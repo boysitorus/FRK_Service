@@ -10,9 +10,9 @@ class pendidikan_controller extends Controller
 {
     public function getTeori()
     {
-        // $teori = Rencana::where('sub_rencana', 'teori')->get();
+
         $teori = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-            ->select('rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelas', 'detail_pendidikan.jumlah_evaluasi', 'detail_pendidikan.sks_matakuliah', 'rencana.sks_terhitung')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelas', 'detail_pendidikan.jumlah_evaluasi', 'detail_pendidikan.sks_matakuliah', 'rencana.sks_terhitung')
             ->get();
 
         return response()->json($teori, 200);
@@ -28,7 +28,6 @@ class pendidikan_controller extends Controller
 
         $jam_persiapan = $sks_matakuliah;
         $jam_tatap_muka = $sks_matakuliah * $jumlah_kelas;
-
 
         $sks_terhitung = round($jam_persiapan + $jam_tatap_muka + $jumlah_evaluasi) / 3;
 
@@ -50,5 +49,25 @@ class pendidikan_controller extends Controller
         $res = [$rencana, $detailPendidikan];
 
         return response()->json($res, 201);
+    }
+
+    public function deleteTeori($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPendidikan::where('id_rencana', $id);
+        
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
     }
 }

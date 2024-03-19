@@ -23,4 +23,5 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     // $router->get('/data-dosen', 'AuthController@index');
     $router->get('/pendidikan/teori', 'pendidikan_controller@getTeori');
     $router->post('/pendidikan/teori', 'pendidikan_controller@postTeori');
+    $router->delete('/pendidikan/teori/{id}', 'pendidikan_controller@deleteTeori');
 });
