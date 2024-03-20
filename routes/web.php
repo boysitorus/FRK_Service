@@ -24,6 +24,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/pendidikan', 'pendidikan_controller@getAll');
     $router->get('/pendidikan/teori', 'pendidikan_controller@getTeori');
     $router->post('/pendidikan/teori', 'pendidikan_controller@postTeori');
+    $router->delete('/pendidikan/teori/{id}', 'pendidikan_controller@deleteTeori');
     $router->get('/pendidikan/bimbingan', 'pendidikan_controller@getBimbingan');
     $router->post('/pendidikan/bimbingan', 'pendidikan_controller@postBimbingan');
     $router->get('/pendidikan/seminar', 'pendidikan_controller@getSeminar');
