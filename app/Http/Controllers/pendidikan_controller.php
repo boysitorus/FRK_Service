@@ -8,11 +8,33 @@ use Illuminate\Http\Request;
 
 class pendidikan_controller extends Controller
 {
-    public function getTeori()
+
+    public function getAll()
     {
-        // $teori = Rencana::where('sub_rencana', 'teori')->get();
+        // Ambil semua data teori dari tabel Rencana
         $teori = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelas', 'detail_pendidikan.jumlah_evaluasi', 'detail_pendidikan.sks_matakuliah', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'teori')
+            ->get();
+
+        // Ambil semua data bimbingan dari tabel Rencana
+        $bimbingan = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'bimbingan')
+            ->get();
+
+        // Kembalikan data dalam bentuk yang sesuai untuk ditampilkan di halaman
+        return response()->json([
+            'teori' => $teori,
+            'bimbingan' => $bimbingan
+        ], 200);
+    }
+
+    public function getTeori()
+    {
+        $teori = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelas', 'detail_pendidikan.jumlah_evaluasi', 'detail_pendidikan.sks_matakuliah', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'teori')
             ->get();
 
         return response()->json($teori, 200);
@@ -45,6 +67,78 @@ class pendidikan_controller extends Controller
             'sks_matakuliah' => $sks_matakuliah,
             'jumlah_evaluasi' => $jumlah_evaluasi,
             'jumlah_kelas' => $jumlah_kelas
+        ]);
+
+        $res = [$rencana, $detailPendidikan];
+
+        return response()->json($res, 201);
+    }
+
+    public function getBimbingan()
+    {
+        $bimbingan = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'bimbingan')
+            ->get();
+
+        return response()->json($bimbingan, 200);
+    }
+
+    public function postBimbingan(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+        
+        $sks_terhitung = $jumlah_mahasiswa / 25;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'pendidikan',
+            'sub_rencana' => 'bimbingan',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPendidikan = DetailPendidikan::create([
+            'id_rencana' => $rencana->id,
+            'jumlah_mahasiswa' => $jumlah_mahasiswa
+        ]);
+
+        $res =[$rencana, $detailPendidikan];
+
+        return response()->json($res, 201);
+    }
+
+    public function getSeminar()
+    {
+        $seminar = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelompok', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'seminar')
+            ->get();
+
+        return response()->json($seminar, 200);
+    }
+
+    public function postSeminar(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_kelompok = (int)$request->get('jumlah_kelompok');
+
+        $sks_terhitung = (4 * $jumlah_kelompok)/42;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'pendidikan',
+            'sub_rencana' => 'seminar',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPendidikan = DetailPendidikan::create([
+            'id_rencana' => $rencana->id,
+            'jumlah_kelompok' => $jumlah_kelompok
         ]);
 
         $res = [$rencana, $detailPendidikan];
