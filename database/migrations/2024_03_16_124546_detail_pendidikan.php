@@ -25,8 +25,11 @@ return new class extends Migration
             $table->integer('jumlah_pengampu')->nullable();
             $table->timestamps();
 
+            // Define foreign key constraint with ON DELETE CASCADE
             $table->primary('id_rencana');
-            $table->foreign('id_rencana')->references('id_rencana')->on('rencana');
+            $table->foreign('id_rencana')
+                ->references('id_rencana')->on('rencana')
+                ->onDelete('cascade');
         });
     }
 

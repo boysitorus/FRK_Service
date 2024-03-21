@@ -30,6 +30,7 @@ class pendidikan_controller extends Controller
         ], 200);
     }
 
+    // METHOD TEORI
     public function getTeori()
     {
 
@@ -75,6 +76,28 @@ class pendidikan_controller extends Controller
         return response()->json($res, 201);
     }
 
+    public function deleteTeori($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPendidikan::where('id_rencana', $id);
+        
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+
+    // METHOD BIMBINGAN
+
     public function getBimbingan()
     {
         $bimbingan = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
@@ -110,6 +133,28 @@ class pendidikan_controller extends Controller
 
         return response()->json($res, 201);
     }
+
+    public function deleteBimbingan($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPendidikan::where('id_rencana', $id);
+        
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+
+    // METHOD SEMINAR
 
     public function getSeminar()
     {
@@ -147,7 +192,7 @@ class pendidikan_controller extends Controller
         return response()->json($res, 201);
     }
 
-    public function deleteTeori($id)
+    public function deleteSeminar($id)
     {
         $record = Rencana::where('id_rencana', $id);
         $detail_record = DetailPendidikan::where('id_rencana', $id);
@@ -166,4 +211,6 @@ class pendidikan_controller extends Controller
             return response()->json($response, 300);
         }
     }
+    
+
 }
