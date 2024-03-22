@@ -20,14 +20,19 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
-    // $router->get('/data-dosen', 'AuthController@index');
+    //teori
     $router->get('/pendidikan', 'pendidikan_controller@getAll');
     $router->get('/pendidikan/teori', 'pendidikan_controller@getTeori');
     $router->post('/pendidikan/teori', 'pendidikan_controller@postTeori');
     $router->delete('/pendidikan/teori/{id}', 'pendidikan_controller@deleteTeori');
+    $router->post('/pendidikan/edit/teori', 'pendidikan_controller@editTeori');
+
+    //bimbingan
     $router->get('/pendidikan/bimbingan', 'pendidikan_controller@getBimbingan');
     $router->post('/pendidikan/bimbingan', 'pendidikan_controller@postBimbingan');
     $router->delete('/pendidikan/bimbingan/{id}', 'pendidikan_controller@deleteBimbingan');
+
+    //seminar
     $router->get('/pendidikan/seminar', 'pendidikan_controller@getSeminar');
     $router->post('/pendidikan/seminar', 'pendidikan_controller@postSeminar');
     $router->delete('/pendidikan/seminar/{id}', 'pendidikan_controller@deleteSeminar');

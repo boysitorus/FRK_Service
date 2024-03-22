@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DetailPendidikan;
 use App\Models\Rencana;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class pendidikan_controller extends Controller
 {
@@ -65,7 +66,7 @@ class pendidikan_controller extends Controller
         ]);
 
         $detailPendidikan = DetailPendidikan::create([
-            'id_rencana' => $rencana->id,
+            'id_rencana' => $rencana->id_rencana,
             'sks_matakuliah' => $sks_matakuliah,
             'jumlah_evaluasi' => $jumlah_evaluasi,
             'jumlah_kelas' => $jumlah_kelas
@@ -74,6 +75,62 @@ class pendidikan_controller extends Controller
         $res = [$rencana, $detailPendidikan];
 
         return response()->json($res, 201);
+    }
+
+    public function editTeori(Request $request ){
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPendidikan::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_kelas = (int)$request->get('jumlah_kelas');
+        $jumlah_evaluasi = (int)$request->get('jumlah_evaluasi');
+        $sks_matakuliah = (int)$request->get('sks_matakuliah');
+        
+
+        if($nama_kegiatan != null && $nama_kegiatan != ""){
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+        
+        if($jumlah_kelas == null){
+            $jumlah_kelas = $detail_rencana->jumlah_kelas;
+        } else {
+            $detail_rencana->jumlah_kelas = $jumlah_kelas;
+        }
+
+        if($jumlah_evaluasi == null){
+            $jumlah_evaluasi = $detail_rencana->jumlah_evaluasi;
+        }else {
+            $detail_rencana->jumlah_evaluasi = $jumlah_evaluasi;
+        }
+
+        if($sks_matakuliah == null){
+            $sks_matakuliah = $detail_rencana->sks_matakuliah;
+        }else {
+            $detail_rencana->sks_matakuliah = $sks_matakuliah;
+        }
+
+        if($jumlah_kelas != null || $jumlah_evaluasi != null || $sks_matakuliah != null){
+            $jam_persiapan = $sks_matakuliah;
+            $jam_tatap_muka = $sks_matakuliah * $jumlah_kelas;
+    
+            $sks_terhitung = round($jam_persiapan + $jam_tatap_muka + $jumlah_evaluasi) / 3;
+
+            $rencana->sks_terhitung = $sks_terhitung;
+        }
+        
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana, 
+            "message" => "Rencana updated successfully"
+        ];
+
+        
+        return response()->json($res, 200);
     }
 
     public function deleteTeori($id)
