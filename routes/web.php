@@ -53,4 +53,24 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/pendidikan/kembang', 'pendidikan_controller@getKembang');
     $router->post('/pendidikan/kembang', 'pendidikan_controller@postKembang');
     $router->delete('/pendidikan/kembang/{id}', 'pendidikan_controller@deleteKembang');
+
+    // CANGKOK
+    $router->get('/pendidikan/cangkok', 'pendidikan_controller@getCangkok');
+    $router->post('/pendidikan/cangkok', 'pendidikan_controller@postCangkok');
+    $router->delete('/pendidikan/cangkok/{id}', 'pendidikan_controller@deleteCangkok');
+    $router->post('/pendidikan/edit/cangkok', 'pendidikan_controller@editCangkok');
+
+    //KOORDINATOR
+    $router->get('/pendidikan/koordinator', 'pendidikan_controller@getKoordinator');
+    $router->post('/pendidikan/koordinator', 'pendidikan_controller@postKoordinator');
+    $router->delete('/pendidikan/koordinator/{id}', 'pendidikan_controller@deleteKoordinator');
+    $router->post('/pendidikan/edit/koordinator', 'pendidikan_controller@editKoordinator');
+
+    // ASISTENSI
+    $router->get('/pendidikan/asistensi', 'pendidikan_controller@getAsistensi');
+    $router->post('/pendidikan/asistensi', 'pendidikan_controller@postAsistensi');
+    $router->delete('/pendidikan/asistensi/{id}', 'pendidikan_controller@deleteAsistensi');
+    $router->post('/pendidikan/edit/asistensi', 'pendidikan_controller@editAsistensi');
+
+
 });
