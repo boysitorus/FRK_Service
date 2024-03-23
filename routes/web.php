@@ -3,6 +3,7 @@
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\pendidikan_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,19 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/pendidikan/bimbingan', 'pendidikan_controller@getBimbingan');
     $router->post('/pendidikan/bimbingan', 'pendidikan_controller@postBimbingan');
     $router->delete('/pendidikan/bimbingan/{id}', 'pendidikan_controller@deleteBimbingan');
+    $router->post('/pendidikan/edit/bimbingan', 'pendidikan_controller@editBimbingan');
 
     //seminar
     $router->get('/pendidikan/seminar', 'pendidikan_controller@getSeminar');
     $router->post('/pendidikan/seminar', 'pendidikan_controller@postSeminar');
     $router->delete('/pendidikan/seminar/{id}', 'pendidikan_controller@deleteSeminar');
+    $router->post('/pendidikan/edit/seminar', 'pendidikan_controller@editSeminar');
+    
+    $router->get('/pendidikan/rendah', [pendidikan_controller::class, 'getRendah']);
+    $router->post('/pendidikan/rendah', [pendidikan_controller::class, 'postRendah']);
+    $router->delete('/pendidikan/rendah/{id}', [pendidikan_controller::class, 'deleteRendah']);
+    
+    $router->get('/pendidikan/kembang', 'pendidikan_controller@getKembang');
+    $router->post('/pendidikan/kembang', 'pendidikan_controller@postKembang');
+    $router->delete('/pendidikan/kembang/{id}', 'pendidikan_controller@deleteKembang');
 });
