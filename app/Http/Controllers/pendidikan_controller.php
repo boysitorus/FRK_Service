@@ -24,10 +24,23 @@ class pendidikan_controller extends Controller
             ->where('rencana.sub_rencana', 'bimbingan')
             ->get();
 
+        $rendah = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'bimbing_rendah')
+            ->get();
+
+        $kembang = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_sap', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'bimbing_rendah')
+            ->get();
+
+
         // Kembalikan data dalam bentuk yang sesuai untuk ditampilkan di halaman
         return response()->json([
             'teori' => $teori,
-            'bimbingan' => $bimbingan
+            'bimbingan' => $bimbingan,
+            'rendah' => $rendah,
+            'kembang' => $kembang
         ], 200);
     }
 
@@ -350,5 +363,124 @@ class pendidikan_controller extends Controller
         }
     }
     
+    // G. MEMBIMBING DOSEN YANG LEBIH RENDAH
+
+    public function getRendah()
+    {
+
+        $rendah = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'bimbing_rendah')
+            ->get();
+
+        return response()->json($rendah, 200);
+    }
+
+    public function postRendah(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_dosen = (int)$request->get('jumlah_dosen');
+
+        $sks_terhitung = $jumlah_dosen;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'pendidikan',
+            'sub_rencana' => 'bimbing_rendah',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detailPendidikan = DetailPendidikan::create([
+            'id_rencana' => $rencana->id,
+            'jumlah_dosen' => $jumlah_dosen,
+        ]);
+
+        $res = [$rencana, $detailPendidikan];
+
+        return response()->json($res, 201);
+    }
+
+    public function deleteRendah($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPendidikan::where('id_rencana', $id);
+        
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+
+    // H. MENGEMBANGKAN PROGRAM PERKULIAHAN
+
+    public function getKembang()
+    {
+
+        $kembang = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_sap', 'rencana.sks_terhitung')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_sap', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'pengembangan')
+            ->get();
+
+        return response()->json($kembang, 200);
+    }
+
+    public function postKembang(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_sap = (int)$request->get('jumlah_sap');
+
+        $sks_terhitung = $jumlah_sap;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'pendidikan',
+            'sub_rencana' => 'pengembangan',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detailPendidikan = DetailPendidikan::create([
+            'id_rencana' => $rencana->id,
+            'jumlah_dosen' => $jumlah_sap,
+        ]);
+
+        $res = [$rencana, $detailPendidikan];
+
+        return response()->json($res, 201);
+    }
+
+    public function deleteKembang($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPendidikan::where('id_rencana', $id);
+        
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
 
 }
