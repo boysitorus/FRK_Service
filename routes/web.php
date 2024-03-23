@@ -27,6 +27,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/pendidikan/teori/{id}', 'pendidikan_controller@deleteTeori');
     $router->post('/pendidikan/edit/teori', 'pendidikan_controller@editTeori');
 
+    //praktikum
+    $router->get('/pendidikan/praktikum', 'pendidikan_controller@getPraktikum');
+    $router->post('/pendidikan/praktikum', 'pendidikan_controller@postPraktikum');
+    $router->delete('/pendidikan/praktikum/{id}', 'pendidikan_controller@deletePraktikum');
+    $router->post('/pendidikan/edit/praktikum', 'pendidikan_controller@editPraktikum');
+
     //bimbingan
     $router->get('/pendidikan/bimbingan', 'pendidikan_controller@getBimbingan');
     $router->post('/pendidikan/bimbingan', 'pendidikan_controller@postBimbingan');
