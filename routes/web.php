@@ -36,4 +36,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/pendidikan/seminar', 'pendidikan_controller@getSeminar');
     $router->post('/pendidikan/seminar', 'pendidikan_controller@postSeminar');
     $router->delete('/pendidikan/seminar/{id}', 'pendidikan_controller@deleteSeminar');
+
+     //Tugas Akhir
+     $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
+     $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
+     $router->post('/pendidikan/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
+     $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
 });
