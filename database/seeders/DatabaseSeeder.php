@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UsersTableSeeder::class,
-            // RencanaTableSeeder::class,
+            RencanaTableSeeder::class,
         ]);
     }
 }
