@@ -58,7 +58,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/pendidikan/cangkok', 'pendidikan_controller@getCangkok');
     $router->post('/pendidikan/cangkok', 'pendidikan_controller@postCangkok');
     $router->delete('/pendidikan/cangkok/{id}', 'pendidikan_controller@deleteCangkok');
-    $router->post('/pendidikan/edit/cangkok', 'pendidikan_controller@editCangkok');
+    $router->post('/pendidikan/edit/cangkok/{id}', 'pendidikan_controller@editCangkok');
 
     //KOORDINATOR
     $router->get('/pendidikan/koordinator', 'pendidikan_controller@getKoordinator');
@@ -71,6 +71,5 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/pendidikan/asistensi', 'pendidikan_controller@postAsistensi');
     $router->delete('/pendidikan/asistensi/{id}', 'pendidikan_controller@deleteAsistensi');
     $router->post('/pendidikan/edit/asistensi', 'pendidikan_controller@editAsistensi');
-
 
 });

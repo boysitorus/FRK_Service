@@ -57,7 +57,10 @@ class pendidikan_controller extends Controller
             'teori' => $teori,
             'bimbingan' => $bimbingan,
             'rendah' => $rendah,
-            'kembang' => $kembang
+            'kembang' => $kembang,
+            'cangkok' => $cangkok,
+            'koordinator' => $koordinator,
+            'asistensi' => $asistensi
         ], 200);
     }
 
@@ -490,113 +493,99 @@ class pendidikan_controller extends Controller
 
 
     // ----------FUNCTION BAGIAN I-------------
-        public function postCangkok(Request $request)
+    public function postCangkok(Request $request)
     {
-        $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
+        $id_dosen = $request->get('id_dosen');
         $jumlah_dosen = (int)$request->get('jumlah_dosen');
-        $sks_matakuliah = (int)$request->get('sks_matakuliah');
-
-        $jam_persiapan = $sks_matakuliah;
-        $jam_tatap_muka = $sks_matakuliah * $jumlah_dosen;
-
-        $sks_terhitung = round(($jam_persiapan + $jam_tatap_muka) / 2, 2);
-
+    
+        // Hitung SKS Terhitung berdasarkan sks matakuliah
+        $sks_terhitung = $jumlah_dosen;
+    
+        // Buat entri baru pada tabel Rencana untuk jenis_rencana = 'pendidikan' dan sub_rencana = 'cangkok'
         $rencana = Rencana::create([
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'cangkok',
-            'id_dosen' => $id_dosen,
             'nama_kegiatan' => $nama_kegiatan,
-            'sks_terhitung' => round($sks_terhitung, 2),
+            'id_dosen' => $id_dosen,
+            'sks_terhitung' => $sks_terhitung
         ]);
-
+    
+        // Buat entri baru pada tabel DetailPendidikan untuk id_rencana yang baru dibuat
         $detailPendidikan = DetailPendidikan::create([
             'id_rencana' => $rencana->id_rencana,
-            'jumlah_dosen' => $jumlah_dosen,
-            'sks_matakuliah' => $sks_matakuliah
+            'jumlah_dosen' => $jumlah_dosen
         ]);
-
-        $res = [$rencana, $detailPendidikan];
-
+    
+        // Response yang akan dikirimkan
+        $res = [
+            "rencana" => $rencana,
+            "detail_pendidikan" => $detailPendidikan,
+            "message" => "Cangkok created successfully"
+        ];
+    
+        // Kembalikan response dalam bentuk JSON dengan status code 201 (Created)
         return response()->json($res, 201);
     }
-
-        public function getCangkok()
+    
+    
+    public function getCangkok()
     {
         $cangkok = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'cangkok')
             ->get();
-
+    
         return response()->json($cangkok, 200);
     }
-
-        public function editCangkok(Request $request)
+    
+    public function editCangkok(Request $request)
     {
         $id_rencana = $request->get('id_rencana');
-
-        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
-        $detail_rencana = DetailPendidikan::where('id_rencana', $id_rencana)->first();
+    
+        $rencana = Rencana::find($id_rencana);
+        $detailPendidikan = DetailPendidikan::where('id_rencana', $id_rencana)->first();
+    
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_dosen = (int)$request->get('jumlah_dosen');
-        $sks_matakuliah = (int)$request->get('sks_matakuliah');
-
-        if ($nama_kegiatan != null && $nama_kegiatan != "") {
-            $rencana->nama_kegiatan = $nama_kegiatan;
-        }
-
-        if ($jumlah_dosen == null) {
-            $jumlah_dosen = $detail_rencana->jumlah_dosen;
-        } else {
-            $detail_rencana->jumlah_dosen = $jumlah_dosen;
-        }
-
-        if ($sks_matakuliah == null) {
-            $sks_matakuliah = $detail_rencana->sks_matakuliah;
-        } else {
-            $detail_rencana->sks_matakuliah = $sks_matakuliah;
-        }
-
-        if ($jumlah_dosen != null || $sks_matakuliah != null) {
-            $jam_persiapan = $sks_matakuliah;
-            $jam_tatap_muka = $sks_matakuliah * $jumlah_dosen;
-
-            $sks_terhitung = round($jam_persiapan + $jam_tatap_muka) / 2;
-
-            $rencana->sks_terhitung = $sks_terhitung;
-        }
-
+        $sks_terhitung = $jumlah_dosen;
+    
+        $rencana->nama_kegiatan = $nama_kegiatan;
+        $rencana->sks_terhitung = $sks_terhitung;
         $rencana->save();
-        $detail_rencana->save();
-
+    
+        $detailPendidikan->jumlah_dosen = $jumlah_dosen;
+        $detailPendidikan->save();
+    
         $res = [
             "rencana" => $rencana,
-            "detail_rencana" => $detail_rencana,
-            "message" => "Rencana updated successfully"
+            "detail_pendidikan" => $detailPendidikan,
+            "message" => "Cangkok updated successfully"
         ];
-
+    
         return response()->json($res, 200);
     }
-
-        public function deleteCangkok($id)
+    
+    public function deleteCangkok($id)
     {
-        $record = Rencana::where('id_rencana', $id);
-        $detail_record = DetailPendidikan::where('id_rencana', $id);
-
-        if ($record && $detail_record) {
-            $detail_record->delete();
-            $record->delete();
+        $rencana = Rencana::find($id);
+        $detailPendidikan = DetailPendidikan::where('id_rencana', $id)->first();
+    
+        if ($rencana && $detailPendidikan) {
+            $detailPendidikan->delete();
+            $rencana->delete();
             $response = [
-                'message' => 'Delete kegiatan sukses'
+                'message' => 'Delete cangkok success'
             ];
-            return response()->json($response, 201);
+            return response()->json($response, 200);
         } else {
             $response = [
-                'message' => 'Delete kegiatan gagal'
+                'message' => 'Delete cangkok failed'
             ];
-            return response()->json($response, 300);
+            return response()->json($response, 404);
         }
     }
+    
 
     // ------------FUNCTION BAGIAN J-----------------
     public function getKoordinator()
