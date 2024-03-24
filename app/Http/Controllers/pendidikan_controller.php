@@ -24,6 +24,7 @@ class pendidikan_controller extends Controller
             ->where('rencana.sub_rencana', 'bimbingan')
             ->get();
 
+
         $rendah = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'bimbing_rendah')
@@ -119,6 +120,10 @@ class pendidikan_controller extends Controller
         $jumlah_kelas = (int)$request->get('jumlah_kelas');
         $jumlah_evaluasi = (int)$request->get('jumlah_evaluasi');
         $sks_matakuliah = (int)$request->get('sks_matakuliah');
+<<<<<<< HEAD
+
+=======
+>>>>>>> 2c9f09441a697ae808d73a41a9b3c9666890cbfb
 
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
@@ -341,21 +346,18 @@ class pendidikan_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
 
-        if($nama_kegiatan != null && $nama_kegiatan != "")
-        {
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if($jumlah_mahasiswa == null)
-        {
+        if ($jumlah_mahasiswa == null) {
             $jumlah_mahasiswa = $detail_rencana->jumlah_mahasiswa;
         } else {
             $detail_rencana->jumlah_mahasiswa = $jumlah_mahasiswa;
         }
 
-        if($jumlah_mahasiswa != null)
-        {
-            $sks_terhitung = $jumlah_mahasiswa/25;
+        if ($jumlah_mahasiswa != null) {
+            $sks_terhitung = $jumlah_mahasiswa / 25;
 
             $rencana->sks_terhitung = $sks_terhitung;
         }
@@ -440,21 +442,18 @@ class pendidikan_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_kelompok = (int)$request->get('jumlah_kelompok');
 
-        if($nama_kegiatan != null && $nama_kegiatan != "")
-        {
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if($jumlah_kelompok == null)
-        {
+        if ($jumlah_kelompok == null) {
             $jumlah_kelompok = $detail_rencana->jumlah_kelompok;
         } else {
             $detail_rencana->jumlah_kelompok = $jumlah_kelompok;
         }
 
-        if($jumlah_kelompok != null)
-        {
-            $sks_terhitung = (4 * $jumlah_kelompok)/42;
+        if ($jumlah_kelompok != null) {
+            $sks_terhitung = (4 * $jumlah_kelompok) / 42;
 
             $rencana->sks_terhitung = $sks_terhitung;
         }
@@ -527,8 +526,99 @@ class pendidikan_controller extends Controller
         // Kembalikan response dalam bentuk JSON dengan status code 201 (Created)
         return response()->json($res, 201);
     }
-    
-    
+
+    public function editKembang(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPendidikan::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_sap = (int)$request->get('jumlah_sap');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jumlah_sap == null) {
+            $jumlah_sap = $detail_rencana->jumlah_sap;
+        } else {
+            $detail_rencana->jumlah_kelas = $jumlah_sap;
+        }
+
+        if ($jumlah_sap != null) {
+
+            $sks_terhitung = $jumlah_sap;
+
+            $rencana->sks_terhitung = $sks_terhitung;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+
+        return response()->json($res, 200);
+    }
+
+    public function deleteKembang($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPendidikan::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+
+    // ----------FUNCTION BAGIAN I-------------
+    public function postCangkok(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_dosen = (int)$request->get('jumlah_dosen');
+        $sks_matakuliah = (int)$request->get('sks_matakuliah');
+
+        $jam_persiapan = $sks_matakuliah;
+        $jam_tatap_muka = $sks_matakuliah * $jumlah_dosen;
+
+        $sks_terhitung = round(($jam_persiapan + $jam_tatap_muka) / 2, 2);
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'pendidikan',
+            'sub_rencana' => 'cangkok',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPendidikan = DetailPendidikan::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jumlah_dosen' => $jumlah_dosen,
+            'sks_matakuliah' => $sks_matakuliah
+        ]);
+
+        $res = [$rencana, $detailPendidikan];
+
+        return response()->json($res, 201);
+    }
+
     public function getCangkok()
     {
         $cangkok = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
@@ -538,7 +628,7 @@ class pendidikan_controller extends Controller
     
         return response()->json($cangkok, 200);
     }
-    
+
     public function editCangkok(Request $request)
     {
         $id_rencana = $request->get('id_rencana');
@@ -565,7 +655,7 @@ class pendidikan_controller extends Controller
     
         return response()->json($res, 200);
     }
-    
+
     public function deleteCangkok($id)
     {
         $rencana = Rencana::find($id);
@@ -671,7 +761,7 @@ class pendidikan_controller extends Controller
     }
 
     // ------------- FUNCTION BAGIAN K------------------
-        public function getAsistensi()
+    public function getAsistensi()
     {
         $asistensi = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
@@ -763,5 +853,108 @@ class pendidikan_controller extends Controller
             return response()->json($response, 300);
         }
     }
+    // METHOD Tugas Akhir
 
+    public function getTugasAkhir()
+    {
+        $tugasAkhir = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'tugasAkhir')
+            ->get();
+
+        return response()->json($tugasAkhir, 200);
+    }
+
+    public function postTugasAkhir(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+
+        $sks_terhitung = (4 * $jumlah_mahasiswa) / 42;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'pendidikan',
+            'sub_rencana' => 'tugasAkhir',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        if ($rencana) {
+            $detailPendidikan = DetailPendidikan::create([
+                'id_rencana' => $rencana->id_rencana,
+                'jumlah_mahasiswa' => $jumlah_mahasiswa
+            ]);
+        }
+
+
+        $res = [$rencana, $detailPendidikan];
+
+        return response()->json($res, 201);
+    }
+
+
+    public function editTugasAkhir(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPendidikan::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+
+        dd($request);
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jumlah_mahasiswa == null) {
+            dd($id_rencana);
+            $jumlah_mahasiswa = $detail_rencana->jumlah_mahasiswa;
+        } else {
+            $detail_rencana->jumlah_kelas = $jumlah_mahasiswa;
+        }
+
+        if ($jumlah_mahasiswa != null) {
+            $id_dosen = $request->get('id_dosen');
+            $nama_kegiatan = $request->get('nama_kegiatan');
+            $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+
+            $sks_terhitung = (4 * $jumlah_mahasiswa) / 42;
+
+            $rencana->save();
+            $detail_rencana->save();
+
+            $res = [
+                "rencana" => $rencana,
+                "detail_rencana" => $detail_rencana,
+                "message" => "Rencana updated successfully"
+            ];
+        }
+
+        return response()->json($res, 200);
+    }
+
+    public function deleteTugasAkhir($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPendidikan::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
 }

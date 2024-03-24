@@ -46,18 +46,18 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/pendidikan/seminar/{id}', 'pendidikan_controller@deleteSeminar');
 
      //Tugas Akhir
-    $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
-    $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
-    $router->post('/pendidikan/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
-    $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
+     $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
+     $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
+     $router->post('/pendidikan/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
+     $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
     $router->post('/pendidikan/edit/seminar', 'pendidikan_controller@editSeminar');
-    
+
     // rendah
     $router->get('/pendidikan/rendah', 'pendidikan_controller@getRendah');
     $router->post('/pendidikan/rendah', 'pendidikan_controller@postRendah');
     $router->delete('/pendidikan/rendah/{id}', 'pendidikan_controller@deleteRendah');
     $router->post('/pendidikan/edit/rendah', 'pendidikan_controller@editRendah');
-    
+
     // Kembang
     $router->get('/pendidikan/kembang', 'pendidikan_controller@getKembang');
     $router->post('/pendidikan/kembang', 'pendidikan_controller@postKembang');
@@ -81,5 +81,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/pendidikan/asistensi', 'pendidikan_controller@postAsistensi');
     $router->delete('/pendidikan/asistensi/{id}', 'pendidikan_controller@deleteAsistensi');
     $router->post('/pendidikan/edit/asistensi', 'pendidikan_controller@editAsistensi');
+
 
 });
