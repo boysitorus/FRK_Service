@@ -46,10 +46,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/pendidikan/seminar/{id}', 'pendidikan_controller@deleteSeminar');
 
      //Tugas Akhir
-     $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
-     $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
-     $router->post('/pendidikan/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
-     $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
+    $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
+    $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
+    $router->post('/pendidikan/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
+    $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
     $router->post('/pendidikan/edit/seminar', 'pendidikan_controller@editSeminar');
 
     // rendah

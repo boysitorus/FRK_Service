@@ -120,11 +120,6 @@ class pendidikan_controller extends Controller
         $jumlah_kelas = (int)$request->get('jumlah_kelas');
         $jumlah_evaluasi = (int)$request->get('jumlah_evaluasi');
         $sks_matakuliah = (int)$request->get('sks_matakuliah');
-<<<<<<< HEAD
-
-=======
->>>>>>> 2c9f09441a697ae808d73a41a9b3c9666890cbfb
-
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
@@ -585,38 +580,6 @@ class pendidikan_controller extends Controller
             ];
             return response()->json($response, 300);
         }
-    }
-
-    // ----------FUNCTION BAGIAN I-------------
-    public function postCangkok(Request $request)
-    {
-        $id_dosen = $request->get('id_dosen');
-        $nama_kegiatan = $request->get('nama_kegiatan');
-        $jumlah_dosen = (int)$request->get('jumlah_dosen');
-        $sks_matakuliah = (int)$request->get('sks_matakuliah');
-
-        $jam_persiapan = $sks_matakuliah;
-        $jam_tatap_muka = $sks_matakuliah * $jumlah_dosen;
-
-        $sks_terhitung = round(($jam_persiapan + $jam_tatap_muka) / 2, 2);
-
-        $rencana = Rencana::create([
-            'jenis_rencana' => 'pendidikan',
-            'sub_rencana' => 'cangkok',
-            'id_dosen' => $id_dosen,
-            'nama_kegiatan' => $nama_kegiatan,
-            'sks_terhitung' => round($sks_terhitung, 2),
-        ]);
-
-        $detailPendidikan = DetailPendidikan::create([
-            'id_rencana' => $rencana->id_rencana,
-            'jumlah_dosen' => $jumlah_dosen,
-            'sks_matakuliah' => $sks_matakuliah
-        ]);
-
-        $res = [$rencana, $detailPendidikan];
-
-        return response()->json($res, 201);
     }
 
     public function getCangkok()
