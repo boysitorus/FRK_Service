@@ -124,7 +124,6 @@ class pendidikan_controller extends Controller
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if($jumlah_kelas == null){
         if ($jumlah_kelas == null) {
             $jumlah_kelas = $detail_rencana->jumlah_kelas;
         } else {
@@ -341,21 +340,18 @@ class pendidikan_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
 
-        if($nama_kegiatan != null && $nama_kegiatan != "")
-        {
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if($jumlah_mahasiswa == null)
-        {
+        if ($jumlah_mahasiswa == null) {
             $jumlah_mahasiswa = $detail_rencana->jumlah_mahasiswa;
         } else {
             $detail_rencana->jumlah_mahasiswa = $jumlah_mahasiswa;
         }
 
-        if($jumlah_mahasiswa != null)
-        {
-            $sks_terhitung = $jumlah_mahasiswa/25;
+        if ($jumlah_mahasiswa != null) {
+            $sks_terhitung = $jumlah_mahasiswa / 25;
 
             $rencana->sks_terhitung = $sks_terhitung;
         }
@@ -440,21 +436,18 @@ class pendidikan_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_kelompok = (int)$request->get('jumlah_kelompok');
 
-        if($nama_kegiatan != null && $nama_kegiatan != "")
-        {
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if($jumlah_kelompok == null)
-        {
+        if ($jumlah_kelompok == null) {
             $jumlah_kelompok = $detail_rencana->jumlah_kelompok;
         } else {
             $detail_rencana->jumlah_kelompok = $jumlah_kelompok;
         }
 
-        if($jumlah_kelompok != null)
-        {
-            $sks_terhitung = (4 * $jumlah_kelompok)/42;
+        if ($jumlah_kelompok != null) {
+            $sks_terhitung = (4 * $jumlah_kelompok) / 42;
 
             $rencana->sks_terhitung = $sks_terhitung;
         }
@@ -690,7 +683,7 @@ class pendidikan_controller extends Controller
     }
 
     // ----------FUNCTION BAGIAN I-------------
-        public function postCangkok(Request $request)
+    public function postCangkok(Request $request)
     {
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
@@ -721,7 +714,7 @@ class pendidikan_controller extends Controller
         return response()->json($res, 201);
     }
 
-        public function getCangkok()
+    public function getCangkok()
     {
         $cangkok = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
@@ -731,7 +724,7 @@ class pendidikan_controller extends Controller
         return response()->json($cangkok, 200);
     }
 
-        public function editCangkok(Request $request)
+    public function editCangkok(Request $request)
     {
         $id_rencana = $request->get('id_rencana');
 
@@ -778,7 +771,7 @@ class pendidikan_controller extends Controller
         return response()->json($res, 200);
     }
 
-        public function deleteCangkok($id)
+    public function deleteCangkok($id)
     {
         $record = Rencana::where('id_rencana', $id);
         $detail_record = DetailPendidikan::where('id_rencana', $id);
@@ -801,12 +794,12 @@ class pendidikan_controller extends Controller
     // ------------FUNCTION BAGIAN J-----------------
     public function getKoordinator()
     {
-    $koordinator = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-        ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
-        ->where('rencana.sub_rencana', 'koordinator')
-        ->get();
+        $koordinator = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'koordinator')
+            ->get();
 
-    return response()->json($koordinator, 200);
+        return response()->json($koordinator, 200);
     }
 
     public function postKoordinator(Request $request)
@@ -873,7 +866,7 @@ class pendidikan_controller extends Controller
     }
 
     // ------------- FUNCTION BAGIAN K------------------
-        public function getAsistensi()
+    public function getAsistensi()
     {
         $asistensi = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
@@ -961,7 +954,7 @@ class pendidikan_controller extends Controller
             return response()->json($response, 300);
         }
     }
-        // METHOD Tugas Akhir
+    // METHOD Tugas Akhir
 
     public function getTugasAkhir()
     {
@@ -979,7 +972,7 @@ class pendidikan_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
 
-        $sks_terhitung = (4 * $jumlah_mahasiswa)/42;
+        $sks_terhitung = (4 * $jumlah_mahasiswa) / 42;
 
         $rencana = Rencana::create([
             'jenis_rencana' => 'pendidikan',
@@ -1003,7 +996,8 @@ class pendidikan_controller extends Controller
     }
 
 
-    public function editTugasAkhir(Request $request ){
+    public function editTugasAkhir(Request $request)
+    {
         $request->all();
         $id_rencana = $request->get('id_rencana');
 
@@ -1014,33 +1008,32 @@ class pendidikan_controller extends Controller
 
         dd($request);
 
-        if($nama_kegiatan != null && $nama_kegiatan != ""){
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if($jumlah_mahasiswa == null){
+        if ($jumlah_mahasiswa == null) {
             dd($id_rencana);
             $jumlah_mahasiswa = $detail_rencana->jumlah_mahasiswa;
         } else {
             $detail_rencana->jumlah_kelas = $jumlah_mahasiswa;
         }
 
-        if($jumlah_mahasiswa != null){
+        if ($jumlah_mahasiswa != null) {
             $id_dosen = $request->get('id_dosen');
-        $nama_kegiatan = $request->get('nama_kegiatan');
-        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+            $nama_kegiatan = $request->get('nama_kegiatan');
+            $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
 
-        $sks_terhitung = (4 * $jumlah_mahasiswa)/42;
+            $sks_terhitung = (4 * $jumlah_mahasiswa) / 42;
 
-        $rencana->save();
-        $detail_rencana->save();
+            $rencana->save();
+            $detail_rencana->save();
 
-        $res = [
-            "rencana" => $rencana,
-            "detail_rencana" => $detail_rencana,
-            "message" => "Rencana updated successfully"
-        ];
-
+            $res = [
+                "rencana" => $rencana,
+                "detail_rencana" => $detail_rencana,
+                "message" => "Rencana updated successfully"
+            ];
         }
 
         return response()->json($res, 200);
@@ -1064,7 +1057,5 @@ class pendidikan_controller extends Controller
             ];
             return response()->json($response, 300);
         }
-    }
-
     }
 }
