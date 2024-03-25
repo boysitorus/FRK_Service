@@ -780,7 +780,6 @@ class pendidikan_controller extends Controller
         return response()->json($res, 200);
     }
 
-
     public function deleteRendah($id)
     {
         $record = Rencana::where('id_rencana', $id);
@@ -805,9 +804,9 @@ class pendidikan_controller extends Controller
     // START OF METHOD H
     public function getKembang()
     {
-        $kembang = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_sap', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'pengembangan')
+        $proposal = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'proposal')
             ->get();
 
             return response()->json($kembang, 200);
@@ -819,7 +818,7 @@ class pendidikan_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_sap = (int)$request->get('jumlah_sap');
 
-        $sks_terhitung = $jumlah_sap;
+        $sks_terhitung = 0.5 * $jumlah_sap;
 
         $rencana = Rencana::create([
             'jenis_rencana' => 'pendidikan',
@@ -847,14 +846,14 @@ class pendidikan_controller extends Controller
         $detailPendidikan = DetailPendidikan::where('id_rencana', $id_rencana)->first();
 
         $nama_kegiatan = $request->get('nama_kegiatan');
-        $jumlah_dosen = (int)$request->get('jumlah_dosen');
-        $sks_terhitung = $jumlah_dosen;
+        $jumlah_sap = (int)$request->get('jumlah_sap');
+        $sks_terhitung = 0.5 * $jumlah_sap;
 
         $rencana->nama_kegiatan = $nama_kegiatan;
         $rencana->sks_terhitung = $sks_terhitung;
         $rencana->save();
 
-        $detailPendidikan->jumlah_dosen = $jumlah_dosen;
+        $detailPendidikan->jumlah_sap = $jumlah_sap;
         $detailPendidikan->save();
 
         $res = [
@@ -865,6 +864,7 @@ class pendidikan_controller extends Controller
 
         return response()->json($res, 200);
     }
+
     // END OF METHOD H
 
     // START OF METHOD I
@@ -883,30 +883,45 @@ class pendidikan_controller extends Controller
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_dosen = (int)$request->get('jumlah_dosen');
-        $sks_matakuliah = (int)$request->get('sks_matakuliah');
 
-        $jam_persiapan = $sks_matakuliah;
-        $jam_tatap_muka = $sks_matakuliah * $jumlah_dosen;
-
-        $sks_terhitung = round(($jam_persiapan + $jam_tatap_muka) / 2, 2);
+        $sks_terhitung = $jumlah_dosen;
 
         $rencana = Rencana::create([
             'jenis_rencana' => 'pendidikan',
-            'sub_rencana' => 'cangkok',
+            'sub_rencana' => 'bimbing_rendah',
             'id_dosen' => $id_dosen,
             'nama_kegiatan' => $nama_kegiatan,
-            'sks_terhitung' => round($sks_terhitung, 2),
+            'sks_terhitung' => $sks_terhitung,
         ]);
 
         $detailPendidikan = DetailPendidikan::create([
             'id_rencana' => $rencana->id_rencana,
-            'jumlah_dosen' => $jumlah_dosen,
-            'sks_matakuliah' => $sks_matakuliah
+            'jumlah_dosen' => $jumlah_dosen
         ]);
 
         $res = [$rencana, $detailPendidikan];
 
         return response()->json($res, 201);
+    }
+
+    public function deleteCangkok($id)
+    {
+        $rencana = Rencana::find($id);
+        $detailPendidikan = DetailPendidikan::where('id_rencana', $id)->first();
+
+        if ($rencana && $detailPendidikan) {
+            $detailPendidikan->delete();
+            $rencana->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
     }
 
     public function editCangkok(Request $request)
@@ -955,26 +970,6 @@ class pendidikan_controller extends Controller
 
         return response()->json($res, 200);
     }
-
-    public function deleteCangkok($id)
-    {
-        $rencana = Rencana::find($id);
-        $detailPendidikan = DetailPendidikan::where('id_rencana', $id)->first();
-
-        if ($rencana && $detailPendidikan) {
-            $detailPendidikan->delete();
-            $rencana->delete();
-            $response = [
-                'message' => 'Delete kegiatan success'
-            ];
-            return response()->json($response, 200);
-        } else {
-            $response = [
-                'message' => 'Delete kegiatan failed'
-            ];
-            return response()->json($response, 404);
-        }
-    }
     // END OF METHOD I
 
 
@@ -1006,7 +1001,7 @@ class pendidikan_controller extends Controller
         $res = [
             "rencana" => $rencana,
             "detail_pendidikan" => $detailPendidikan,
-            "message" => "Koordinator created successfully"
+            "message" => "Kegiatan detasering updated successfully"
         ];
         return response()->json($res, 201);
     }
@@ -1033,12 +1028,12 @@ class pendidikan_controller extends Controller
 
     public function deleteKoordinator($id)
     {
-        $record = Rencana::where('id_rencana', $id);
-        $detail_record = DetailPendidikan::where('id_rencana', $id);
+        $rencana = Rencana::find($id);
+        $detailPendidikan = DetailPendidikan::where('id_rencana', $id)->first();
 
-        if ($record && $detail_record) {
-            $detail_record->delete();
-            $record->delete();
+        if ($rencana && $detailPendidikan) {
+            $detailPendidikan->delete();
+            $rencana->delete();
             $response = [
                 'message' => 'Delete kegiatan success'
             ];
@@ -1086,17 +1081,14 @@ class pendidikan_controller extends Controller
             "detail_pendidikan" => $detailPendidikan,
             "message" => "Koordinator created successfully"
         ];
-
-        return response()->json($res, 200);
+        return response()->json($res, 201);
     }
 
 
     public function editAsistensi(Request $request)
     {
         $id_rencana = $request->get('id_rencana');
-
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
-        $detail_rencana = DetailPendidikan::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = $request->get('jumlah_mahasiswa');
         $sks_terhitung = 1;
