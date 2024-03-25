@@ -527,6 +527,46 @@ class pendidikan_controller extends Controller
     //     return response()->json($res, 201);
     // }
 
+    // METHOD BAGIAN G (RENDAH)
+
+    public function getRendah()
+    {
+        $rencana = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'bimbing_rendah')
+            ->get();
+
+
+
+        return response()->json($rencana, 200);
+    }
+
+    public function postRendah(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_dosen = (int)$request->get('jumlah_dosen');
+
+        $sks_terhitung = $jumlah_dosen;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'pendidikan',
+            'sub_rencana' => 'bimbing_rendah',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detailPendidikan = DetailPendidikan::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jumlah_dosen' => $jumlah_dosen
+        ]);
+
+        $res = [$rencana, $detailPendidikan];
+
+        return response()->json($res, 201);
+    }
+
     public function editRendah(Request $request)
     {
         $request->all();
@@ -544,7 +584,7 @@ class pendidikan_controller extends Controller
         if ($jumlah_dosen == null) {
             $jumlah_dosen = $detail_rencana->jumlah_dosen;
         } else {
-            $detail_rencana->jumlah_kelas = $jumlah_dosen;
+            $detail_rencana->jumlah_dosen = $jumlah_dosen;
         }
 
         if ($jumlah_dosen != null) {
@@ -607,7 +647,7 @@ class pendidikan_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_sap = (int)$request->get('jumlah_sap');
 
-        $sks_terhitung = $jumlah_sap;
+        $sks_terhitung = 0.5 * $jumlah_sap;
 
         $rencana = Rencana::create([
             'jenis_rencana' => 'pendidikan',
@@ -635,14 +675,14 @@ class pendidikan_controller extends Controller
         $detailPendidikan = DetailPendidikan::where('id_rencana', $id_rencana)->first();
 
         $nama_kegiatan = $request->get('nama_kegiatan');
-        $jumlah_dosen = (int)$request->get('jumlah_dosen');
-        $sks_terhitung = $jumlah_dosen;
+        $jumlah_sap = (int)$request->get('jumlah_sap');
+        $sks_terhitung = 0.5 * $jumlah_sap;
 
         $rencana->nama_kegiatan = $nama_kegiatan;
         $rencana->sks_terhitung = $sks_terhitung;
         $rencana->save();
 
-        $detailPendidikan->jumlah_dosen = $jumlah_dosen;
+        $detailPendidikan->jumlah_sap = $jumlah_sap;
         $detailPendidikan->save();
 
         $res = [
