@@ -47,11 +47,21 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/pendidikan/seminar/{id}', 'pendidikan_controller@deleteSeminar');
 
      //Tugas Akhir
-     $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
-     $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
-     $router->post('/pendidikan/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
-     $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
+    $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
+    $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
+    $router->post('/pendidikan/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
+    $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
     $router->post('/pendidikan/edit/seminar', 'pendidikan_controller@editSeminar');
+    $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
+    $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
+    $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
+    $router->post('/pendidikan/edit/tugasAkhir', 'pendidikan_controller@editTugasAkhir');
+
+     //Proposal
+    $router->get('/pendidikan/proposal', 'pendidikan_controller@getProposal');
+    $router->post('/pendidikan/proposal', 'pendidikan_controller@postProposal');
+    $router->delete('/pendidikan/proposal/{id}', 'pendidikan_controller@deleteProposal');
+    $router->post('/pendidikan/edit/proposal', 'pendidikan_controller@editProposal');
 
     // rendah
     $router->get('/pendidikan/rendah', 'pendidikan_controller@getRendah');
@@ -69,7 +79,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/pendidikan/cangkok', 'pendidikan_controller@getCangkok');
     $router->post('/pendidikan/cangkok', 'pendidikan_controller@postCangkok');
     $router->delete('/pendidikan/cangkok/{id}', 'pendidikan_controller@deleteCangkok');
-    $router->post('/pendidikan/edit/cangkok', 'pendidikan_controller@editCangkok');
+    $router->post('/pendidikan/edit/cangkok/{id}', 'pendidikan_controller@editCangkok');
 
     //KOORDINATOR
     $router->get('/pendidikan/koordinator', 'pendidikan_controller@getKoordinator');
