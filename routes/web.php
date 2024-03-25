@@ -21,6 +21,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function () use ($router) {
+    //PENDIDIKAN START
     //teori
     $router->get('/pendidikan', 'pendidikan_controller@getAll');
     $router->get('/pendidikan/teori', 'pendidikan_controller@getTeori');
@@ -91,6 +92,16 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/pendidikan/asistensi', 'pendidikan_controller@postAsistensi');
     $router->delete('/pendidikan/asistensi/{id}', 'pendidikan_controller@deleteAsistensi');
     $router->post('/pendidikan/edit/asistensi', 'pendidikan_controller@editAsistensi');
+    //PENDIDIKAN END
+
+    //PENELITIAN START
+    //A. penelitian kelompok
+    $router->get('/penelitian', 'PenelitianController@getAll');
+    $router->get('/penelitian/penelitian_kelompok', 'PenelitianController@getPenelitianKelompok');
+    $router->post('/penelitian/penelitian_kelompok', 'PenelitianController@postPenelitianKelompok');
+    $router->delete('/penelitian/penelitian_kelompok/{id}', 'PenelitianController@deletePenelitianKelompok');
+    $router->post('/penelitian/edit/penelitian_kelompok', 'PenelitianControllerr@editPenelitianKelompok');
 
 
+    //PENELITIAN END
 });
