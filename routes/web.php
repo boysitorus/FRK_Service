@@ -48,6 +48,11 @@ $router->group(['prefix' => 'api'], function () use ($router) {
      //Tugas Akhir
     $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
     $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
+    $router->post('/pendidikan/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
+    $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
+    $router->post('/pendidikan/edit/seminar', 'pendidikan_controller@editSeminar');
+    $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
+    $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
     $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
     $router->post('/pendidikan/edit/tugasAkhir', 'pendidikan_controller@editTugasAkhir');
 
@@ -73,7 +78,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/pendidikan/cangkok', 'pendidikan_controller@getCangkok');
     $router->post('/pendidikan/cangkok', 'pendidikan_controller@postCangkok');
     $router->delete('/pendidikan/cangkok/{id}', 'pendidikan_controller@deleteCangkok');
-    $router->post('/pendidikan/edit/cangkok', 'pendidikan_controller@editCangkok');
+    $router->post('/pendidikan/edit/cangkok/{id}', 'pendidikan_controller@editCangkok');
 
     //KOORDINATOR
     $router->get('/pendidikan/koordinator', 'pendidikan_controller@getKoordinator');
