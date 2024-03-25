@@ -100,7 +100,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/penelitian/penelitian_kelompok', 'PenelitianController@getPenelitianKelompok');
     $router->post('/penelitian/penelitian_kelompok', 'PenelitianController@postPenelitianKelompok');
     $router->delete('/penelitian/penelitian_kelompok/{id}', 'PenelitianController@deletePenelitianKelompok');
-    $router->post('/penelitian/edit/penelitian_kelompok', 'PenelitianControllerr@editPenelitianKelompok');
+    $router->post('/penelitian/edit/penelitian_kelompok', 'PenelitianController@editPenelitianKelompok');
 
 
     //PENELITIAN END
