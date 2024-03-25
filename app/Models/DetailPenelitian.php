@@ -18,7 +18,7 @@ class DetailPenelitian extends Model
         'lingkup_wilayah', 
         'peran',
         'lingkup_penerbit', 
-        'jumlah_dosen'
+        'jumlah_dosen',
     ];
 
     protected $primaryKey = 'id_rencana';

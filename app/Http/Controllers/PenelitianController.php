@@ -16,21 +16,18 @@ class PenelitianController extends Controller
 
         // Tabel A
         $penelitian_kelompok = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.tahap_pencapaian', 'detail_pendidikan.posisi', 'detail_pendidikan.jumlah_anggota', 'rencana.sks_terhitung')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.posisi', 'detail_penelitian.jumlah_anggota', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_kelompok')
             ->get();
 
         // Tabel B
-        $penelitian_mandiri = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.tahap_pencapaian', 'rencana.sks_terhitung')
+        $penelitian_mandiri = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_mandiri')
             ->get();
 
         // Tabel C
-        $rendah = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'bimbing_rendah')
-            ->get();
+
 
         // Tabel D
 
@@ -67,7 +64,7 @@ class PenelitianController extends Controller
     public function getPenelitianKelompok()
     {
         $penelitian_kelompok = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.tahap_pencapaian', 'detail_pendidikan.posisi', 'detail_pendidikan.jumlah_anggota', 'rencana.sks_terhitung')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.posisi', 'detail_penelitian.jumlah_anggota', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_kelompok')
             ->get();
 
@@ -78,44 +75,69 @@ class PenelitianController extends Controller
     {
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
-        $tahap_pencapaian = $request->get('tahap_pencapaian');
+        $status_tahapan = $request->get('status_tahapan');
         $posisi = $request->get('posisi');
         $jumlah_anggota = (int)$request->get('jumlah_anggota');
 
-        $bobot_pencapaian = 1
-        $sks_terhitung = round(($bobot_pencapaian + $jam_tatap_muka + $jumlah_evaluasi) / 3, 2);
+        $bobot_pencapaian = 0;
+        switch ($status_tahapan){
+            case "Proposal":
+                $bobot_pencapaian = 0.25;
+                break;
+            case "Pengumpulan Data /sebar kuesioner":
+                $bobot_pencapaian = 0.5;
+                break;
+            case "Analisa Data":
+                $bobot_pencapaian = 0.75;
+                break;
+            case "Laporan Akhir":
+                $bobot_pencapaian = 1;
+                break;
+            default:
+                $bobot_pencapaian = 0;
+                break;
+        }
+
+        $sks = 0;
+        if ($posisi == "Ketua") {
+            $sks = 0.6*2;
+        } elseif ($posisi == "Anggota") {
+            $sks = round(0.8*2/$jumlah_anggota, 2);
+        }
+
+        $sks_terhitung = $bobot_pencapaian*$sks;
 
         $rencana = Rencana::create([
-            'jenis_rencana' => 'pendidikan',
-            'sub_rencana' => 'teori',
+            'jenis_rencana' => 'penelitian',
+            'sub_rencana' => 'penelitian_kelompok',
             'id_dosen' => $id_dosen,
             'nama_kegiatan' => $nama_kegiatan,
             'sks_terhitung' => round($sks_terhitung, 2),
         ]);
 
-        $detailPendidikan = DetailPendidikan::create([
+        $detailPenelitian = DetailPenelitian::create([
             'id_rencana' => $rencana->id_rencana,
-            'sks_matakuliah' => $sks_matakuliah,
-            'jumlah_evaluasi' => $jumlah_evaluasi,
-            'jumlah_kelas' => $jumlah_kelas
+            'status_tahapan' => $status_tahapan,
+            'posisi' => $posisi,
+            'jumlah_anggota' => $jumlah_anggota
         ]);
 
-        $res = [$rencana, $detailPendidikan];
+        $res = [$rencana, $detailPenelitian];
 
         return response()->json($res, 201);
     }
 
-    public function editTeori(Request $request)
+    public function editPenelitanKelompok(Request $request)
     {
         $request->all();
         $id_rencana = $request->get('id_rencana');
 
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
-        $detail_rencana = DetailPendidikan::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
-        $jumlah_kelas = (int)$request->get('jumlah_kelas');
-        $jumlah_evaluasi = (int)$request->get('jumlah_evaluasi');
-        $sks_matakuliah = (int)$request->get('sks_matakuliah');
+        $status_tahapan = $request->get('status_tahapan');
+        $posisi = $request->get('posisi');
+        $jumlah_anggota= (int)$request->get('jumlah_anggota');
 
 
 
@@ -123,29 +145,45 @@ class PenelitianController extends Controller
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if ($jumlah_kelas == null) {
-            $jumlah_kelas = $detail_rencana->jumlah_kelas;
+        if ($status_tahapan == null) {
+            $status_tahapan = $detail_rencana->status_tahapan;
         } else {
-            $detail_rencana->jumlah_kelas = $jumlah_kelas;
+            $detail_rencana->status_tahapan = $status_tahapan;
         }
 
-        if ($jumlah_evaluasi == null) {
-            $jumlah_evaluasi = $detail_rencana->jumlah_evaluasi;
+        if ($posisi == null) {
+            $posisi = $detail_rencana->posisi;
         } else {
-            $detail_rencana->jumlah_evaluasi = $jumlah_evaluasi;
+            $detail_rencana->posisi = $posisi;
         }
 
-        if ($sks_matakuliah == null) {
-            $sks_matakuliah = $detail_rencana->sks_matakuliah;
+        if ($jumlah_anggota == null) {
+            $jumlah_anggota = $detail_rencana->jumlah_anggota;
         } else {
-            $detail_rencana->sks_matakuliah = $sks_matakuliah;
+            $detail_rencana->jumlah_anggota = $jumlah_anggota;
         }
 
-        if ($jumlah_kelas != null || $jumlah_evaluasi != null || $sks_matakuliah != null) {
-            $jam_persiapan = $sks_matakuliah;
-            $jam_tatap_muka = $sks_matakuliah * $jumlah_kelas;
-
-            $sks_terhitung = round($jam_persiapan + $jam_tatap_muka + $jumlah_evaluasi) / 3;
+        if ($status_tahapan != null || $posisi != null || $jumlah_anggota != null) {
+            switch ($status_tahapan){
+                case "Proposal":
+                    $bobot_pencapaian = 0.25;
+                case "Pengumpulan Data /sebar kuesioner":
+                    $bobot_pencapaian = 0.5;
+                case "Analisa Data":
+                    $bobot_pencapaian = 0.75;
+                case "Laporan Akhir":
+                    $bobot_pencapaian = 1;
+                default:
+                    $bobot_pencapaian = 0;
+            }
+    
+            if ($posisi == "Ketua") {
+                $sks = 0.6*2;
+            } elseif ($posisi == "Anggota") {
+                $sks = round(0.8*2/$jumlah_anggota, 2);
+            }
+    
+            $sks_terhitung = $bobot_pencapaian*$sks;
 
             $rencana->sks_terhitung = $sks_terhitung;
         }
@@ -163,10 +201,10 @@ class PenelitianController extends Controller
         return response()->json($res, 200);
     }
 
-    public function deleteTeori($id)
+    public function deletePenelitianKelompok($id)
     {
         $record = Rencana::where('id_rencana', $id);
-        $detail_record = DetailPendidikan::where('id_rencana', $id);
+        $detail_record = DetailPenelitian::where('id_rencana', $id);
 
         if ($record && $detail_record) {
             $detail_record->delete();
