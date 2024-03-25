@@ -1028,12 +1028,12 @@ class pendidikan_controller extends Controller
 
     public function deleteKoordinator($id)
     {
-        $rencana = Rencana::find($id);
-        $detailPendidikan = DetailPendidikan::where('id_rencana', $id)->first();
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPendidikan::where('id_rencana', $id);
 
-        if ($rencana && $detailPendidikan) {
-            $detailPendidikan->delete();
-            $rencana->delete();
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
             $response = [
                 'message' => 'Delete kegiatan success'
             ];
@@ -1051,7 +1051,7 @@ class pendidikan_controller extends Controller
     public function getAsistensi()
     {
         $asistensi = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan','detail_pendidikan.jumlah_dosen', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'asistensi')
             ->get();
 
@@ -1062,7 +1062,19 @@ class pendidikan_controller extends Controller
     {
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
-        $sks_terhitung = 1;
+        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+        $jumlah_dosen = (int)$request->get('jumlah_dosen'); // Asumsikan ini adalah input tambahan
+
+        // Menentukan SKS Terhitung berdasarkan jumlah mahasiswa
+        $sks_terhitung = 1; // Default SKS Terhitung adalah 1
+
+        // Jika jumlah mahasiswa lebih dari 25, maka kita menggunakan prosentase 150%
+        if ($jumlah_mahasiswa > 25) {
+            $sks_terhitung = 1.5; // 150% dari 1 SKS
+        }
+
+        // Menghitung SKS Terhitung dengan mempertimbangkan jumlah dosen
+        $sks_terhitung = $sks_terhitung / $jumlah_dosen;
 
         $rencana = Rencana::create([
             'jenis_rencana' => 'pendidikan',
@@ -1073,36 +1085,49 @@ class pendidikan_controller extends Controller
         ]);
 
         $detailPendidikan = DetailPendidikan::create([
-            'id_rencana' => $rencana->id_rencana
+            'id_rencana' => $rencana->id_rencana,
+            'jumlah_mahasiswa' => $jumlah_mahasiswa,
+            'jumlah_dosen' => $jumlah_dosen
         ]);
 
         $res = [
             "rencana" => $rencana,
             "detail_pendidikan" => $detailPendidikan,
-            "message" => "Koordinator created successfully"
+            "message" => "Asistensi tugas created successfully"
         ];
-        return response()->json($res, 201);
-    }
 
+        return response()->json($res, 200);
+    }
 
     public function editAsistensi(Request $request)
     {
         $id_rencana = $request->get('id_rencana');
+
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPendidikan::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
-        $jumlah_mahasiswa = $request->get('jumlah_mahasiswa');
-        $sks_terhitung = 1;
+        $jumlah_dosen = (int)$request->get('jumlah_dosen');
+        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if ($jumlah_mahasiswa != null) {
-            $detail_rencana->jumlah_mahasiswa = $jumlah_mahasiswa;
+        if ($jumlah_dosen != null) {
+            $detail_rencana->jumlah_dosen = $jumlah_dosen;
         }
 
-        if ($sks_terhitung != null) {
-            $rencana->sks_terhitung = 1;
+        if ($jumlah_mahasiswa != null) {
+            $detail_rencana->jumlah_mahasiswa = $jumlah_mahasiswa;
+
+            // Menghitung SKS Terhitung berdasarkan jumlah mahasiswa dan jumlah dosen
+            $sks_terhitung = 1; // Default SKS Terhitung adalah 1
+            if ($jumlah_mahasiswa > 25) {
+                $sks_terhitung = 1.5; // 150% dari 1 SKS
+            }
+            $sks_terhitung = $sks_terhitung / $jumlah_dosen;
+
+            $rencana->sks_terhitung = round($sks_terhitung, 2);
         }
 
         $rencana->save();
@@ -1111,7 +1136,7 @@ class pendidikan_controller extends Controller
         $res = [
             "rencana" => $rencana,
             "detail_rencana" => $detail_rencana,
-            "message" => "Rencana updated successfully"
+            "message" => "Asistensi updated successfully"
         ];
 
         return response()->json($res, 200);
