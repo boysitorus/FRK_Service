@@ -804,9 +804,9 @@ class pendidikan_controller extends Controller
     // START OF METHOD H
     public function getKembang()
     {
-        $proposal = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
+        $kembang = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'proposal')
+            ->where('rencana.sub_rencana', 'kembang')
             ->get();
 
             return response()->json($kembang, 200);
@@ -865,9 +865,29 @@ class pendidikan_controller extends Controller
         return response()->json($res, 200);
     }
 
+    public function deleteKembang($id)
+    {
+        $rencana = Rencana::find($id);
+        $detailPendidikan = DetailPendidikan::where('id_rencana', $id)->first();
+
+        if ($rencana && $detailPendidikan) {
+            $detailPendidikan->delete();
+            $rencana->delete();
+            $response = [
+                'message' => 'Delete kegiatan success'
+            ];
+            return response()->json($response, 200);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan failed'
+            ];
+            return response()->json($response, 404);
+        }
+    }
     // END OF METHOD H
 
     // START OF METHOD I
+
     public function getCangkok()
     {
         $cangkok = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
@@ -884,11 +904,11 @@ class pendidikan_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_dosen = (int)$request->get('jumlah_dosen');
 
-        $sks_terhitung = $jumlah_dosen;
+        $sks_terhitung = 2;
 
         $rencana = Rencana::create([
             'jenis_rencana' => 'pendidikan',
-            'sub_rencana' => 'bimbing_rendah',
+            'sub_rencana' => 'cangkok',
             'id_dosen' => $id_dosen,
             'nama_kegiatan' => $nama_kegiatan,
             'sks_terhitung' => $sks_terhitung,
@@ -926,13 +946,14 @@ class pendidikan_controller extends Controller
 
     public function editCangkok(Request $request)
     {
+        $request->all();
         $id_rencana = $request->get('id_rencana');
 
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
         $detail_rencana = DetailPendidikan::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_dosen = (int)$request->get('jumlah_dosen');
-        $sks_matakuliah = (int)$request->get('sks_matakuliah');
+        $sks_matakuliah = 2;
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
