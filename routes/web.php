@@ -102,6 +102,17 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/penelitian/penelitian_kelompok/{id}', 'PenelitianController@deletePenelitianKelompok');
     $router->post('/penelitian/edit/penelitian_kelompok', 'PenelitianControllerr@editPenelitianKelompok');
 
+    //E. Menyadur naskah buku
+    $router->get('/penelitian/menyadur', 'PenelitianController@getMenyadur');
+    $router->post('/penelitian/menyadur', 'PenelitianController@postMenyadur');
+    $router->delete('/penelitian/menyadur/{id}', 'PenelitianController@deleteMenyadur');
+    $router->post('/penelitian/edit/menyadur', 'PenelitianControllerr@editMenyadur');
+
+    //F. Menyunting naskah buku
+    $router->get('/penelitian/menyunting', 'PenelitianController@getMenyunting');
+    $router->post('/penelitian/menyunting', 'PenelitianController@postMenyunting');
+    $router->delete('/penelitian/menyunting/{id}', 'PenelitianController@deleteMenyunting');
+    $router->post('/penelitian/edit/menyunting', 'PenelitianControllerr@editMenyunting');
 
     //PENELITIAN END
 });
