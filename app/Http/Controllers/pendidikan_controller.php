@@ -805,8 +805,8 @@ class pendidikan_controller extends Controller
     public function getKembang()
     {
         $kembang = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'kembang')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_sap', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'pengembangan')
             ->get();
 
             return response()->json($kembang, 200);
