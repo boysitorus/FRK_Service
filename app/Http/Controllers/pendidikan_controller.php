@@ -12,7 +12,7 @@ class pendidikan_controller extends Controller
 
     public function getAll()
     {
-        // BAGIAN A
+        // Amb        // BAGIAN A
         $teori = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelas', 'detail_pendidikan.jumlah_evaluasi', 'detail_pendidikan.sks_matakuliah', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'teori')
@@ -35,7 +35,7 @@ class pendidikan_controller extends Controller
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'tugasAkhir')
             ->get();
-        
+
         // BAGIAN F
         $proposal = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
@@ -80,7 +80,7 @@ class pendidikan_controller extends Controller
         ], 200);
     }
 
-    // START OF METHOD A 
+    // START OF METHOD A
     public function getTeori()
     {
         $teori = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
@@ -514,29 +514,24 @@ class pendidikan_controller extends Controller
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
-        $sks_terhitung = $jumlah_mahasiswa;
+
+        $sks_terhitung = $jumlah_mahasiswa / 25;
 
         $rencana = Rencana::create([
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'tugasAkhir',
             'id_dosen' => $id_dosen,
             'nama_kegiatan' => $nama_kegiatan,
-            'sks_terhitung' => $sks_terhitung,
+            'sks_terhitung' => round($sks_terhitung, 2),
         ]);
 
-        if ($rencana) {
-            $detailPendidikan = DetailPendidikan::create([
-                'id_rencana' => $rencana->id_rencana,
-                'jumlah_mahasiswa' => $jumlah_mahasiswa
-            ]);
-        }
+        $detailPendidikan = DetailPendidikan::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jumlah_mahasiswa' => $jumlah_mahasiswa
+        ]);
 
 
-        $res = [
-            "rencana" => $rencana,
-            "detail_pendidikan" => $detailPendidikan,
-            "message" => "Asistensi tugas created successfully"
-        ];
+        $res = [$rencana, $detailPendidikan];
 
         return response()->json($res, 200);
     }
@@ -559,25 +554,24 @@ class pendidikan_controller extends Controller
         if ($jumlah_mahasiswa == null) {
             $jumlah_mahasiswa = $detail_rencana->jumlah_mahasiswa;
         } else {
-            $detail_rencana->jumlah_kelas = $jumlah_mahasiswa;
+            $detail_rencana->jumlah_mahasiswa = $jumlah_mahasiswa;
         }
 
         if ($jumlah_mahasiswa != null) {
-            $id_dosen = $request->get('id_dosen');
-            $nama_kegiatan = $request->get('nama_kegiatan');
-            $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+            $sks_terhitung = $jumlah_mahasiswa / 6;
 
-            $sks_terhitung = (4 * $jumlah_mahasiswa) / 42;
-
-            $rencana->save();
-            $detail_rencana->save();
-
-            $res = [
-                "rencana" => $rencana,
-                "detail_rencana" => $detail_rencana,
-                "message" => "Rencana updated successfully"
-            ];
+            $rencana->sks_terhitung = $sks_terhitung;
         }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
 
         return response()->json($res, 200);
     }
@@ -620,7 +614,7 @@ class pendidikan_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
 
-        $sks_terhitung = (4 * $jumlah_mahasiswa) / 42;
+        $sks_terhitung = (4 / 14) / (3 * $jumlah_mahasiswa);
 
         $rencana = Rencana::create([
             'jenis_rencana' => 'pendidikan',
@@ -661,25 +655,23 @@ class pendidikan_controller extends Controller
         if ($jumlah_mahasiswa == null) {
             $jumlah_mahasiswa = $detail_rencana->jumlah_mahasiswa;
         } else {
-            $detail_rencana->jumlah_kelas = $jumlah_mahasiswa;
+            $detail_rencana->jumlah_mahasiswa = $jumlah_mahasiswa;
         }
 
         if ($jumlah_mahasiswa != null) {
-            $id_dosen = $request->get('id_dosen');
-            $nama_kegiatan = $request->get('nama_kegiatan');
-            $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+            $sks_terhitung = $jumlah_mahasiswa / 25;
 
-            $sks_terhitung = (4 * $jumlah_mahasiswa) / 42;
-
-            $rencana->save();
-            $detail_rencana->save();
-
-            $res = [
-                "rencana" => $rencana,
-                "detail_rencana" => $detail_rencana,
-                "message" => "Rencana updated successfully"
-            ];
+            $rencana->sks_terhitung = $sks_terhitung;
         }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
 
         return response()->json($res, 200);
     }
@@ -704,7 +696,7 @@ class pendidikan_controller extends Controller
         }
     }
     // END OF METHOD F
-    
+
     // START OF METHOD G
     public function getRendah()
     {
@@ -776,7 +768,7 @@ class pendidikan_controller extends Controller
             "detail_pendidikan" => $detail_rencana,
             "message" => "Cangkok created successfully"
         ];
-        
+
         return response()->json($res, 200);
     }
 
@@ -804,12 +796,12 @@ class pendidikan_controller extends Controller
     // START OF METHOD H
     public function getKembang()
     {
-        $proposal = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
+        $kembang = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'proposal')
+            ->where('rencana.sub_rencana', 'kembang')
             ->get();
 
-            return response()->json($kembang, 200);
+        return response()->json($kembang, 200);
     }
 
     public function postKembang(Request $request)
@@ -1088,6 +1080,7 @@ class pendidikan_controller extends Controller
     public function editAsistensi(Request $request)
     {
         $id_rencana = $request->get('id_rencana');
+        $detail_rencana = DetailPendidikan::where('id_rencana', $id_rencana)->first();
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = $request->get('jumlah_mahasiswa');
