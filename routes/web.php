@@ -107,6 +107,18 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/penelitian/penelitian_mandiri', 'PenelitianController@postPenelitianMandiri');
     $router->delete('/penelitian/penelitian_mandiri/{id}', 'PenelitianController@deletePenelitianMandiri');
     $router->post('/penelitian/edit/penelitian_mandiri', 'PenelitianController@editPenelitianMandiri');
+
+    // I.
+    $router->get('/penelitian/penelitian_tridharma', 'PenelitianController@getPenelitianTridharma');
+    $router->post('/penelitian/penelitian_tridharma', 'PenelitianController@postPenelitianTridharma');
+    $router->delete('/penelitian/penelitian_tridharma/{id}', 'PenelitianController@deletePenelitianTridharma');
+    $router->post('/penelitian/edit/penelitian_tridharma', 'PenelitianControllerr@editPenelitianTridharma');
+    
+    // J. Menulis Jurnal ilmiah
+    $router->get('/penelitian/jurnal_ilmiah', 'PenelitianController@getJurnalIlmiah');
+    $router->post('/penelitian/jurnal_ilmiah', 'PenelitianController@postJurnalIlmiah');
+    $router->delete('/penelitian/jurnal_ilmiah/{id}', 'PenelitianController@deleteJurnalIlmiah');
+    $router->post('/penelitian/edit/jurnal_ilmiah', 'PenelitianControllerr@editJurnalIlmiah');
     
 
     //M. Pembicara Seminar 
