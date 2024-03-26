@@ -183,7 +183,7 @@ class PenelitianController extends Controller
                 $sks = round(0.8*2/$jumlah_anggota, 2);
             }
     
-            $sks_terhitung = $bobot_pencapaian*$sks;
+            $sks_terhitung = $nilai;
 
             $rencana->sks_terhitung = $sks_terhitung;
         }
@@ -220,6 +220,264 @@ class PenelitianController extends Controller
             return response()->json($response, 300);
         }
     }
+
+
+
+    // M. Pembicara Seminar
+    public function getPembicaraSeminar()
+    {
+        $pembicara_seminar = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.lingkup_wilayah', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'pembicara_seminar')
+            ->get();
+
+        return response()->json($pembicara_seminar, 200);
+    }
+
+    public function postPembicaraSeminar(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $tingkatan = $request->get('tingkatan');
+
+        $nilai = 0;
+        switch ($tingkatan){
+            case "Tingkat regional daerah, institusional(minimum fakultas":
+                $nilai = 0.5;
+                break;
+            case "Tingkat Nasional":
+                $nilai = 0.75;
+                break;
+            case "Tingkat Internasional(dengan bahasa internasional)":
+                $nilai = 1;
+                break;
+            default:
+                break;
+        }
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penelitian',
+            'sub_rencana' => 'pembicara_seminar',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPenelitian = DetailPenelitian::create([
+            'id_rencana' => $rencana->id_rencana,
+            'tingkatan' => $tingkatan,
+        ]);
+
+        $res = [$rencana, $detailPenelitian];
+
+        return response()->json($res, 201);
+    }
+
+    //Edit Tabel M
+    public function editPembicaraSeminar(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $tingkatan = $request->get('tingkatan');
+
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($tingkatan == null) {
+            $tingkatan = $detail_rencana->tingkatan;
+        } else {
+            $detail_rencana->tingkatan = $tingkatan;
+        }
+
+
+        if ($tingkatan != null) {
+            switch ($tingkatan){
+                case "Tingkat regional daerah, institusional(minimum fakultas":
+                    $nilai = 0.5;
+                    break;
+                case "Tingkat Nasional":
+                    $nilai = 0.75;
+                    break;
+                case "Tingkat Internasional(dengan bahasa internasional)":
+                    $nilai = 1;
+                    break;
+                default:
+                    break;
+            }
+    
+            $sks_terhitung = $nilai;
+
+            $rencana->sks_terhitung = $sks_terhitung;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+
+        return response()->json($res, 200);
+    }
+
+    //Delete tabel M
+    public function deletePe($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenelitian::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+
+    // N. Penyajian Makalah
+    public function getPenyajianMakalah()
+    {
+        $penyajian_makalah = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.lingkup_wilayah', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'penyajian_makalah')
+            ->get();
+
+        return response()->json($penyajian_makalah, 200);
+    }
+
+    public function postPenyajianMakalah(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $tingkatan = $request->get('tingkatan');
+
+        $nilai = 0;
+        switch ($tingkatan){
+            case "Tingkat regional daerah, institusional(minimum fakultas":
+                $nilai = 0.5;
+                break;
+            case "Tingkat Nasional":
+                $nilai = 0.75;
+                break;
+            case "Tingkat Internasional(dengan bahasa internasional)":
+                $nilai = 1;
+                break;
+            default:
+                break;
+        }
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penelitian',
+            'sub_rencana' => 'pembicara_seminar',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPenelitian = DetailPenelitian::create([
+            'id_rencana' => $rencana->id_rencana,
+            'tingkatan' => $tingkatan,
+        ]);
+
+        $res = [$rencana, $detailPenelitian];
+
+        return response()->json($res, 201);
+    }
+
+    //Edit Tabel N
+    public function editPenyajianMakalah(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $tingkatan = $request->get('tingkatan');
+
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($tingkatan == null) {
+            $tingkatan = $detail_rencana->tingkatan;
+        } else {
+            $detail_rencana->tingkatan = $tingkatan;
+        }
+
+
+        if ($tingkatan != null) {
+            switch ($tingkatan){
+                case "Tingkat regional daerah, institusional(minimum fakultas":
+                    $nilai = 0.5;
+                    break;
+                case "Tingkat Nasional":
+                    $nilai = 0.75;
+                    break;
+                case "Tingkat Internasional(dengan bahasa internasional)":
+                    $nilai = 1;
+                    break;
+                default:
+                    break;
+            }
+    
+            $sks_terhitung = $nilai;
+
+            $rencana->sks_terhitung = $sks_terhitung;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+
+        return response()->json($res, 200);
+    }
+
+    //Delete tabel N
+    public function deletePenyajianMakalah($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenelitian::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+
+    
 
     //END OF METHOD TEORI
 
