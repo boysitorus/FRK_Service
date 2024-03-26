@@ -212,7 +212,7 @@ class PenelitianController extends Controller
                 $sks = round(0.8*2/$jumlah_anggota, 2);
             }
     
-            $sks_terhitung = $nilai;
+            $sks_terhitung = $bobot_pencapaian*$sks;
 
             $rencana->sks_terhitung = $sks_terhitung;
         }
@@ -755,6 +755,7 @@ class PenelitianController extends Controller
                 $nilai = 1;
                 break;
             default:
+                $nilai = 0;
                 break;
         }
 
@@ -763,7 +764,7 @@ class PenelitianController extends Controller
             'sub_rencana' => 'pembicara_seminar',
             'id_dosen' => $id_dosen,
             'nama_kegiatan' => $nama_kegiatan,
-            'sks_terhitung' => round($sks_terhitung, 2),
+            'sks_terhitung' => round($nilai, 2),
         ]);
 
         $detailPenelitian = DetailPenelitian::create([
@@ -882,6 +883,7 @@ class PenelitianController extends Controller
                 $nilai = 1;
                 break;
             default:
+                $nilai = 0;
                 break;
         }
 
@@ -890,7 +892,7 @@ class PenelitianController extends Controller
             'sub_rencana' => 'pembicara_seminar',
             'id_dosen' => $id_dosen,
             'nama_kegiatan' => $nama_kegiatan,
-            'sks_terhitung' => round($sks_terhitung, 2),
+            'sks_terhitung' => round($nilai, 2),
         ]);
 
         $detailPenelitian = DetailPenelitian::create([
