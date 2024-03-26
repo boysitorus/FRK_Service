@@ -796,11 +796,11 @@ class pendidikan_controller extends Controller
     // START OF METHOD H
     public function getKembang()
     {
-        $kembang = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
+        $rencana = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_sap', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'pengembangan');
-
-        return response()->json($kembang, 200);
+            ->where('rencana.sub_rencana', 'pengembangan')
+            ->get();
+        return response()->json($rencana, 200);
     }
 
     public function postKembang(Request $request)
@@ -1063,7 +1063,7 @@ class pendidikan_controller extends Controller
     public function getAsistensi()
     {
         $asistensi = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan','detail_pendidikan.jumlah_dosen', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'asistensi')
             ->get();
 
