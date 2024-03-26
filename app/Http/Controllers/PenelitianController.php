@@ -243,7 +243,152 @@ class PenelitianController extends Controller
         }
     }
 
-    //END OF METHOD TEORI
+    //END OF METHOD PENELITIAN MANDIRI
+
+    //BEGINNING  OF METHOD PENILITIAN MANDIRI
+
+    public function getPenelitianMandiri()
+    {
+        $penelitian_mandiri = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'penelitian_mandiri')
+            ->get();
+
+        return response()->json($penelitian_mandiri, 200);
+    }
+
+    public function postPenelitianMandiri(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $status_tahapan = $request->get('status_tahapan');
+
+        $bobot_pencapaian = 0;
+        switch ($status_tahapan){
+            case "Proposal":
+                $bobot_pencapaian = 0.25;
+                break;
+            case "Pengumpulan data /sebar kuesioner":
+                $bobot_pencapaian = 0.5;
+                break;
+            case "Analisa Data":
+                $bobot_pencapaian = 0.75;
+                break;
+            case "Laporan Akhir":
+                $bobot_pencapaian = 1;
+                break;
+            case "Konsep (desain)":
+                $bobot_pencapaian = 0.25;
+                break;
+            case "50% dari Karya":
+                $bobot_pencapaian = 0.75;
+                break;
+            case "Hasil akhir":
+                $bobot_pencapaian = 1;
+                break;
+            default:
+                $bobot_pencapaian = 0;
+                break;
+        }
+
+        $sks = 2;
+        $sks_terhitung = $bobot_pencapaian*$sks;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penelitian',
+            'sub_rencana' => 'penelitian_mandiri',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPenelitian = DetailPenelitian::create([
+            'id_rencana' => $rencana->id_rencana,
+            'status_tahapan' => $status_tahapan
+        ]);
+
+        $res = [$rencana, $detailPenelitian];
+
+        return response()->json($res, 201);
+    }
+
+    public function editPenelitianMandiri(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $status_tahapan = $request->get('status_tahapan');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($status_tahapan == null) {
+            $status_tahapan = $detail_rencana->status_tahapan;
+        } else {
+            $detail_rencana->status_tahapan = $status_tahapan;
+        }
+
+        if ($status_tahapan != null) {
+            switch ($status_tahapan){
+                case "Proposal":
+                    $bobot_pencapaian = 0.25;
+                    break;
+                case "Pengumpulan Data /sebar kuesioner":
+                    $bobot_pencapaian = 0.5;
+                    break;
+                case "Analisa Data":
+                    $bobot_pencapaian = 0.75;
+                    break;
+                case "Laporan Akhir":
+                    $bobot_pencapaian = 1;
+                    break;
+                default:
+                    $bobot_pencapaian = 0;
+            }
+            $sks = 2;
+            $sks_terhitung = $bobot_pencapaian*$sks;
+
+            $rencana->sks_terhitung = $sks_terhitung;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+
+        return response()->json($res, 200);
+    }
+
+    public function deletePenelitianMandiri($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenelitian::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+
+    //END OF METHOD PENELITIAN MANDIRI
 
     //BEGINNING OF METHOD MENYADUR
     public function getMenyadur(){
