@@ -102,6 +102,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/penelitian/penelitian_kelompok/{id}', 'PenelitianController@deletePenelitianKelompok');
     $router->post('/penelitian/edit/penelitian_kelompok', 'PenelitianController@editPenelitianKelompok');
 
+    //B. penelitian mandiri
+    $router->get('/penelitian/penelitian_mandiri', 'PenelitianController@getPenelitianMandiri');
+    $router->post('/penelitian/penelitian_mandiri', 'PenelitianController@postPenelitianMandiri');
+    $router->delete('/penelitian/penelitian_mandiri/{id}', 'PenelitianController@deletePenelitianMandiri');
+    $router->post('/penelitian/edit/penelitian_mandiri', 'PenelitianController@editPenelitianMandiri');
+    
 
     //M. Pembicara Seminar 
     $router->get('/penelitian/pembicara_seminar', 'PenelitianController@getPembicaraSeminar');
