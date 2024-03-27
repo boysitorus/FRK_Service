@@ -32,7 +32,7 @@ class PenelitianController extends Controller
         // Tabel D
 
 
-        // Tabel  E MENYADUR NASKAH
+        // Tabel  E
         $menyadur = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', "detail_penelitian.posisi",'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'menyadur')
@@ -565,7 +565,7 @@ class PenelitianController extends Controller
     public function getMenyunting(){
         $menyunting = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan',"detail_penelitian.posisi",'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'menyadur')
+            ->where('rencana.sub_rencana', 'menyunting')
             ->get();
         return response()->json($menyunting, 200);
     }
