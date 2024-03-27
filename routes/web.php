@@ -106,13 +106,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/penelitian/menyadur', 'PenelitianController@getMenyadur');
     $router->post('/penelitian/menyadur', 'PenelitianController@postMenyadur');
     $router->delete('/penelitian/menyadur/{id}', 'PenelitianController@deleteMenyadur');
-    $router->post('/penelitian/edit/menyadur', 'PenelitianControllerr@editMenyadur');
+    $router->post('/penelitian/edit/menyadur', 'PenelitianController@editMenyadur');
 
     //F. Menyunting naskah buku
     $router->get('/penelitian/menyunting', 'PenelitianController@getMenyunting');
     $router->post('/penelitian/menyunting', 'PenelitianController@postMenyunting');
     $router->delete('/penelitian/menyunting/{id}', 'PenelitianController@deleteMenyunting');
-    $router->post('/penelitian/edit/menyunting', 'PenelitianControllerr@editMenyunting');
+    $router->post('/penelitian/edit/menyunting', 'PenelitianController@editMenyunting');
 
     // I.
     $router->get('/penelitian/penelitian_tridharma', 'PenelitianController@getPenelitianTridharma');
