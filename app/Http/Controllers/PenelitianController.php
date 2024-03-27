@@ -437,7 +437,9 @@ class PenelitianController extends Controller
 
         $sks = 0;
         if ($posisi == "Ketua") {
-            $sks = 0.6*2;
+            $sks = 0.6 * 2;
+        } elseif ($posisi == "Editor") {
+            $sks = 0.6 * 2;
         } elseif ($posisi == "Anggota") {
             $sks = 0.4 * 2;
         }
@@ -516,7 +518,9 @@ class PenelitianController extends Controller
     
             $sks = 0;
             if ($posisi == "Ketua") {
-                $sks = 0.6*2;
+                $sks = 0.6 * 2;
+            } elseif ($posisi == "Editor") {
+                $sks = 0.6 * 2;
             } elseif ($posisi == "Anggota") {
                 $sks = 0.4 * 2;
             }
