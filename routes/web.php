@@ -87,11 +87,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/pendidikan/koordinator/{id}', 'pendidikan_controller@deleteKoordinator');
     $router->post('/pendidikan/edit/koordinator', 'pendidikan_controller@editKoordinator');
 
-    // ASISTENSI
-    $router->get('/pendidikan/asistensi', 'pendidikan_controller@getAsistensi');
-    $router->post('/pendidikan/asistensi', 'pendidikan_controller@postAsistensi');
-    $router->delete('/pendidikan/asistensi/{id}', 'pendidikan_controller@deleteAsistensi');
-    $router->post('/pendidikan/edit/asistensi', 'pendidikan_controller@editAsistensi');
     //PENDIDIKAN END
 
     //PENELITIAN START
