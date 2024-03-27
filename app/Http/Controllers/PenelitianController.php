@@ -610,7 +610,7 @@ class PenelitianController extends Controller
 
         $rencana = Rencana::create([
             'jenis_rencana' => 'penelitian',
-            'sub_rencana' => 'menyadur',
+            'sub_rencana' => 'menyunting',
             'id_dosen' => $id_dosen,
             'nama_kegiatan' => $nama_kegiatan,
             'sks_terhitung' => round($sks_terhitung, 2),
