@@ -102,6 +102,18 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/penelitian/penelitian_mandiri/{id}', 'PenelitianController@deletePenelitianMandiri');
     $router->post('/penelitian/edit/penelitian_mandiri', 'PenelitianController@editPenelitianMandiri');
 
+    //E. Menyadur naskah buku
+    $router->get('/penelitian/menyadur', 'PenelitianController@getMenyadur');
+    $router->post('/penelitian/menyadur', 'PenelitianController@postMenyadur');
+    $router->delete('/penelitian/menyadur/{id}', 'PenelitianController@deleteMenyadur');
+    $router->post('/penelitian/edit/menyadur', 'PenelitianControllerr@editMenyadur');
+
+    //F. Menyunting naskah buku
+    $router->get('/penelitian/menyunting', 'PenelitianController@getMenyunting');
+    $router->post('/penelitian/menyunting', 'PenelitianController@postMenyunting');
+    $router->delete('/penelitian/menyunting/{id}', 'PenelitianController@deleteMenyunting');
+    $router->post('/penelitian/edit/menyunting', 'PenelitianControllerr@editMenyunting');
+
     // I.
     $router->get('/penelitian/penelitian_tridharma', 'PenelitianController@getPenelitianTridharma');
     $router->post('/penelitian/penelitian_tridharma', 'PenelitianController@postPenelitianTridharma');
@@ -127,18 +139,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/penelitian/penyajian_makalah', 'PenelitianController@postPenyajianMakalah');
     $router->delete('/penelitian/penyajian_makalah/{id}', 'PenelitianController@deletePenyajianMakalah');
     $router->post('/penelitian/edit/penyajian_makalah', 'PenelitianControllerr@editPenyajianMakalah');
-
-    //E. Menyadur naskah buku
-    $router->get('/penelitian/menyadur', 'PenelitianController@getMenyadur');
-    $router->post('/penelitian/menyadur', 'PenelitianController@postMenyadur');
-    $router->delete('/penelitian/menyadur/{id}', 'PenelitianController@deleteMenyadur');
-    $router->post('/penelitian/edit/menyadur', 'PenelitianControllerr@editMenyadur');
-
-    //F. Menyunting naskah buku
-    $router->get('/penelitian/menyunting', 'PenelitianController@getMenyunting');
-    $router->post('/penelitian/menyunting', 'PenelitianController@postMenyunting');
-    $router->delete('/penelitian/menyunting/{id}', 'PenelitianController@deleteMenyunting');
-    $router->post('/penelitian/edit/menyunting', 'PenelitianControllerr@editMenyunting');
 
     //PENELITIAN END
 });
