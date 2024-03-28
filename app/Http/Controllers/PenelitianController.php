@@ -193,7 +193,7 @@ class PenelitianController extends Controller
                 case "Proposal":
                     $bobot_pencapaian = 0.25;
                     break;
-                case "Pengumpulan Data /sebar kuesioner":
+                case "Pengumpulan data /sebar kuesioner":
                     $bobot_pencapaian = 0.5;
                     break;
                 case "Analisa Data":
@@ -202,8 +202,18 @@ class PenelitianController extends Controller
                 case "Laporan Akhir":
                     $bobot_pencapaian = 1;
                     break;
+                case "Konsep (desain)":
+                    $bobot_pencapaian = 0.25;
+                    break;
+                case "50% dari Karya":
+                    $bobot_pencapaian = 0.75;
+                    break;
+                case "Hasil akhir":
+                    $bobot_pencapaian = 1;
+                    break;
                 default:
                     $bobot_pencapaian = 0;
+                    break;
             }
     
             if ($posisi == "Ketua") {
@@ -344,7 +354,7 @@ class PenelitianController extends Controller
                 case "Proposal":
                     $bobot_pencapaian = 0.25;
                     break;
-                case "Pengumpulan Data /sebar kuesioner":
+                case "Pengumpulan data /sebar kuesioner":
                     $bobot_pencapaian = 0.5;
                     break;
                 case "Analisa Data":
@@ -353,8 +363,18 @@ class PenelitianController extends Controller
                 case "Laporan Akhir":
                     $bobot_pencapaian = 1;
                     break;
+                case "Konsep (desain)":
+                    $bobot_pencapaian = 0.25;
+                    break;
+                case "50% dari Karya":
+                    $bobot_pencapaian = 0.75;
+                    break;
+                case "Hasil akhir":
+                    $bobot_pencapaian = 1;
+                    break;
                 default:
                     $bobot_pencapaian = 0;
+                    break;
             }
             $sks = 2;
             $sks_terhitung = $bobot_pencapaian*$sks;
