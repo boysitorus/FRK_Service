@@ -163,5 +163,16 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/penelitian/media_massa/{id}', 'PenelitianController@deleteMediaMassa');
     $router->post('/penelitian/edit/media_massa', 'PenelitianController@editMediaMassa');
 
+    //M. Pembaca Seminar
+    $router->get('/penelitian/pembicara_seminar', 'PenelitianController@getPembicaraSeminar');
+    $router->post('/penelitian/pembicara_seminar', 'PenelitianController@postPembicaraSeminar');
+    $router->delete('/penelitian/pembicara_seminar/{id}', 'PenelitianController@deletePembicaraSeminar');
+    $router->post('/penelitian/edit/pembicara_seminar', 'PenelitianController@editPembicaraSeminar');
+
+    //N. Penyajian Makalah
+    $router->get('/penelitian/penyajian_makalah', 'PenelitianController@getPenyajianMakalah');
+    $router->post('/penelitian/penyajian_makalah', 'PenelitianController@postPenyajianMakalah');
+    $router->delete('/penelitian/penyajian_makalah/{id}', 'PenelitianController@deletePenyajianMakalah');
+    $router->post('/penelitian/edit/penyajian_makalah', 'PenelitianController@editPenyajianMakalah');
     //PENELITIAN END
 });
