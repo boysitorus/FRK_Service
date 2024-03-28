@@ -1237,4 +1237,228 @@ class PenelitianController extends Controller
         }
     }
 
+    //START OF METHOD HAK_PATEN
+    public function getHakPaten()
+    {
+        $hak_paten = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.lingkup_wilayah', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'hak_paten')
+            ->get();
+
+        return response()->json($hak_paten, 200);
+    }
+
+    public function postHakPaten(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $lingkup_wilayah = $request->get('lingkup_wilayah');
+        
+        $bobot_pencapaian = 0;
+        switch ($lingkup_wilayah){
+            case "Paten Sederhana":
+                $bobot_pencapaian = 3.00;
+                break;
+            case "Paten Biasa":
+                $bobot_pencapaian = 4.00;
+                break;
+            case "Paten internasional(minimal tiga negara)":
+                $bobot_pencapaian = 5.00;
+                break;
+            default:
+                $bobot_pencapaian = 0;
+                break;
+        }
+
+        $sks_terhitung = $bobot_pencapaian;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penelitian',
+            'sub_rencana' => 'hak_paten',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPenelitian = DetailPenelitian::create([
+            'id_rencana' => $rencana->id_rencana,
+            'lingkup_wilayah' => $lingkup_wilayah,
+        ]);
+
+        $res = [$rencana, $detailPenelitian];
+
+        return response()->json($res, 201);
+    }
+
+    public function editHakPaten(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+    
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $lingkup_wilayah = $request->get('lingkup_wilayah');
+      
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($lingkup_wilayah == null) {
+            $lingkup_wilayah = $detail_rencana->lingkup_wilayah;
+        } else {
+            $detail_rencana->lingkup_wilayah = $lingkup_wilayah;
+        }
+
+        
+        if ($lingkup_wilayah != null ) {
+            switch ($lingkup_wilayah){
+                case "Paten Sederhana":
+                    $bobot_pencapaian = 3.00;
+                    break;
+                case "Paten Biasa":
+                    $bobot_pencapaian = 4.00;
+                    break;
+                case "Paten internasional(minimal tiga negara)":
+                    $bobot_pencapaian = 5.00;
+                    break;
+                default:
+                    $bobot_pencapaian = 0;
+                    break;
+            }
+    
+            $sks_terhitung = $bobot_pencapaian;
+
+            $rencana->sks_terhitung = $sks_terhitung;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+
+        return response()->json($res, 200);
+    }
+
+    public function deleteHakPaten($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenelitian::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+
+    //END OF METHOD
+
+    //START OF METHOD MEDIA_MASSA
+    public function getMediaMassa()
+    {
+        $media_massa = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'media_massa')
+            ->get();
+
+        return response()->json($media_massa, 200);
+    }
+
+    public function postMediaMassa(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+
+        $sks_terhitung = 0.5;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penelitian',
+            'sub_rencana' => 'media_massa',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPenelitian = DetailPenelitian::create([
+            'id_rencana' => $rencana->id_rencana,
+        ]);
+
+        $res = [$rencana, $detailPenelitian];
+
+        return response()->json($res, 201);
+    }
+
+    public function editMediaMassa(Request $request)
+    {
+        $id_rencana = $request->input('id_rencana');
+        $nama_kegiatan = $request->input('nama_kegiatan');
+    
+        // Temukan objek Rencana dan DetailPenelitian berdasarkan id_rencana
+        $rencana = Rencana::find($id_rencana);
+        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
+    
+        // Periksa apakah objek Rencana dan DetailPenelitian ditemukan
+        if (!$rencana || !$detail_rencana) {
+            return response()->json(["message" => "Rencana not found"], 404);
+        }
+    
+        // Update nama_kegiatan jika tersedia dalam request
+        if ($nama_kegiatan !== null && $nama_kegiatan !== "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+    
+        // Tetapkan sks_terhitung
+        $sks_terhitung = 0.5;
+        $rencana->sks_terhitung = $sks_terhitung;
+    
+        // Simpan perubahan
+        $rencana->save();
+        $detail_rencana->save();
+    
+        // Siapkan respons
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+    
+        return response()->json($res, 200);
+    }
+    
+
+    public function deleteMediaMassa($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenelitian::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+
 }

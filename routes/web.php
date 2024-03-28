@@ -140,5 +140,17 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/penelitian/penyajian_makalah/{id}', 'PenelitianController@deletePenyajianMakalah');
     $router->post('/penelitian/edit/penyajian_makalah', 'PenelitianControllerr@editPenyajianMakalah');
 
+    //K. Hak Paten
+    $router->get('/penelitian/hak_paten', 'PenelitianController@getHakPaten');
+    $router->post('/penelitian/hak_paten', 'PenelitianController@postHakPaten');
+    $router->delete('/penelitian/hak_paten/{id}', 'PenelitianController@deleteHakPaten');
+    $router->post('/penelitian/edit/hak_paten', 'PenelitianController@editHakPaten');
+
+    //L. Media Massa
+    $router->get('/penelitian/media_massa', 'PenelitianController@getMediaMassa');
+    $router->post('/penelitian/media_massa', 'PenelitianController@postMediaMassa');
+    $router->delete('/penelitian/media_massa/{id}', 'PenelitianController@deleteMediaMassa');
+    $router->post('/penelitian/edit/media_massa', 'PenelitianController@editMediaMassa');
+
     //PENELITIAN END
 });
