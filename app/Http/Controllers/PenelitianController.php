@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class PenelitianController extends Controller
 {
-    
+
     public function getAll()
     {
         // Ambil semua data dari masing-masing tabel rencana
@@ -37,19 +37,24 @@ class PenelitianController extends Controller
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', "detail_penelitian.posisi",'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'menyadur')
             ->get();
-        
+
         // Tabel F
         $menyunting = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan','detail_penelitian.posisi', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'menyunting')
             ->get();
 
-
         // Tabel G
-
+        $penelitian_modul = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan', 'detail_penelitian.peran', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'penelitian_modul')
+            ->get();
 
         // Tabel H
-
+        $penelitian_pekerti = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'penelitian_pekerti')
+            ->get();
 
         // BAGIAN I
         $penelitian_tridharma = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
@@ -64,7 +69,7 @@ class PenelitianController extends Controller
             ->get();
 
         // BAGIAN K
-        
+
 
         // Kembalikan data dalam bentuk yang sesuai untuk ditampilkan di halaman
         return response()->json([
@@ -72,6 +77,8 @@ class PenelitianController extends Controller
             'penelitian_mandiri' => $penelitian_mandiri,
             'menyadur'=>$menyadur,
             'menyunting'=>$menyunting,
+            'penelitian_modul' => $penelitian_modul,
+            'penelitian_pekerti' => $penelitian_pekerti,
             'penelitian_tridharma' => $penelitian_tridharma,
         ], 200);
     }
@@ -215,13 +222,13 @@ class PenelitianController extends Controller
                     $bobot_pencapaian = 0;
                     break;
             }
-    
+
             if ($posisi == "Ketua") {
                 $sks = 0.6*2;
             } elseif ($posisi == "Anggota") {
                 $sks = round(0.8*2/$jumlah_anggota, 2);
             }
-    
+
             $sks_terhitung = $bobot_pencapaian*$sks;
 
             $rencana->sks_terhitung = $sks_terhitung;
@@ -535,7 +542,7 @@ class PenelitianController extends Controller
                     $bobot_pencapaian = 0;
                     break;
             }
-    
+
             $sks = 0;
             if ($posisi == "Ketua") {
                 $sks = 0.6 * 2;
@@ -544,7 +551,7 @@ class PenelitianController extends Controller
             } elseif ($posisi == "Anggota") {
                 $sks = 0.4 * 2;
             }
-    
+
             $sks_terhitung = $bobot_pencapaian*$sks;
 
             $rencana->sks_terhitung = $sks_terhitung;
@@ -701,14 +708,14 @@ class PenelitianController extends Controller
                     $bobot_pencapaian = 0;
                     break;
             }
-    
+
             $sks = 0;
             if ($posisi == "Ketua") {
                 $sks = 0.5*2;
             } elseif ($posisi == "Anggota") {
                 $sks = 0.5 * 2;
             }
-    
+
             $sks_terhitung = $bobot_pencapaian*$sks;
 
             $rencana->sks_terhitung = $sks_terhitung;
@@ -749,6 +756,268 @@ class PenelitianController extends Controller
 
     //END OF METHOD MENYUNTING
 
+    // START OF METHOD PENELITIAN_MODUL
+    public function getPenelitianModul()
+    {
+        $penelitian_modul = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan', 'detail_penelitian.peran', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'penelitian_modul')
+            ->get();
+
+        return response()->json($penelitian_modul, 200);
+    }
+
+    public function postPenelitianModul(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $status_tahapan = $request->get('status_tahapan');
+        $jenis_pengerjaan = $request->get('jenis_pengerjaan');
+        $peran = $request->get('peran');
+
+        $bobot_pencapaian = 0;
+        switch ($status_tahapan){
+            case "Proposal":
+                $bobot_pencapaian = 0.25;
+                break;
+            case "Pengumpulan data /sebar kuesioner":
+                $bobot_pencapaian = 0.5;
+                break;
+            case "Analisa Data":
+                $bobot_pencapaian = 0.75;
+                break;
+            case "Laporan Akhir":
+                $bobot_pencapaian = 1;
+                break;
+            case "Konsep (desain)":
+                $bobot_pencapaian = 0.25;
+                break;
+            case "50% dari Karya":
+                $bobot_pencapaian = 0.75;
+                break;
+            case "Hasil akhir":
+                $bobot_pencapaian = 1;
+                break;
+            default:
+                $bobot_pencapaian = 0;
+                break;
+        }
+
+
+        $sks = 0;
+        if ($jenis_pengerjaan == "Kelompok") {
+            if ($peran == "Penulis Utama") {
+                $sks = 0.6*1;
+            } elseif ($peran == "Anggota") {
+                $sks = 0.4*1;
+            }
+        } elseif ($jenis_pengerjaan == "Mandiri") {
+            $sks = (1);
+        }
+
+        $sks_terhitung = $bobot_pencapaian*$sks;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penelitian',
+            'sub_rencana' => 'penelitian_modul',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPenelitian = DetailPenelitian::create([
+            'id_rencana' => $rencana->id_rencana,
+            'status_tahapan' => $status_tahapan,
+            'jenis_pengerjaan' => $jenis_pengerjaan,
+            'peran' => $peran
+        ]);
+
+        $res = [$rencana, $detailPenelitian];
+
+        return response()->json($res, 201);
+    }
+
+    public function editPenelitianModul(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $status_tahapan = $request->get('status_tahapan');
+        $jenis_pengerjaan = $request->get('jenis_pengerjaan');
+        $peran= $request->get('peran');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($status_tahapan == null) {
+            $status_tahapan = $detail_rencana->status_tahapan;
+        } else {
+            $detail_rencana->status_tahapan = $status_tahapan;
+        }
+
+        if ($jenis_pengerjaan == null) {
+            $jenis_pengerjaan = $detail_rencana->jenis_pengerjaan;
+        } else {
+            $detail_rencana->jenis_pengerjaan = $jenis_pengerjaan;
+        }
+
+        if ($peran == null) {
+            $peran = $detail_rencana->peran;
+        } else {
+            $detail_rencana->peran = $peran;
+        }
+
+        if ($status_tahapan != null || $jenis_pengerjaan != null || $peran != null) {
+            switch ($status_tahapan){
+                case "Proposal":
+                    $bobot_pencapaian = 0.25;
+                    break;
+                case "Pengumpulan Data /sebar kuesioner":
+                    $bobot_pencapaian = 0.5;
+                    break;
+                case "Analisa Data":
+                    $bobot_pencapaian = 0.75;
+                    break;
+                case "Laporan Akhir":
+                    $bobot_pencapaian = 1;
+                    break;
+                default:
+                    $bobot_pencapaian = 0;
+            }
+
+            $sks = 0;
+            if ($jenis_pengerjaan == "Kelompok") {
+                if ($peran == "Penulis Utama") {
+                    $sks = 0.6*1;
+                } elseif ($peran == "Anggota") {
+                    $sks = 0.4*1;
+                }
+            } elseif ($jenis_pengerjaan == "Mandiri") {
+                $sks = 1;
+            }
+
+            $sks_terhitung = $bobot_pencapaian * $sks;
+
+            $rencana->sks_terhitung = $sks_terhitung;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+
+        return response()->json($res, 200);
+    }
+
+    public function deletePenelitianModul($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenelitian::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+    //END OF METHOD PENELITIAN MODUL
+
+    // START OF METHOD PENELITIAN_PEKERTI
+    public function getPenelitianPekerti()
+    {
+        $penelitian_pekerti = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'penelitian_pekerti')
+            ->get();
+
+        return response()->json($penelitian_pekerti, 200);
+    }
+
+    public function postPenelitianPekerti(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+
+        $sks = 2;
+
+        $sks_terhitung = $sks;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penelitian',
+            'sub_rencana' => 'penelitian_pekerti',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detailPenelitian = DetailPenelitian::create([
+            'id_rencana' => $rencana->id_rencana,
+        ]);
+
+        $res = [$rencana, $detailPenelitian];
+
+        return response()->json($res, 201);
+    }
+
+    public function editPenelitianPekerti(Request $request)
+    {
+        $request->all();
+
+        $id_rencana = $request->get('id_rencana');
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+
+            $rencana->save();
+        }
+
+        $res = [
+            "rencana" => $rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+        return response()->json($res, 200);
+    }
+
+    public function deletePenelitianPekerti($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenelitian::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
+    //END OF METHOD PENELITIAN PEKERTI
 
     // M. Pembicara Seminar
     public function getPembicaraSeminar()
@@ -838,7 +1107,7 @@ class PenelitianController extends Controller
                 default:
                     break;
             }
-    
+
             $sks_terhitung = $nilai;
 
             $rencana->sks_terhitung = $sks_terhitung;
@@ -966,7 +1235,7 @@ class PenelitianController extends Controller
                 default:
                     break;
             }
-    
+
             $sks_terhitung = $nilai;
 
             $rencana->sks_terhitung = $sks_terhitung;
@@ -1006,7 +1275,7 @@ class PenelitianController extends Controller
         }
     }
 
-    
+
 
     //END OF METHOD TEORI
 
@@ -1016,7 +1285,7 @@ class PenelitianController extends Controller
         ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.bkd_evaluasi', 'rencana.sks_terhitung')
         ->where('rencana.sub_rencana', 'penelitian_mandiri')
         ->get();
-            
+
         return response()->json($penelitian_tridharma, 200);
     }
 
@@ -1026,7 +1295,7 @@ class PenelitianController extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $bkd_evaluasi = $request->get('bkd_evaluasi');
     }
-    
+
     public function editPenelitianTridharma(){
 
     }
@@ -1060,7 +1329,7 @@ class PenelitianController extends Controller
         'detail_penelitian.peran','rencana.sks_terhitung')
         ->where('rencana.sub_rencana', 'penelitian_mandiri')
         ->get();
-            
+
         return response()->json($jurnal_ilmiah, 200);
     }
 
@@ -1070,20 +1339,20 @@ class PenelitianController extends Controller
         $jenis_pengerjaan = $request->get('jenis_pengerjaan');
         $lingkup_penerbit = $request->get('lingkup_penerbit');
         $peran = $request->get('peran');
-       
+
         $sks_lingkup = 0;
         $bobot_peran = 0;
         switch($lingkup_penerbit)
         {
-            case '1' : 
+            case '1' :
                 $sks_lingkup = 1;
                 break;
 
-            case '2' : 
+            case '2' :
                 $sks_lingkup = 2;
                 break;
 
-            case '3' : 
+            case '3' :
                 $sks_lingkup = 3;
                 break;
             default;
@@ -1093,7 +1362,7 @@ class PenelitianController extends Controller
             case '1':
                 $bobot_peran = 0.6;
                 break;
-            
+
             case '2':
                 $bobot_peran = 0.4;
                 break;
@@ -1140,11 +1409,11 @@ class PenelitianController extends Controller
         $jenis_pengerjaan = $request->get('jenis_pengerjaan');
         $lingkup_penerbit = $request->get('lingkup_penerbit');
         $peran = $request->get('peran');
-       
+
         $sks_lingkup = 0;
         $bobot_peran = 0;
 
-        
+
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
@@ -1170,15 +1439,15 @@ class PenelitianController extends Controller
 
         switch($lingkup_penerbit)
         {
-            case '1' : 
+            case '1' :
                 $sks_lingkup = 1;
                 break;
 
-            case '2' : 
+            case '2' :
                 $sks_lingkup = 2;
                 break;
 
-            case '3' : 
+            case '3' :
                 $sks_lingkup = 3;
                 break;
             default;
@@ -1188,7 +1457,7 @@ class PenelitianController extends Controller
             case '1':
                 $bobot_peran = 0.6;
                 break;
-            
+
             case '2':
                 $bobot_peran = 0.4;
                 break;
@@ -1253,7 +1522,7 @@ class PenelitianController extends Controller
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $lingkup_wilayah = $request->get('lingkup_wilayah');
-        
+
         $bobot_pencapaian = 0;
         switch ($lingkup_wilayah){
             case "Paten Sederhana":
@@ -1294,12 +1563,12 @@ class PenelitianController extends Controller
     {
         $request->all();
         $id_rencana = $request->get('id_rencana');
-    
+
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
         $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
         $lingkup_wilayah = $request->get('lingkup_wilayah');
-      
+
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
@@ -1311,7 +1580,7 @@ class PenelitianController extends Controller
             $detail_rencana->lingkup_wilayah = $lingkup_wilayah;
         }
 
-        
+
         if ($lingkup_wilayah != null ) {
             switch ($lingkup_wilayah){
                 case "Paten Sederhana":
@@ -1327,7 +1596,7 @@ class PenelitianController extends Controller
                     $bobot_pencapaian = 0;
                     break;
             }
-    
+
             $sks_terhitung = $bobot_pencapaian;
 
             $rencana->sks_terhitung = $sks_terhitung;
@@ -1407,39 +1676,39 @@ class PenelitianController extends Controller
     {
         $id_rencana = $request->input('id_rencana');
         $nama_kegiatan = $request->input('nama_kegiatan');
-    
+
         // Temukan objek Rencana dan DetailPenelitian berdasarkan id_rencana
         $rencana = Rencana::find($id_rencana);
         $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
-    
+
         // Periksa apakah objek Rencana dan DetailPenelitian ditemukan
         if (!$rencana || !$detail_rencana) {
             return response()->json(["message" => "Rencana not found"], 404);
         }
-    
+
         // Update nama_kegiatan jika tersedia dalam request
         if ($nama_kegiatan !== null && $nama_kegiatan !== "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
-    
+
         // Tetapkan sks_terhitung
         $sks_terhitung = 0.5;
         $rencana->sks_terhitung = $sks_terhitung;
-    
+
         // Simpan perubahan
         $rencana->save();
         $detail_rencana->save();
-    
+
         // Siapkan respons
         $res = [
             "rencana" => $rencana,
             "detail_rencana" => $detail_rencana,
             "message" => "Rencana updated successfully"
         ];
-    
+
         return response()->json($res, 200);
     }
-    
+
 
     public function deleteMediaMassa($id)
     {

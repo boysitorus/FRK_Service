@@ -114,25 +114,36 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/penelitian/menyunting/{id}', 'PenelitianController@deleteMenyunting');
     $router->post('/penelitian/edit/menyunting', 'PenelitianController@editMenyunting');
 
+    //G. penelitian modul
+    $router->get('/penelitian/penelitian_modul', 'PenelitianController@getPenelitianModul');
+    $router->post('/penelitian/penelitian_modul', 'PenelitianController@postPenelitianModul');
+    $router->delete('/penelitian/penelitian_modul/{id}', 'PenelitianController@deletePenelitianModul');
+    $router->post('/penelitian/edit/penelitian_modul', 'PenelitianController@editPenelitianModul');
+
+    //H. penelitian pekerti
+    $router->get('/penelitian/penelitian_pekerti', 'PenelitianController@getPenelitianPekerti');
+    $router->post('/penelitian/penelitian_pekerti', 'PenelitianController@postPenelitianPekerti');
+    $router->delete('/penelitian/penelitian_pekerti/{id}', 'PenelitianController@deletePenelitianPekerti');
+    $router->post('/penelitian/edit/penelitian_pekerti', 'PenelitianController@editPenelitianPekerti');
+
     // I.
     $router->get('/penelitian/penelitian_tridharma', 'PenelitianController@getPenelitianTridharma');
     $router->post('/penelitian/penelitian_tridharma', 'PenelitianController@postPenelitianTridharma');
     $router->delete('/penelitian/penelitian_tridharma/{id}', 'PenelitianController@deletePenelitianTridharma');
     $router->post('/penelitian/edit/penelitian_tridharma', 'PenelitianControllerr@editPenelitianTridharma');
-    
+
     // J. Menulis Jurnal ilmiah
     $router->get('/penelitian/jurnal_ilmiah', 'PenelitianController@getJurnalIlmiah');
     $router->post('/penelitian/jurnal_ilmiah', 'PenelitianController@postJurnalIlmiah');
     $router->delete('/penelitian/jurnal_ilmiah/{id}', 'PenelitianController@deleteJurnalIlmiah');
     $router->post('/penelitian/edit/jurnal_ilmiah', 'PenelitianControllerr@editJurnalIlmiah');
-    
 
-    //M. Pembicara Seminar 
+    //M. Pembicara Seminar
     $router->get('/penelitian/pembicara_seminar', 'PenelitianController@getPembicaraSeminar');
     $router->post('/penelitian/pembicara_seminar', 'PenelitianController@postPembicaraSeminar');
     $router->delete('/penelitian/pembicara_seminar/{id}', 'PenelitianController@deletePembicarSeminar');
     $router->post('/penelitian/edit/pembicara_seminar', 'PenelitianControllerr@editPembicaraSeminar');
-    
+
     //N. Penyajian Makalah
     $router->get('/penelitian', 'PenelitianController@getAll');
     $router->get('/penelitian/penyajian_makalah', 'PenelitianController@getPenyajianMakalah');
