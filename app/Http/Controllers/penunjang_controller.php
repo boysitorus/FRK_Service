@@ -138,7 +138,10 @@ class penunjang_controller extends Controller
             ->get();
         return response()->json($reviewer, 200);
     }
-    public function postReviewer(Request $request){}
+    public function postReviewer(Request $request)
+    {
+        
+    }
     public function editReviewer(Request $request){}
     public function deleteReviewer($id){}
 }
