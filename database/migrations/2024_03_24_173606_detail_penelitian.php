@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('peran')->nullable();
             $table->string('lingkup_penerbit')->nullable();
             $table->integer('jumlah_dosen')->nullable();
+            $table->integer('jumlah_bkd')->nullable();
             $table->timestamps();
 
             // Define foreign key constraint with ON DELETE CASCADE
