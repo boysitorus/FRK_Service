@@ -12,7 +12,7 @@ class pendidikan_controller extends Controller
 
     public function getAll()
     {
-        // Amb        // BAGIAN A
+         // BAGIAN A
         $teori = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelas', 'detail_pendidikan.jumlah_evaluasi', 'detail_pendidikan.sks_matakuliah', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'teori')
@@ -60,12 +60,6 @@ class pendidikan_controller extends Controller
             ->where('rencana.sub_rencana', 'koordinator')
             ->get();
 
-        // BAGIAN K
-        $asistensi = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'asistensi')
-            ->get();
-
         // Kembalikan data dalam bentuk yang sesuai untuk ditampilkan di halaman
         return response()->json([
             'teori' => $teori,
@@ -74,7 +68,6 @@ class pendidikan_controller extends Controller
             'kembang' => $kembang,
             'cangkok' => $cangkok,
             'koordinator' => $koordinator,
-            'asistensi' => $asistensi,
             'tugasAkhir' => $tugasAkhir,
             'proposal' => $proposal
         ], 200);

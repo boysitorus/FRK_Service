@@ -2,10 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailPenunjang;
 use Illuminate\Http\Request;
 
 class penunjang_controller extends Controller
 {
+
+    public function getAll()
+    {
+        // BAGIAN L
+        $profesi = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'profesi')
+            ->get();
+
+        //BAGIAN M
+        $peserta = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'peserta')
+            ->get();
+
+        //BAGIAN N
+        $reviewer = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'reviewer')
+            ->get();
+
+        // Kembalikan data dalam bentuk yang sesuai untuk ditampilkan di halaman
+        return response()->json([
+            'profesi' => $profesi,
+            'peserta' => $peserta,
+            'reviewer' => $reviewer
+        ], 200);
+    }
+    
+
     //Handler A. Bimbingan Akademik
     public function getAkademik(){}
     public function postAkademik(Request $request){}
