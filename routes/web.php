@@ -4,6 +4,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\pendidikan_controller;
+use App\Http\Controllers\penunjang_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,8 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router) {
     //PENDIDIKAN START
-    //teori
     $router->get('/pendidikan', 'pendidikan_controller@getAll');
+    //teori
     $router->get('/pendidikan/teori', 'pendidikan_controller@getTeori');
     $router->post('/pendidikan/teori', 'pendidikan_controller@postTeori');
     $router->delete('/pendidikan/teori/{id}', 'pendidikan_controller@deleteTeori');
@@ -45,13 +46,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/pendidikan/seminar', 'pendidikan_controller@getSeminar');
     $router->post('/pendidikan/seminar', 'pendidikan_controller@postSeminar');
     $router->delete('/pendidikan/seminar/{id}', 'pendidikan_controller@deleteSeminar');
+    $router->post('/pendidikan/edit/seminar', 'pendidikan_controller@editSeminar');
 
      //Tugas Akhir
     $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
     $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
     $router->post('/pendidikan/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
     $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
-    $router->post('/pendidikan/edit/seminar', 'pendidikan_controller@editSeminar');
     $router->get('/pendidikan/tugasAkhir', 'pendidikan_controller@getTugasAkhir');
     $router->post('/pendidikan/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
     $router->delete('/pendidikan/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
@@ -175,4 +176,20 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/penelitian/penyajian_makalah/{id}', 'PenelitianController@deletePenyajianMakalah');
     $router->post('/penelitian/edit/penyajian_makalah', 'PenelitianController@editPenyajianMakalah');
     //PENELITIAN END
+
+    //PENUNJANG START
+    $router->get('/penunjang', 'penunjang_controller@getAll');
+
+    //C. Pimpinan Pembinaan Unit kegiatan mahasiswa
+    $router->get('/penunjang/ukm', 'penunjang_controller@getUkm');
+    $router->post('/penunjang/ukm', 'penunjang_controller@postUkm');
+    $router->post('/penunjang/edit/ukm/', 'penunjang_controller@editUkm');
+    $router->delete('/penunjang/ukm/{id}', 'penunjang_controller@deleteUkm');
+
+    //D. Pimpinan organisasi sosial intern sebagai hanya Ketua/Wakil yang dibina Ketua, misal a. Koperasi fakultas, b. Dharma wanita, c. Takmir Masjid/Pastoran
+    $router->get('/penunjang/sosial', 'penunjang_controller@getSosial');
+    $router->post('/penunjang/sosial', 'penunjang_controller@postSosial');
+    $router->post('/penunjang/edit/sosial/', 'penunjang_controller@editSosial');
+    $router->delete('/penunjang/sosial/{id}', 'penunjang_controller@deleteSosial');
+
 });
