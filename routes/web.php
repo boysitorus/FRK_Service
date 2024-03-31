@@ -192,26 +192,26 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     //START ROUTE FOR PENUNJANG
     $router->group(['prefix' => 'penunjang'], function () use ($router) {
+        // Bagian A
         $router->get('/akademik', 'penunjang_controller@getAkademik');
         $router->post('/akademik', 'penunjang_controller@postAkademik');
         $router->post('/edit/akademik', 'penunjang_controller@editAkademik');
         $router->delete('/akademik/{id}', 'penunjang_controller@deleteAkademik');
+        // END OF BAGIAN A
+
+        //BAGIAN C
+        $router->get('/ukm', 'penunjang_controller@getUkm');
+        $router->post('/ukm', 'penunjang_controller@postUkm');
+        $router->post('/edit/ukm/', 'penunjang_controller@editUkm');
+        $router->delete('/ukm/{id}', 'penunjang_controller@deleteUkm');
+        //END OF BAGIAN C
+
+        //BAGIAN D
+        $router->get('/sosial', 'penunjang_controller@getSosial');
+        $router->post('/sosial', 'penunjang_controller@postSosial');
+        $router->post('/edit/sosial/', 'penunjang_controller@editSosial');
+        $router->delete('/sosial/{id}', 'penunjang_controller@deleteSosial');
+        //END OF BAGIAN D
     });
     //END OF ROUTE FOR PENUNJANG
-
-    //PENUNJANG START
-    $router->get('/penunjang', 'penunjang_controller@getAll');
-
-    //C. Pimpinan Pembinaan Unit kegiatan mahasiswa
-    $router->get('/penunjang/ukm', 'penunjang_controller@getUkm');
-    $router->post('/penunjang/ukm', 'penunjang_controller@postUkm');
-    $router->post('/penunjang/edit/ukm/', 'penunjang_controller@editUkm');
-    $router->delete('/penunjang/ukm/{id}', 'penunjang_controller@deleteUkm');
-
-    //D. Pimpinan organisasi sosial intern sebagai hanya Ketua/Wakil yang dibina Ketua, misal a. Koperasi fakultas, b. Dharma wanita, c. Takmir Masjid/Pastoran
-    $router->get('/penunjang/sosial', 'penunjang_controller@getSosial');
-    $router->post('/penunjang/sosial', 'penunjang_controller@postSosial');
-    $router->post('/penunjang/edit/sosial/', 'penunjang_controller@editSosial');
-    $router->delete('/penunjang/sosial/{id}', 'penunjang_controller@deleteSosial');
-
 });
