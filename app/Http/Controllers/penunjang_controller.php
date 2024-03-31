@@ -347,9 +347,30 @@ class penunjang_controller extends Controller
 
         return response()->json($asosiasi, 200);
     }
-    public function postAsosiasi(Request $request){}
+    public function postAsosiasi(Request $request)
+    {
+        
+    }
     public function editAsosiasi(Request $request){}
-    public function deleteAsosiasi($id){}
+    public function deleteAsosiasi($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ]; 
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
 
     //Handler M. Peserta seminar/workshop/kursus berdasar penugasan pimpinan
     public function getSeminar(){
@@ -362,7 +383,25 @@ class penunjang_controller extends Controller
     }
     public function postSeminar(Request $request){}
     public function editSeminar(Request $request){}
-    public function deleteSeminar($id){}
+    public function deleteSeminar($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ]; 
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
 
     //Handler N. Reviewer jurnal ilmiah , proposal Hibah dll
     public function getReviewer(){
@@ -374,8 +413,42 @@ class penunjang_controller extends Controller
     }
     public function postReviewer(Request $request)
     {
-        
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $sks_terhitung = 1;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'reviewer',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detail_penunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+        ]);
+        $res = [rencana, $detail_penunjang];
+        return response()->json($res, 201);
     }
     public function editReviewer(Request $request){}
-    public function deleteReviewer($id){}
+    public function deleteReviewer($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ]; 
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
 }
