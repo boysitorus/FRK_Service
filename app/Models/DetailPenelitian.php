@@ -18,6 +18,7 @@ class DetailPenelitian extends Model
         'peran',
         'lingkup_penerbit', 
         'jumlah_dosen',
+        'jumlah_bkd'
     ];
 
     protected $primaryKey = 'id_rencana';
