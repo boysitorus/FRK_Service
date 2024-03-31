@@ -212,6 +212,32 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('/edit/sosial/', 'penunjang_controller@editSosial');
         $router->delete('/sosial/{id}', 'penunjang_controller@deleteSosial');
         //END OF BAGIAN D
+
+
+
+        
+        //BAGIAN L
+        $router->get('/asosiasi', 'penunjang_controller@getAsosiasi');
+        $router->post('/asosiasi', 'penunjang_controller@postAsosiasi');
+        $router->post('/edit/asosiasi', 'penunjang_controller@editAsosiasi');
+        $router->delete('/asosiasi/{id}', 'penunjang_controller@deleteAsosiasi');
+        //END OF BAGIAN L
+
+
+        //BAGIAN M
+        $router->get('/seminar', 'penunjang_controller@getSeminar');
+        $router->post('/seminar', 'penunjang_controller@postSeminar');
+        $router->post('/edit/seminar', 'penunjang_controller@editSeminar');
+        $router->delete('/seminar/{id}', 'penunjang_controller@deleteSeminar');
+        //END OF BAGIAN M
+
+
+        //BAGIAN N
+        $router->get('/reviewer', 'penunjang_controller@getReviewer');
+        $router->post('/reviewer', 'penunjang_controller@postReviewer');
+        $router->post('/edit/reviewer', 'penunjang_controller@editReviewer');
+        $router->delete('/reviewer/{id}', 'penunjang_controller@deleteReviewer');
+        //END OF BAGIAN N
     });
     //END OF ROUTE FOR PENUNJANG
 });
