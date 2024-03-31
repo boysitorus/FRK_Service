@@ -188,4 +188,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('/penelitian/penyajian_makalah/{id}', 'PenelitianController@deletePenyajianMakalah');
     $router->post('/penelitian/edit/penyajian_makalah', 'PenelitianController@editPenyajianMakalah');
     //PENELITIAN END
+
+    //START ROUTE FOR PENUNJANG
+    $router->group(['prefix' => 'penunjang'], function () use ($router) {
+        $router->get('/akademik', 'penunjang_controller@getAkademik');
+        $router->post('/akademik', 'penunjang_controller@postAkademik');
+        $router->post('/edit/akademik', 'penunjang_controller@editAkademik');
+        $router->delete('/akademik/{id}', 'penunjang_controller@deleteAkademik');
+    });
+    //END OF ROUTE FOR PENUNJANG
 });

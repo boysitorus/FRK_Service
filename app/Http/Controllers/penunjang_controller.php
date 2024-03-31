@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DetailPenunjang;
+use App\Models\Rencana;
 use Illuminate\Http\Request;
 
 class penunjang_controller extends Controller
@@ -38,10 +39,95 @@ class penunjang_controller extends Controller
     
 
     //Handler A. Bimbingan Akademik
-    public function getAkademik(){}
-    public function postAkademik(Request $request){}
-    public function editAkademik(Request $request){}
-    public function deleteAkademik($id){}
+    public function getAkademik(){
+        $teori = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+        ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jumlah_mahasiswa')
+        ->where('rencana.sub_rencana', 'akademik')
+        ->get();
+
+    return response()->json($teori, 200);
+    }
+    public function postAkademik(Request $request){
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+        $sks_terhitung = 0;
+
+        if($jumlah_mahasiswa >= 25){
+            $sks_terhitung = 2;
+        } else {
+            $sks_terhitung = 1;
+        }
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'akademik',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jumlah_mahasiswa' => $jumlah_mahasiswa
+        ]);
+
+        $res = [$rencana, $detailPenunjang];
+
+        return response()->json($res, 201);
+    }
+    public function editAkademik(Request $request){
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_penunjang = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+
+        if($nama_kegiatan != null || $nama_kegiatan != ""){
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if($jumlah_mahasiswa != null){
+            $detail_penunjang->jumlah_mahasiswa = $jumlah_mahasiswa;
+            
+            if($jumlah_mahasiswa >= 2){
+                $detail_penunjang->sks_terhitung = 2;
+            } else {
+                $detail_penunjang->sks_terhitung = 1;
+            }
+        }
+
+        $rencana->save();
+        $detail_penunjang->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_penunjang" => $detail_penunjang,
+            "message" => "Rencana updated successfully"
+        ];
+
+        return response()->json($res, 200);
+    }
+    public function deleteAkademik($id){
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
 
 
     //Handler B. Bimbingan dan Konseling
