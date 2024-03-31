@@ -4,6 +4,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\pendidikan_controller;
+use App\Http\Controllers\PenelitianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,17 +91,29 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     //PENDIDIKAN END
 
     //PENELITIAN START
-    //A. penelitian kelompok
+    //A. Penelitian kelompok
     $router->get('/penelitian/penelitian_kelompok', 'PenelitianController@getPenelitianKelompok');
     $router->post('/penelitian/penelitian_kelompok', 'PenelitianController@postPenelitianKelompok');
     $router->delete('/penelitian/penelitian_kelompok/{id}', 'PenelitianController@deletePenelitianKelompok');
     $router->post('/penelitian/edit/penelitian_kelompok', 'PenelitianController@editPenelitianKelompok');
 
-    //B. penelitian mandiri
+    //B. Penelitian mandiri
     $router->get('/penelitian/penelitian_mandiri', 'PenelitianController@getPenelitianMandiri');
     $router->post('/penelitian/penelitian_mandiri', 'PenelitianController@postPenelitianMandiri');
     $router->delete('/penelitian/penelitian_mandiri/{id}', 'PenelitianController@deletePenelitianMandiri');
     $router->post('/penelitian/edit/penelitian_mandiri', 'PenelitianController@editPenelitianMandiri');
+
+    //C. Buku Terbit
+    $router->get('/penelitian/buku_terbit', 'PenelitianController@getBukuTerbit');
+    $router->post('/penelitian/buku_terbit', 'PenelitianController@postBukuTerbit');
+    $router->delete('/penelitian/buku_terbit/{id}', 'PenelitianController@deleteBukuTerbit');
+    $router->post('/penelitian/edit/buku_terbit', 'PenelitianController@editBukuTerbit');
+
+    //D. Buku Internasional
+    $router->get('/penelitian/buku_internasional', 'PenelitianController@getBukuInternasional');
+    $router->post('/penelitian/buku_internasional', 'PenelitianController@postBukuInternasional');
+    $router->delete('/penelitian/buku_internasional/{id}', 'PenelitianController@deleteBukuInternasional');
+    $router->post('/penelitian/edit/buku_internasionali', 'PenelitianController@editBukuInternasional');
 
     //E. Menyadur naskah buku
     $router->get('/penelitian/menyadur', 'PenelitianController@getMenyadur');
