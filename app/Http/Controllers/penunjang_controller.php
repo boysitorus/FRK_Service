@@ -5,35 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\DetailPenunjang;
 use App\Models\Rencana;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class penunjang_controller extends Controller
 {
 
     public function getAll()
     {
-        // BAGIAN L
-        $asosiasi = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'profesi')
+        // BAGIAN C
+        $ukm = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jumlah_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'ukm')
             ->get();
 
-        //BAGIAN M
-        $seminar = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'peserta')
-            ->get();
+        // BAGIAN D
+        $sosial = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
+        ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+        ->where('rencana.sub_rencana', 'sosial')
+        ->get();
 
-        //BAGIAN N
-        $reviewer = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
-            ->where('rencana.sub_rencana', 'reviewer')
-            ->get();
 
         // Kembalikan data dalam bentuk yang sesuai untuk ditampilkan di halaman
         return response()->json([
-            'asosiasi' => $asosiasi,
-            'seminar' => $seminar,
-            'reviewer' => $reviewer
+            'ukm' => $ukm,
+            'sosial' => $sosial,
         ], 200);
     }
     
@@ -137,16 +132,169 @@ class penunjang_controller extends Controller
     public function deleteBimbingan($id){}
 
     //Handler C. Pimpinan Pembinaan UKM
-    public function getUkm(){}
-    public function postUkm(Request $request){}
-    public function editUkm(Request $request){}
-    public function deleteUkm($id){}
+    public function getUkm(){
+        $ukm = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jumlah_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'ukm')
+            ->get();
+
+        return response()->json($ukm, 200);
+    }
+
+    public function postUkm(Request $request){
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_kegiatan = (int) $request->get('jumlah_kegiatan');
+
+        $sks_terhitung = $jumlah_kegiatan;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'ukm',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jumlah_kegiatan' => $jumlah_kegiatan,
+        ]);
+
+        $res = [$rencana, $detailPenunjang];
+
+        return response()->json($res, 201);
+    }
+
+    public function editUkm(Request $request){
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_kegiatan = (int)$request->get('jumlah_kegiatan');
+
+        if($nama_kegiatan != null && $nama_kegiatan != ""){
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if($jumlah_kegiatan == null){
+            $jumlah_kegiatan = $detail_rencana->jumlah_kegiatan;
+        } else {
+            $detail_rencana->jumlah_kegiatan = $jumlah_kegiatan;
+        }
+
+        if($jumlah_kegiatan != null) {
+            $sks_terhitung = $jumlah_kegiatan;
+
+            $rencana->sks_terhitung = $sks_terhitung;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+        return response()->json($res, 200);
+    }
+    public function deleteUkm($id){
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ]; 
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
 
     //Handler D. Pimpinan organisasi sosial intern
-    public function getSosial(){}
-    public function postSosial(Request $request){}
-    public function editSosial(Request $request){}
-    public function deleteSosial($id){}
+    public function getSosial(){
+        $sosial = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'sosial')
+            ->get();
+
+        return response()->json($sosial, 200);
+    }
+
+    public function postSosial(Request $request){
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $sks_terhitung = 1;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'sosial',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+        ]);
+
+        $res = [$rencana, $detailPenunjang];
+
+        return response()->json($res, 201);
+    }
+    
+    public function editSosial(Request $request){
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();;
+        $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+
+        if($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            'detail_rencana' => $detail_rencana,
+            "message" => "Rencana updated successfully",
+        ];
+
+        return response()->json($res, 200);
+    }
+
+    public function deleteSosial($id){
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ]; 
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
 
     //Handler E. Jabatan Struktural
     public function getStruktural(){}

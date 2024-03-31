@@ -16,6 +16,7 @@ class DetailPenunjang extends Model
         'jenis_jabatan_nonstruktural', 
         'jenis_tingkatan', 
         'jumlah_prodi',
+        'jumlah_kegiatan',
     ];
 
     protected $primaryKey = 'id_rencana';
