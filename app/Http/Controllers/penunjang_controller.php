@@ -428,7 +428,7 @@ class penunjang_controller extends Controller
         $detail_penunjang = DetailPenunjang::create([
             'id_rencana' => $rencana->id_rencana,
         ]);
-        $res = [rencana, $detail_penunjang];
+        $res = [$rencana, $detail_penunjang];
         return response()->json($res, 201);
     }
     public function editReviewer(Request $request){}
