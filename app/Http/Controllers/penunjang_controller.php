@@ -83,17 +83,17 @@ class penunjang_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
 
-        if ($nama_kegiatan != null || $nama_kegiatan != "") {
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
         if ($jumlah_mahasiswa != null) {
             $detail_penunjang->jumlah_mahasiswa = $jumlah_mahasiswa;
 
-            if ($jumlah_mahasiswa >= 2) {
-                $detail_penunjang->sks_terhitung = 2;
+            if ($jumlah_mahasiswa >= 25) {
+                $rencana->sks_terhitung = 2;
             } else {
-                $detail_penunjang->sks_terhitung = round($jumlah_mahasiswa / 12, 2);
+                $rencana->sks_terhitung = round($jumlah_mahasiswa / 12, 2);
             }
         }
 
@@ -186,10 +186,10 @@ class penunjang_controller extends Controller
         if ($jumlah_mahasiswa != null) {
             $detail_penunjang->jumlah_mahasiswa = $jumlah_mahasiswa;
 
-            if ($jumlah_mahasiswa >= 2) {
-                $detail_penunjang->sks_terhitung = 2;
+            if ($jumlah_mahasiswa >= 25) {
+                $rencana->sks_terhitung = 2;
             } else {
-                $detail_penunjang->sks_terhitung = round($jumlah_mahasiswa / 12, 2);
+                $rencana->sks_terhitung = round($jumlah_mahasiswa / 12, 2);
             }
         }
 
