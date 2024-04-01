@@ -20,9 +20,9 @@ class penunjang_controller extends Controller
 
         // BAGIAN D
         $sosial = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-        ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
-        ->where('rencana.sub_rencana', 'sosial')
-        ->get();
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'sosial')
+            ->get();
 
 
         // Kembalikan data dalam bentuk yang sesuai untuk ditampilkan di halaman
@@ -31,27 +31,29 @@ class penunjang_controller extends Controller
             'sosial' => $sosial,
         ], 200);
     }
-    
+
 
     //Handler A. Bimbingan Akademik
-    public function getAkademik(){
-        $teori = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-        ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jumlah_mahasiswa')
-        ->where('rencana.sub_rencana', 'akademik')
-        ->get();
+    public function getAkademik()
+    {
+        $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jumlah_mahasiswa')
+            ->where('rencana.sub_rencana', 'akademik')
+            ->get();
 
-    return response()->json($teori, 200);
+        return response()->json($akademik, 200);
     }
-    public function postAkademik(Request $request){
+    public function postAkademik(Request $request)
+    {
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
         $sks_terhitung = 0;
 
-        if($jumlah_mahasiswa >= 25){
+        if ($jumlah_mahasiswa >= 25) {
             $sks_terhitung = 2;
         } else {
-            $sks_terhitung = 1;
+            $sks_terhitung = round($jumlah_mahasiswa / 12, 2);
         }
 
         $rencana = Rencana::create([
@@ -71,7 +73,8 @@ class penunjang_controller extends Controller
 
         return response()->json($res, 201);
     }
-    public function editAkademik(Request $request){
+    public function editAkademik(Request $request)
+    {
         $id_rencana = $request->get('id_rencana');
 
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
@@ -80,17 +83,17 @@ class penunjang_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
 
-        if($nama_kegiatan != null || $nama_kegiatan != ""){
+        if ($nama_kegiatan != null || $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if($jumlah_mahasiswa != null){
+        if ($jumlah_mahasiswa != null) {
             $detail_penunjang->jumlah_mahasiswa = $jumlah_mahasiswa;
-            
-            if($jumlah_mahasiswa >= 2){
+
+            if ($jumlah_mahasiswa >= 2) {
                 $detail_penunjang->sks_terhitung = 2;
             } else {
-                $detail_penunjang->sks_terhitung = 1;
+                $detail_penunjang->sks_terhitung = round($jumlah_mahasiswa / 12, 2);
             }
         }
 
@@ -105,7 +108,8 @@ class penunjang_controller extends Controller
 
         return response()->json($res, 200);
     }
-    public function deleteAkademik($id){
+    public function deleteAkademik($id)
+    {
         $record = Rencana::where('id_rencana', $id);
         $detail_record = DetailPenunjang::where('id_rencana', $id);
 
@@ -126,13 +130,103 @@ class penunjang_controller extends Controller
 
 
     //Handler B. Bimbingan dan Konseling
-    public function getBimbingan(){}
-    public function postBimbingan(Request $request){}
-    public function editBimbingan(Request $request){}
-    public function deleteBimbingan($id){}
+    public function getBimbingan()
+    {
+        $bimbingan = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jumlah_mahasiswa')
+            ->where('rencana.sub_rencana', 'bimbingan')
+            ->get();
+
+        return response()->json($bimbingan, 200);
+    }
+    public function postBimbingan(Request $request)
+    {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+        $sks_terhitung = 0;
+
+        if ($jumlah_mahasiswa >= 25) {
+            $sks_terhitung = 2;
+        } else {
+            $sks_terhitung = round($jumlah_mahasiswa / 12, 2);
+        }
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'bimbingan',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jumlah_mahasiswa' => $jumlah_mahasiswa
+        ]);
+
+        $res = [$rencana, $detailPenunjang];
+
+        return response()->json($res, 201);
+    }
+    public function editBimbingan(Request $request)
+    {
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_penunjang = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
+
+        if ($nama_kegiatan != null || $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jumlah_mahasiswa != null) {
+            $detail_penunjang->jumlah_mahasiswa = $jumlah_mahasiswa;
+
+            if ($jumlah_mahasiswa >= 2) {
+                $detail_penunjang->sks_terhitung = 2;
+            } else {
+                $detail_penunjang->sks_terhitung = round($jumlah_mahasiswa / 12, 2);
+            }
+        }
+
+        $rencana->save();
+        $detail_penunjang->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_penunjang" => $detail_penunjang,
+            "message" => "Rencana updated successfully"
+        ];
+
+        return response()->json($res, 200);
+    }
+    public function deleteBimbingan($id)
+    {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
+    }
 
     //Handler C. Pimpinan Pembinaan UKM
-    public function getUkm(){
+    public function getUkm()
+    {
         $ukm = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jumlah_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'ukm')
@@ -141,7 +235,8 @@ class penunjang_controller extends Controller
         return response()->json($ukm, 200);
     }
 
-    public function postUkm(Request $request){
+    public function postUkm(Request $request)
+    {
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_kegiatan = (int) $request->get('jumlah_kegiatan');
@@ -166,7 +261,8 @@ class penunjang_controller extends Controller
         return response()->json($res, 201);
     }
 
-    public function editUkm(Request $request){
+    public function editUkm(Request $request)
+    {
         $request->all();
         $id_rencana = $request->get('id_rencana');
 
@@ -175,17 +271,17 @@ class penunjang_controller extends Controller
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_kegiatan = (int)$request->get('jumlah_kegiatan');
 
-        if($nama_kegiatan != null && $nama_kegiatan != ""){
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
-        if($jumlah_kegiatan == null){
+        if ($jumlah_kegiatan == null) {
             $jumlah_kegiatan = $detail_rencana->jumlah_kegiatan;
         } else {
             $detail_rencana->jumlah_kegiatan = $jumlah_kegiatan;
         }
 
-        if($jumlah_kegiatan != null) {
+        if ($jumlah_kegiatan != null) {
             $sks_terhitung = $jumlah_kegiatan;
 
             $rencana->sks_terhitung = $sks_terhitung;
@@ -202,16 +298,17 @@ class penunjang_controller extends Controller
 
         return response()->json($res, 200);
     }
-    public function deleteUkm($id){
+    public function deleteUkm($id)
+    {
         $record = Rencana::where('id_rencana', $id);
         $detail_record = DetailPenunjang::where('id_rencana', $id);
 
-        if($record && $detail_record) {
+        if ($record && $detail_record) {
             $detail_record->delete();
             $record->delete();
             $response = [
                 'message' => 'Delete kegiatan sukses'
-            ]; 
+            ];
             return response()->json($response, 201);
         } else {
             $response = [
@@ -222,7 +319,8 @@ class penunjang_controller extends Controller
     }
 
     //Handler D. Pimpinan organisasi sosial intern
-    public function getSosial(){
+    public function getSosial()
+    {
         $sosial = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'sosial')
@@ -231,7 +329,8 @@ class penunjang_controller extends Controller
         return response()->json($sosial, 200);
     }
 
-    public function postSosial(Request $request){
+    public function postSosial(Request $request)
+    {
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $sks_terhitung = 1;
@@ -252,16 +351,17 @@ class penunjang_controller extends Controller
 
         return response()->json($res, 201);
     }
-    
-    public function editSosial(Request $request){
+
+    public function editSosial(Request $request)
+    {
         $request->all();
         $id_rencana = $request->get('id_rencana');
 
-        $rencana = Rencana::where('id_rencana', $id_rencana)->first();;
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
         $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
 
-        if($nama_kegiatan != null && $nama_kegiatan != "") {
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
 
@@ -277,16 +377,17 @@ class penunjang_controller extends Controller
         return response()->json($res, 200);
     }
 
-    public function deleteSosial($id){
+    public function deleteSosial($id)
+    {
         $record = Rencana::where('id_rencana', $id);
         $detail_record = DetailPenunjang::where('id_rencana', $id);
 
-        if($record && $detail_record) {
+        if ($record && $detail_record) {
             $detail_record->delete();
             $record->delete();
             $response = [
                 'message' => 'Delete kegiatan sukses'
-            ]; 
+            ];
             return response()->json($response, 201);
         } else {
             $response = [
@@ -297,72 +398,199 @@ class penunjang_controller extends Controller
     }
 
     //Handler E. Jabatan Struktural
-    public function getStruktural(){}
-    public function postStruktural(Request $request){}
-    public function editStruktural(Request $request){}
-    public function deleteStruktural($id){}
+    public function getStruktural()
+    {
+    }
+    public function postStruktural(Request $request)
+    {
+    }
+    public function editStruktural(Request $request)
+    {
+    }
+    public function deleteStruktural($id)
+    {
+    }
 
     //Handler F. Jabatan non struktural
-    public function getNonStruktural(){}
-    public function postNonStruktural(Request $request){}
-    public function editNonStruktural(Request $request){}
-    public function deleteNonStruktural($id){}
+    public function getNonStruktural()
+    {
+    }
+    public function postNonStruktural(Request $request)
+    {
+    }
+    public function editNonStruktural(Request $request)
+    {
+    }
+    public function deleteNonStruktural($id)
+    {
+    }
 
     //Handler G. Ketua Redaksi Jurnal
-    public function getJurnal(){}
-    public function postJurnal(Request $request){}
-    public function editJurnal(Request $request){}
-    public function deleteJurnal($id){}
+    public function getJurnal()
+    {
+    }
+    public function postJurnal(Request $request)
+    {
+    }
+    public function editJurnal(Request $request)
+    {
+    }
+    public function deleteJurnal($id)
+    {
+    }
 
     //Handler H. Ketua Panitia Ad Hoc
-    public function getAdHoc(){}
-    public function postAdHoc(Request $request){}
-    public function editAdHoc(Request $request){}
-    public function deleteAdHoc($id){}
+    public function getAdHoc()
+    {
+    }
+    public function postAdHoc(Request $request)
+    {
+    }
+    public function editAdHoc(Request $request)
+    {
+    }
+    public function deleteAdHoc($id)
+    {
+    }
 
     //Handler I. Ketua Panitia Tetap
-    public function getKetuaPanitia(){}
-    public function postKetuaPanitia(Request $request){}
-    public function editKetuaPanitia(Request $request){}
-    public function deleteKetuaPanitia($id){}
+    public function getKetuaPanitia()
+    {
+    }
+    public function postKetuaPanitia(Request $request)
+    {
+    }
+    public function editKetuaPanitia(Request $request)
+    {
+    }
+    public function deleteKetuaPanitia($id)
+    {
+    }
 
     //Handler J. Anggota Panitia Tetap
-    public function getAnggotaPanitia(){}
-    public function postAnggotaPanitia(Request $request){}
-    public function editAnggotaPanitia(Request $request){}
-    public function deleteAnggotaPanitia($id){}
+    public function getAnggotaPanitia()
+    {
+    }
+    public function postAnggotaPanitia(Request $request)
+    {
+    }
+    public function editAnggotaPanitia(Request $request)
+    {
+    }
+    public function deleteAnggotaPanitia($id)
+    {
+    }
 
     //Handler K. Menjadi Pengurus Yayasan
-    public function getPengurusYayasan(){}
-    public function postPengurusYayasan(Request $request){}
-    public function editPengurusYayasan(Request $request){}
-    public function deletePengurusYayasan($id){}
+    public function getPengurusYayasan()
+    {
+    }
+    public function postPengurusYayasan(Request $request)
+    {
+    }
+    public function editPengurusYayasan(Request $request)
+    {
+    }
+    public function deletePengurusYayasan($id)
+    {
+    }
 
     //Handler L. Menjadi Pengurus/Anggota Asosiasi Profesi
-    public function getAsosiasi(){
+    public function getAsosiasi()
+    {
         $asosiasi = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jenis_jabatan_struktural', 'rencana.sks_terhitung')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jabatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'asosiasi')
             ->get();
 
         return response()->json($asosiasi, 200);
     }
-    public function postAsosiasi(Request $request)
-    {
-        
+    public function postAsosiasi(Request $request) {
+        // Mengambil data dari request
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_jabatan = $request->get('jenis_jabatan');
+        $jenis_tingkatan = $request->get('jenis_tingkatan');
+    
+        // Menghitung SKS berdasarkan tingkat kegiatan dan jabatan
+        $sks_terhitung = 0;
+        if ($jenis_tingkatan === 'nasional') {
+            if ($jenis_jabatan === 'ketua') {
+                $sks_terhitung = 1;
+            } else if ($jenis_jabatan === 'anggota') {
+                $sks_terhitung = 0.5;
+            }
+        } else if ($jenis_tingkatan === 'Internasional') {
+            if ($jenis_jabatan === 'ketua') {
+                $sks_terhitung = 2;
+            } else if ($jenis_jabatan === 'anggota') {
+                $sks_terhitung = 1;
+            }
+        }
+    
+        // Jika belum mencapai batas, lanjutkan dengan proses submit
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'asosiasi',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+    
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jenis_jabatan' => $jenis_jabatan,
+            'jenis_tingkatan' => $jenis_tingkatan,
+        ]);
+    
+        $res = [$rencana, $detailPenunjang];
+    
+        return response()->json($res, 201);
     }
-    public function editAsosiasi(Request $request){}
+
+    public function editAsosiasi(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jabatan = $request->get('jabatan');
+        $tingkatan = $request->get('tingkatan');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jabatan != null && $jabatan != "") {
+            $detail_rencana->jabatan = $jabatan;
+        }
+
+        if ($tingkatan != null && $tingkatan != "") {
+            $detail_rencana->tingkatan = $tingkatan;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+        return response()->json($res, 200);
+    }
     public function deleteAsosiasi($id)
     {
         $record = Rencana::where('id_rencana', $id);
         $detail_record = DetailPenunjang::where('id_rencana', $id);
 
-        if($record && $detail_record) {
+        if ($record && $detail_record) {
             $detail_record->delete();
             $record->delete();
             $response = [
                 'message' => 'Delete kegiatan sukses'
-            ]; 
+            ];
             return response()->json($response, 201);
         } else {
             $response = [
@@ -373,7 +601,8 @@ class penunjang_controller extends Controller
     }
 
     //Handler M. Peserta seminar/workshop/kursus berdasar penugasan pimpinan
-    public function getSeminar(){
+    public function getSeminar()
+    {
         $seminar = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jenis_tingkatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'seminar')
@@ -381,19 +610,79 @@ class penunjang_controller extends Controller
 
         return response()->json($seminar, 200);
     }
-    public function postSeminar(Request $request){}
-    public function editSeminar(Request $request){}
+    public function postSeminar(Request $request) {
+        // Mengambil data dari request
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_tingkatan = $request->get('jenis_tingkatan'); 
+    
+        // Menghitung SKS berdasarkan tingkat kegiatan
+        $sks_terhitung = 0;
+        if ($jenis_tingkatan === 'regional/nasional') {
+            $sks_terhitung = 0.5;
+        } else if ($jenis_tingkatan === 'internasional') {
+            $sks_terhitung = 1;
+        }
+    
+        // Jika belum mencapai batas, lanjutkan dengan proses submit
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'seminar',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+    
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jenis_tingkatan' => $jenis_tingkatan, // Menyimpan jenis tingkatan ke dalam detail penunjang
+        ]);
+    
+        $res = [$rencana, $detailPenunjang];
+    
+        return response()->json($res, 201);
+    }
+    
+    public function editSeminar(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_tingkatan = $request->get('jenis_tingkatan');
+
+        if($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if($jenis_tingkatan != null && $jenis_tingkatan != "") {
+            $detail_rencana->jenis_tingkatan = $jenis_tingkatan;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            'detail_rencana' => $detail_rencana,
+            "message" => "Rencana updated successfully",
+        ];
+
+        return response()->json($res, 200);
+    }
     public function deleteSeminar($id)
     {
         $record = Rencana::where('id_rencana', $id);
         $detail_record = DetailPenunjang::where('id_rencana', $id);
 
-        if($record && $detail_record) {
+        if ($record && $detail_record) {
             $detail_record->delete();
             $record->delete();
             $response = [
                 'message' => 'Delete kegiatan sukses'
-            ]; 
+            ];
             return response()->json($response, 201);
         } else {
             $response = [
@@ -404,8 +693,9 @@ class penunjang_controller extends Controller
     }
 
     //Handler N. Reviewer jurnal ilmiah , proposal Hibah dll
-    public function getReviewer(){
-        $reviewer = DetailPenunjang ::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+    public function getReviewer()
+    {
+        $reviewer = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'reviewer')
             ->get();
@@ -431,18 +721,42 @@ class penunjang_controller extends Controller
         $res = [$rencana, $detail_penunjang];
         return response()->json($res, 201);
     }
-    public function editReviewer(Request $request){}
+    public function editReviewer(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+
+        if($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            'detail_rencana' => $detail_rencana,
+            "message" => "Rencana updated successfully",
+        ];
+
+        return response()->json($res, 200);
+    }
+
     public function deleteReviewer($id)
     {
         $record = Rencana::where('id_rencana', $id);
         $detail_record = DetailPenunjang::where('id_rencana', $id);
 
-        if($record && $detail_record) {
+        if ($record && $detail_record) {
             $detail_record->delete();
             $record->delete();
             $response = [
                 'message' => 'Delete kegiatan sukses'
-            ]; 
+            ];
             return response()->json($response, 201);
         } else {
             $response = [
