@@ -542,18 +542,14 @@ class penunjang_controller extends Controller
         return response()->json($seminar, 200);
     }
     public function postSeminar(Request $request) {
-    // Mengambil data dari request
-    $id_dosen = $request->get('id_dosen');
-    $nama_kegiatan = $request->get('nama_kegiatan');
-    $jenis_tingkatan = $request->get('jenis_tingkatan'); 
-
-    // Menghitung SKS berdasarkan tingkat kegiatan
-    $sks_terhitung = $this->hitungSKS($jenis_tingkatan);
-
-    $jumlahKegiatanPerSemester = 0; // Contoh, ganti dengan data aktual
-
-    // Memeriksa apakah pengguna telah mencapai batas maksimum kegiatan per semester
-    if ($this->cekBatasKepatutan($jenis_tingkatan, $jumlahKegiatanPerSemester)) {
+        // Mengambil data dari request
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_tingkatan = $request->get('jenis_tingkatan'); 
+    
+        // Menghitung SKS berdasarkan tingkat kegiatan
+        $sks_terhitung = $this->hitungSKS($jenis_tingkatan);
+    
         // Jika belum mencapai batas, lanjutkan dengan proses submit
         $rencana = Rencana::create([
             'jenis_rencana' => 'penunjang',
@@ -562,41 +558,28 @@ class penunjang_controller extends Controller
             'nama_kegiatan' => $nama_kegiatan,
             'sks_terhitung' => round($sks_terhitung, 2),
         ]);
-
+    
         $detailPenunjang = DetailPenunjang::create([
             'id_rencana' => $rencana->id_rencana,
+            'jenis_tingkatan' => $jenis_tingkatan, // Menyimpan jenis tingkatan ke dalam detail penunjang
         ]);
-
+    
         $res = [$rencana, $detailPenunjang];
-
+    
         return response()->json($res, 201);
-    } else {
-        // Jika sudah mencapai batas, tampilkan pesan kesalahan
-        return response()->json(['message' => 'Anda telah mencapai batas maksimum kegiatan per semester untuk tingkat ini.'], 400);
     }
-}
-
-// Fungsi untuk menghitung SKS berdasarkan tingkat kegiatan
-private function hitungSKS($tingkat) {
-    $sks = 0;
-    if ($tingkat === 'regional/nasional') {
-        $sks = 0.5;
-    } else if ($tingkat === 'internasional') {
-        $sks = 1;
+    
+    // Fungsi untuk menghitung SKS berdasarkan tingkat kegiatan
+    private function hitungSKS($tingkat) {
+        $sks = 0;
+        if ($tingkat === 'regional/nasional') {
+            $sks = 0.5;
+        } else if ($tingkat === 'internasional') {
+            $sks = 1;
+        }
+        return $sks;
     }
-    return $sks;
-}
-
-// Fungsi untuk memeriksa apakah pengguna telah mencapai batas maksimum kegiatan per semester
-private function cekBatasKepatutan($tingkat, $jumlahKegiatan) {
-    $batas = 0;
-    if ($tingkat === 'regional/nasional') {
-        $batas = 3;
-    } else if ($tingkat === 'internasional') {
-        $batas = 2;
-    }
-    return $jumlahKegiatan < $batas;
-}
+    
     public function editSeminar(Request $request)
     {
         $request->all();
