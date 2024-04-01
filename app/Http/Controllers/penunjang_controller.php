@@ -437,7 +437,30 @@ private function cekBatasKepatutan($tingkat, $jumlahKegiatan) {
     }
     return $jumlahKegiatan < $batas;
 }
-    public function editSeminar(Request $request){}
+    public function editSeminar(Request $request)
+    {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+
+        if($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            'detail_rencana' => $detail_rencana,
+            "message" => "Rencana updated successfully",
+        ];
+
+        return response()->json($res, 200);
+    }
     public function deleteSeminar($id)
     {
         $record = Rencana::where('id_rencana', $id);
