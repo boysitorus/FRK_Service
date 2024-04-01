@@ -445,9 +445,14 @@ private function cekBatasKepatutan($tingkat, $jumlahKegiatan) {
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
         $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_tingkatan = $request->get('jenis_tingkatan');
 
         if($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if($jenis_tingkatan != null && $jenis_tingkatan != "") {
+            $detail_rencana->jenis_tingkatan = $jenis_tingkatan;
         }
 
         $rencana->save();
