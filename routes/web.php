@@ -199,6 +199,13 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->delete('/akademik/{id}', 'penunjang_controller@deleteAkademik');
         // END OF BAGIAN A
 
+        //BAGIAN B
+        $router->get('/bimbingan', 'penunjang_controller@getBimbingan');
+        $router->post('/bimbingan', 'penunjang_controller@postBimbingan');
+        $router->post('/edit/bimbingan', 'penunjang_controller@editBimbingan');
+        $router->delete('/bimbingan/{id}', 'penunjang_controller@deleteBimbingan');
+        //END OF BAGIAN B
+
         //BAGIAN C
         $router->get('/ukm', 'penunjang_controller@getUkm');
         $router->post('/ukm', 'penunjang_controller@postUkm');
