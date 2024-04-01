@@ -617,7 +617,12 @@ class penunjang_controller extends Controller
         $jenis_tingkatan = $request->get('jenis_tingkatan'); 
     
         // Menghitung SKS berdasarkan tingkat kegiatan
-        $sks_terhitung = $this->hitungSKS($jenis_tingkatan);
+        $sks_terhitung = 0;
+        if ($jenis_tingkatan === 'regional/nasional') {
+            $sks_terhitung = 0.5;
+        } else if ($jenis_tingkatan === 'internasional') {
+            $sks_terhitung = 1;
+        }
     
         // Jika belum mencapai batas, lanjutkan dengan proses submit
         $rencana = Rencana::create([
@@ -636,17 +641,6 @@ class penunjang_controller extends Controller
         $res = [$rencana, $detailPenunjang];
     
         return response()->json($res, 201);
-    }
-    
-    // Fungsi untuk menghitung SKS berdasarkan tingkat kegiatan
-    private function hitungSKS($tingkat) {
-        $sks = 0;
-        if ($tingkat === 'regional/nasional') {
-            $sks = 0.5;
-        } else if ($tingkat === 'internasional') {
-            $sks = 1;
-        }
-        return $sks;
     }
     
     public function editSeminar(Request $request)
