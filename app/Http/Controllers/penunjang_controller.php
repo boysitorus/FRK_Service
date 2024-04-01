@@ -499,17 +499,86 @@ class penunjang_controller extends Controller
     public function getAsosiasi()
     {
         $asosiasi = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jenis_jabatan_struktural', 'rencana.sks_terhitung')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jabatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'asosiasi')
             ->get();
 
         return response()->json($asosiasi, 200);
     }
-    public function postAsosiasi(Request $request)
-    {
+    public function postAsosiasi(Request $request) {
+        // Mengambil data dari request
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_jabatan = $request->get('jenis_jabatan');
+        $jenis_tingkatan = $request->get('jenis_tingkatan');
+    
+        // Menghitung SKS berdasarkan tingkat kegiatan dan jabatan
+        $sks_terhitung = 0;
+        if ($jenis_tingkatan === 'nasional') {
+            if ($jenis_jabatan === 'ketua') {
+                $sks_terhitung = 1;
+            } else if ($jenis_jabatan === 'anggota') {
+                $sks_terhitung = 0.5;
+            }
+        } else if ($jenis_tingkatan === 'Internasional') {
+            if ($jenis_jabatan === 'ketua') {
+                $sks_terhitung = 2;
+            } else if ($jenis_jabatan === 'anggota') {
+                $sks_terhitung = 1;
+            }
+        }
+    
+        // Jika belum mencapai batas, lanjutkan dengan proses submit
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'asosiasi',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+    
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jenis_jabatan' => $jenis_jabatan,
+            'jenis_tingkatan' => $jenis_tingkatan,
+        ]);
+    
+        $res = [$rencana, $detailPenunjang];
+    
+        return response()->json($res, 201);
     }
+
     public function editAsosiasi(Request $request)
     {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jabatan = $request->get('jabatan');
+        $tingkatan = $request->get('tingkatan');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jabatan != null && $jabatan != "") {
+            $detail_rencana->jabatan = $jabatan;
+        }
+
+        if ($tingkatan != null && $tingkatan != "") {
+            $detail_rencana->tingkatan = $tingkatan;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+        return response()->json($res, 200);
     }
     public function deleteAsosiasi($id)
     {
