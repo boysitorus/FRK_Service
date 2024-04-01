@@ -114,7 +114,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/penelitian/buku_internasional', 'PenelitianController@getBukuInternasional');
     $router->post('/penelitian/buku_internasional', 'PenelitianController@postBukuInternasional');
     $router->delete('/penelitian/buku_internasional/{id}', 'PenelitianController@deleteBukuInternasional');
-    $router->post('/penelitian/edit/buku_internasionali', 'PenelitianController@editBukuInternasional');
+    $router->post('/penelitian/edit/buku_internasional', 'PenelitianController@editBukuInternasional');
 
     //E. Menyadur naskah buku
     $router->get('/penelitian/menyadur', 'PenelitianController@getMenyadur');

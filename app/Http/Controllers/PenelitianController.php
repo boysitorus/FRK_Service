@@ -745,6 +745,8 @@ class PenelitianController extends Controller
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
+        } else {
+            $detail_rencana->nama_kegiatan = $nama_kegiatan;
         }
 
         if ($status_tahapan == null) {
@@ -753,38 +755,49 @@ class PenelitianController extends Controller
             $detail_rencana->status_tahapan = $status_tahapan;
         }
 
+        if ($jenis_pengerjaan == null) {
+            $jenis_pengerjaan = $detail_rencana->jenis_pengerjaan;
+        } else {
+            $detail_rencana->jenis_pengerjaan = $jenis_pengerjaan;
+        }
+
+        if ($peran == null) {
+            $peran = $detail_rencana->peran;
+        } else {
+            $detail_rencana->peran = $peran;
+        }
+
+        $bobot_pencapaian = 0;
+        $bobot_peran = 0;
+        $sks = 5;
+        $sks_terhitung = 0;
         if ($status_tahapan != null) {
             switch ($status_tahapan){
                 case "Pendahuluan":
-                $bobot_pencapaian = 0.25;
-                break;
-            case "50% dari isi buku":
-                $bobot_pencapaian = 0.5;
-                break;
-            case "Buku Jadi":
-                $bobot_pencapaian = 0.75;
-                break;
-            case "Persetujuan Penerbit":
-                $bobot_pencapaian = 0.85;
-                break;
-            case "Buku Selesai Dicetak":
-                $bobot_pencapaian = 1;
-                break;
-
-            default:
-                $bobot_pencapaian = 0;
-                break;
+                    $bobot_pencapaian = 0.25;
+                    break;
+                case "50% dari isi buku":
+                    $bobot_pencapaian = 0.5;
+                    break;
+                case "Buku Jadi":
+                    $bobot_pencapaian = 0.75;
+                    break;
+                case "Persetujuan Penerbit":
+                    $bobot_pencapaian = 0.85;
+                    break;
+                case "Buku Selesai Dicetak":
+                    $bobot_pencapaian = 1;
+                    break;
+                default:
+                    $bobot_pencapaian = 0;
+                    break;
             }
-            $bobot_peran = 0;
 
             if($peran == "Editor"){
                 $bobot_peran = 0.6;
             }else if($peran == "Kontributor"){
                 $bobot_peran = 0.4;
             }
-
-            $sks = 5;
-            $sks_terhitung = 0;
 
             if($jenis_pengerjaan == "Mandiri"){
                 $sks_terhitung = $bobot_pencapaian*$sks;
