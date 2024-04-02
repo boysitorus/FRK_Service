@@ -217,9 +217,9 @@ class PengabdianController extends Controller
         }
 
         if ($jenis_terbit == null || $jenis_terbit == "") {
-            $detail_rencana->jenis_terbit = $jenis_terbit;
-        } else {
             $jenis_terbit = $detail_rencana->jenis_terbit;
+        } else {
+            $detail_rencana->jenis_terbit = $jenis_terbit; 
         }
 
         if ($status_tahapan == null || $status_tahapan == "") {
