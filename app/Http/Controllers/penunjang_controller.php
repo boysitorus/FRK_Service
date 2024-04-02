@@ -24,11 +24,18 @@ class penunjang_controller extends Controller
             ->where('rencana.sub_rencana', 'sosial')
             ->get();
 
+        // BAGIAN E
+        $struktural = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_jabatan_struktural')
+            ->where('rencana.sub_rencana', 'struktural')
+            ->get();
+
 
         // Kembalikan data dalam bentuk yang sesuai untuk ditampilkan di halaman
         return response()->json([
             'ukm' => $ukm,
             'sosial' => $sosial,
+            'struktural' => $struktural,
         ], 200);
     }
 
@@ -400,15 +407,218 @@ class penunjang_controller extends Controller
     //Handler E. Jabatan Struktural
     public function getStruktural()
     {
+        $struktural = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_jabatan_struktural')
+            ->where('rencana.sub_rencana', 'struktural')
+            ->get();
+
+        return response()->json($struktural, 200);
     }
+
     public function postStruktural(Request $request)
     {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jabatan = $request->get('jenis_jabatan_struktural');
+
+        $bobot = 0;
+
+        switch ($jabatan) {
+            case 'Rektor':
+                $bobot = 12; 
+                break;
+            case 'Wakil Rektor':
+                $bobot = 8;
+                break;
+            case 'Dekan':
+                $bobot = 6; 
+                break;
+            case 'Wakil Dekan':
+                $bobot = 2;
+                break;
+            case 'SPM':
+                $bobot = 4;
+                break;
+            case 'SPI':
+                $bobot = 4;
+                break;
+            case 'Kaprodi':
+                $bobot = 4;
+                break;
+            case 'Sekretaris Kaprodi':
+                $bobot = 2;
+                break;
+            case 'Direktur':
+                $bobot = 5;
+                break;
+            case 'Ka Biro atau Ka Lembaga':
+                $bobot = 4;
+                break;
+            case 'Waka Biro/ Waka Lembaga':
+                $bobot = 3;
+                break;
+            case 'Ka. UPT Teknologi Informasi':
+                $bobot = 4;
+                break;
+            case 'Ka. UPT Perpustakaan':
+                $bobot = 2;
+                break;
+            case 'Ka. UPT Bahasa':
+                $bobot = 1;
+                break;
+            case 'Ka UPT SAM':
+                $bobot = 1;
+                break;
+            case 'Ka Pusat Karir':
+                $bobot = 2;
+                break;
+            case 'Koordinator Divisi di bawah WR3':
+                $bobot = 2;
+                break;
+            case 'Wakil Kepala Unit/Koordinator':
+                $bobot = 2;
+                break;
+            default:
+                $bobot = 0; 
+                break;
+        }
+
+        $sks_terhitung = $bobot*1;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'struktural',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        // Membuat entri baru menggunakan metode create pada model DetailPenunjang
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jenis_jabatan_struktural' => $jabatan,
+        ]);
+
+        $res = [$rencana, $detailPenunjang];
+
+        return response()->json($res, 201);
     }
+
     public function editStruktural(Request $request)
     {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jabatan = $request->get('jenis_jabatan_struktural');
+
+        if($nama_kegiatan != null && $nama_kegiatan != "")
+        {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if($jabatan == null)
+        {
+            $jabatan = $detail_rencana->jenis_jabatan_struktural;
+        } else {
+            $detail_rencana->jenis_jabatan_struktural = $jabatan;
+        }
+
+        if($jabatan != null) {
+            switch ($jabatan) {
+                case 'Rektor':
+                    $bobot = 12; 
+                    break;
+                case 'Wakil Rektor':
+                    $bobot = 8;
+                    break;
+                case 'Dekan':
+                    $bobot = 6; 
+                    break;
+                case 'Wakil Dekan':
+                    $bobot = 2;
+                    break;
+                case 'SPM':
+                    $bobot = 4;
+                    break;
+                case 'SPI':
+                    $bobot = 4;
+                    break;
+                case 'Kaprodi':
+                    $bobot = 4;
+                    break;
+                case 'Sekretaris Kaprodi':
+                    $bobot = 2;
+                    break;
+                case 'Direktur':
+                    $bobot = 5;
+                    break;
+                case 'Ka Biro atau Ka Lembaga':
+                    $bobot = 4;
+                    break;
+                case 'Waka Biro/ Waka Lembaga':
+                    $bobot = 3;
+                    break;
+                case 'Ka. UPT Teknologi Informasi':
+                    $bobot = 4;
+                    break;
+                case 'Ka. UPT Perpustakaan':
+                    $bobot = 2;
+                    break;
+                case 'Ka. UPT Bahasa':
+                    $bobot = 1;
+                    break;
+                case 'Ka UPT SAM':
+                    $bobot = 1;
+                    break;
+                case 'Ka Pusat Karir':
+                    $bobot = 2;
+                    break;
+                case 'Koordinator Divisi di bawah WR3':
+                    $bobot = 2;
+                    break;
+                case 'Wakil Kepala Unit/Koordinator':
+                    $bobot = 2;
+                    break;
+                default:
+                    $bobot = 0; 
+                    break;
+            }
+            $rencana->sks_terhitung = $bobot;
+        }
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+        ];
+
+        return response()->json($res, 200);
     }
+
     public function deleteStruktural($id)
     {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'delete kegiatan sukses'
+            ];
+
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ]; 
+            return ressponse()->json($response, 300);
+        }
     }
 
     //Handler F. Jabatan non struktural

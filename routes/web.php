@@ -244,6 +244,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->delete('/sosial/{id}', 'penunjang_controller@deleteSosial');
         //END OF BAGIAN D
 
+        // BAGIAN E
+        $router->get('/struktural', 'penunjang_controller@getStruktural');
+        $router->post('/struktural', 'penunjang_controller@postStruktural');
+        $router->post('/edit/struktural/', 'penunjang_controller@editStruktural');
+        $router->delete('/struktural/{id}', 'penunjang_controller@deleteStruktural');
+        // END OF BAGIAN E
 
 
         
