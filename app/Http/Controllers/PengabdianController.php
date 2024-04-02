@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailPenelitian;
+use App\Models\DetailPengabdian;
 use App\Models\Rencana;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -131,25 +131,23 @@ class PengabdianController extends Controller
 
         $bobot_pencapaian = 0;
         switch ($status_tahapan){
-            case "Proposal":
+            case "Pendahuluan":
                 $bobot_pencapaian = 0.25;
                 break;
-            case "Pengumpulan data /sebar kuesioner":
+            case "50% dari isi buku":
                 $bobot_pencapaian = 0.5;
                 break;
-            case "Analisa Data":
-                $bobot_pencapaian = 0.75;
+            case "Buku jadi":
+                if($jenis_terbit == "Menulis karya pengabdian yang dipakai sebagai Modul Pelatihan oleh seorang Dosen (Tidak diterbitkan, tetapi digunakan oleh siswa mahasiswa)"){
+                    $bobot_pencapaian = 1;
+                }else {
+                    $bobot_pencapaian = 0.75;
+                }
                 break;
-            case "Laporan Akhir":
-                $bobot_pencapaian = 1;
+            case "Persetujuan penerbit":
+                $bobot_pencapaian = 0.85;
                 break;
-            case "Konsep (desain)":
-                $bobot_pencapaian = 0.25;
-                break;
-            case "50% dari Karya":
-                $bobot_pencapaian = 0.75;
-                break;
-            case "Hasil akhir":
+            case "Buku selesai dicetak":
                 $bobot_pencapaian = 1;
                 break;
             default:
@@ -157,24 +155,34 @@ class PengabdianController extends Controller
                 break;
         }
 
-        $sks = 0;
-        if ($peran == "Ketua") {
-            $sks = 0.6*2;
-        } elseif ($peran == "Anggota") {
-            $sks = round(0.8*2/$jumlah_anggota, 2);
+        $sks = 1;
+        $bobot_peran = 0;
+        $sks_terhitung = 0;
+        if ($peran == "Penulis Utama") {
+            $bobot_peran = 0.6;
+        } elseif ($peran == "Penulis Lain") {
+            $bobot_peran = 0.4*2/$jumlah_anggota;
+        } elseif ($peran == "Editor") {
+            $bobot_peran = 0.6*2;
+        } elseif ($peran == "Kontributor") {
+            $bobot_peran = 0.4;
         }
 
-        $sks_terhitung = $bobot_pencapaian*$sks;
+        if ($jenis_pengerjaan == "Mandiri"){
+            $sks_terhitung = $bobot_pencapaian*$sks;
+        }elseif ($jenis_pengerjaan == "Kelompok"){
+            $sks_terhitung = $bobot_pencapaian*$bobot_peran*$sks;
+        }
 
         $rencana = Rencana::create([
-            'jenis_rencana' => 'penelitian',
-            'sub_rencana' => 'penelitian_kelompok',
+            'jenis_rencana' => 'pengabdian',
+            'sub_rencana' => 'karya',
             'id_dosen' => $id_dosen,
             'nama_kegiatan' => $nama_kegiatan,
             'sks_terhitung' => round($sks_terhitung, 2),
         ]);
 
-        $detailPenelitian = DetailPenelitian::create([
+        $detailPengabdian = DetailPengabdian::create([
             'id_rencana' => $rencana->id_rencana,
             'jenis_terbit' => $jenis_terbit,
             'status_tahapan' => $status_tahapan,
@@ -183,19 +191,143 @@ class PengabdianController extends Controller
             'jumlah_anggota' => $jumlah_anggota
         ]);
 
-        $res = [$rencana, $detailPenelitian];
+        $res = [$rencana, $detailPengabdian];
 
         return response()->json($res, 201);
     }
 
     public function editKarya(Request $request)
     {
-        
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPengabdian::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_terbit = $request->get('jenis_terbit');
+        $status_tahapan = $request->get('status_tahapan');
+        $jenis_pengerjaan = $request->get('jenis_pengerjaan');
+        $peran = $request->get('peran');
+        $jumlah_anggota = (int)$request->get('jumlah_anggota');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        } else {
+            $detail_rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jenis_terbit == null || $jenis_terbit == "") {
+            $detail_rencana->jenis_terbit = $jenis_terbit;
+        } else {
+            $jenis_terbit = $detail_rencana->jenis_terbit;
+        }
+
+        if ($status_tahapan == null || $status_tahapan == "") {
+            $status_tahapan = $detail_rencana->status_tahapan;
+        } else {
+            $detail_rencana->status_tahapan = $status_tahapan;
+        }
+
+        if ($jenis_pengerjaan == null || $jenis_pengerjaan == "") {
+            $jenis_pengerjaan = $detail_rencana->jenis_pengerjaan;
+        } else {
+            $detail_rencana->jenis_pengerjaan = $jenis_pengerjaan;
+        }
+
+        if ($peran == null || $peran == "") {
+            $peran = $detail_rencana->peran;
+        } else {
+            $detail_rencana->peran = $peran;
+        }
+
+        if ($jumlah_anggota == null || $jumlah_anggota == "") {
+            $jumlah_anggota = $detail_rencana->jumlah_anggota;
+        } else {
+            $detail_rencana->jumlah_anggota = $jumlah_anggota;
+        }
+
+        $bobot_pencapaian = 0;
+        switch ($status_tahapan){
+            case "Pendahuluan":
+                $bobot_pencapaian = 0.25;
+                break;
+            case "50% dari isi buku":
+                $bobot_pencapaian = 0.5;
+                break;
+            case "Buku jadi":
+                if($jenis_terbit == "Menulis karya pengabdian yang dipakai sebagai Modul Pelatihan oleh seorang Dosen (Tidak diterbitkan, tetapi digunakan oleh siswa mahasiswa)"){
+                    $bobot_pencapaian = 1;
+                }else {
+                    $bobot_pencapaian = 0.75;
+                }
+                break;
+            case "Persetujuan penerbit":
+                $bobot_pencapaian = 0.85;
+                break;
+            case "Buku selesai dicetak":
+                $bobot_pencapaian = 1;
+                break;
+            default:
+                $bobot_pencapaian = 0;
+                break;
+        }
+
+        $sks = 1;
+        $bobot_peran = 0;
+        $sks_terhitung = 0;
+        if ($peran == "Penulis Utama") {
+            $bobot_peran = 0.6;
+        } elseif ($peran == "Penulis Lain") {
+            $bobot_peran = 0.4*2/$jumlah_anggota;
+        } elseif ($peran == "Editor") {
+            $bobot_peran = 0.6*2;
+        } elseif ($peran == "Kontributor") {
+            $bobot_peran = 0.4;
+        }
+
+        if ($jenis_pengerjaan == "Mandiri"){
+            $sks_terhitung = $bobot_pencapaian*$sks;
+        }elseif ($jenis_pengerjaan == "Kelompok"){
+            $sks_terhitung = $bobot_pencapaian*$bobot_peran*$sks;
+        }
+
+        $rencana->sks_terhitung = $sks_terhitung;
+
+        $sks_terhitung = $bobot_pencapaian*$sks;
+
+        $rencana->sks_terhitung = $sks_terhitung;
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+
+        return response()->json($res, 200);
     }
 
     public function deleteKarya($id)
     {
-        
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPengabdian::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
     }
     //END OF METHOD D. KARYA //END OF METHOD D. KARYA //END OF METHOD D. KARYA //END OF METHOD D. KARYA
 }
