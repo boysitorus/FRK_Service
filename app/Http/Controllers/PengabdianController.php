@@ -290,9 +290,7 @@ class PengabdianController extends Controller
         }elseif ($jenis_pengerjaan == "Kelompok"){
             $sks_terhitung = $bobot_pencapaian*$bobot_peran*$sks;
         }
-
-        $rencana->sks_terhitung = $sks_terhitung;
-
+        
         $sks_terhitung = $bobot_pencapaian*$sks;
 
         $rencana->sks_terhitung = $sks_terhitung;
