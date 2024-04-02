@@ -190,6 +190,30 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/penelitian/edit/penyajian_makalah', 'PenelitianController@editPenyajianMakalah');
     //PENELITIAN END
 
+    //START ROUTE FOR PENGABDIAN //START ROUTE FOR PENGABDIAN //START ROUTE FOR PENGABDIAN
+    $router->group(['prefix' => 'pengabdian'], function () use ($router) {
+        // Bagian A
+        
+        // END OF BAGIAN A
+
+        //BAGIAN B
+        
+        //END OF BAGIAN B
+
+        //BAGIAN C
+        
+        //END OF BAGIAN C
+
+        //BAGIAN D
+        $router->get('/karya', 'PengabdianController@getKarya');
+        $router->post('/karya', 'PengabdianController@postKarya');
+        $router->post('/edit/karya', 'PengabdianController@editKarya');
+        $router->delete('/karya/{id}', 'PengabdianController@deleteKarya');
+        //END OF BAGIAN D
+
+    });
+    //END OF ROUTE FOR PENGABDIAN //END OF ROUTE FOR PENGABDIAN //END OF ROUTE FOR PENGABDIAN
+
     //START ROUTE FOR PENUNJANG
     $router->group(['prefix' => 'penunjang'], function () use ($router) {
         // Bagian A
