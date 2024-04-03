@@ -193,15 +193,18 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     //START ROUTE FOR PENGABDIAN //START ROUTE FOR PENGABDIAN //START ROUTE FOR PENGABDIAN
     $router->group(['prefix' => 'pengabdian'], function () use ($router) {
         // Bagian A
-        
+
         // END OF BAGIAN A
 
         //BAGIAN B
-        
+        $router->get('/penyuluhan', 'PengabdianController@getPenyuluhan');
+        $router->post('/penyuluhan', 'PengabdianController@postPenyuluhan');
+        $router->post('/edit/penyuluhan', 'PengabdianController@editPenyuluhan');
+        $router->delete('/penyuluhan/{id}', 'PengabdianController@deletePenyuluhan');
         //END OF BAGIAN B
 
         //BAGIAN C
-        
+
         //END OF BAGIAN C
 
         //BAGIAN D
@@ -252,7 +255,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         // END OF BAGIAN E
 
 
-        
+
         //BAGIAN L
         $router->get('/asosiasi', 'penunjang_controller@getAsosiasi');
         $router->post('/asosiasi', 'penunjang_controller@postAsosiasi');
