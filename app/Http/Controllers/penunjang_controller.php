@@ -854,35 +854,44 @@ class penunjang_controller extends Controller
         return response()->json($res, 201);
     }
     
-    public function editSeminar(Request $request)
-    {
-        $request->all();
+    public function editSeminar(Request $request) {
         $id_rencana = $request->get('id_rencana');
-
+    
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
         $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jenis_tingkatan = $request->get('jenis_tingkatan');
-
+    
+        // Menghitung SKS berdasarkan tingkat kegiatan
+        $sks_terhitung = 0;
+        if ($jenis_tingkatan === 'Regional/Nasional') {
+            $sks_terhitung = 0.5;
+        } else if ($jenis_tingkatan === 'Internasional') {
+            $sks_terhitung = 1.0;
+        }
+    
         if($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
-
+    
         if($jenis_tingkatan != null && $jenis_tingkatan != "") {
             $detail_rencana->jenis_tingkatan = $jenis_tingkatan;
+            // Mengupdate SKS terhitung berdasarkan tingkat kegiatan
+            $rencana->sks_terhitung = round($sks_terhitung, 2);
         }
-
+    
         $rencana->save();
         $detail_rencana->save();
-
+    
         $res = [
             "rencana" => $rencana,
             'detail_rencana' => $detail_rencana,
             "message" => "Rencana updated successfully",
         ];
-
+    
         return response()->json($res, 200);
     }
+    
     public function deleteSeminar($id)
     {
         $record = Rencana::where('id_rencana', $id);
@@ -906,11 +915,12 @@ class penunjang_controller extends Controller
     //Handler N. Reviewer jurnal ilmiah , proposal Hibah dll
     public function getReviewer()
     {
-        $reviewer = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+        $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'reviewer')
             ->get();
-        return response()->json($reviewer, 200);
+
+        return response()->json($akademik, 200);
     }
     public function postReviewer(Request $request)
     {
