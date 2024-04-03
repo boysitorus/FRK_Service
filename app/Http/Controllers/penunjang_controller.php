@@ -617,7 +617,7 @@ class penunjang_controller extends Controller
             $response = [
                 'message' => 'Delete kegiatan gagal'
             ]; 
-            return ressponse()->json($response, 300);
+            return response()->json($response, 300);
         }
     }
 
