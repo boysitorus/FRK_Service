@@ -708,32 +708,32 @@ class penunjang_controller extends Controller
     //Handler L. Menjadi Pengurus/Anggota Asosiasi Profesi
     public function getAsosiasi()
     {
-        $asosiasi = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jabatan', 'rencana.sks_terhitung')
+        $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_tingkatan', 'detail_penunjang.jabatan')
             ->where('rencana.sub_rencana', 'asosiasi')
             ->get();
 
-        return response()->json($asosiasi, 200);
+        return response()->json($akademik, 200);
     }
     public function postAsosiasi(Request $request) {
         // Mengambil data dari request
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
-        $jenis_jabatan = $request->get('jenis_jabatan');
+        $jabatan = $request->get('jabatan');
         $jenis_tingkatan = $request->get('jenis_tingkatan');
     
         // Menghitung SKS berdasarkan tingkat kegiatan dan jabatan
         $sks_terhitung = 0;
-        if ($jenis_tingkatan === 'nasional') {
-            if ($jenis_jabatan === 'ketua') {
+        if ($jenis_tingkatan === 'Nasional') {
+            if ($jabatan === 'Ketua') {
                 $sks_terhitung = 1;
-            } else if ($jenis_jabatan === 'anggota') {
+            } else if ($jabatan === 'Anggota') {
                 $sks_terhitung = 0.5;
             }
         } else if ($jenis_tingkatan === 'Internasional') {
-            if ($jenis_jabatan === 'ketua') {
+            if ($jabatan === 'Ketua') {
                 $sks_terhitung = 2;
-            } else if ($jenis_jabatan === 'anggota') {
+            } else if ($jabatan === 'Anggota') {
                 $sks_terhitung = 1;
             }
         }
@@ -749,8 +749,9 @@ class penunjang_controller extends Controller
     
         $detailPenunjang = DetailPenunjang::create([
             'id_rencana' => $rencana->id_rencana,
-            'jenis_jabatan' => $jenis_jabatan,
+            
             'jenis_tingkatan' => $jenis_tingkatan,
+            'jabatan' => $jabatan,
         ]);
     
         $res = [$rencana, $detailPenunjang];
@@ -813,12 +814,12 @@ class penunjang_controller extends Controller
     //Handler M. Peserta seminar/workshop/kursus berdasar penugasan pimpinan
     public function getSeminar()
     {
-        $seminar = DetailPenunjang::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jenis_tingkatan', 'rencana.sks_terhitung')
+        $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_tingkatan')
             ->where('rencana.sub_rencana', 'seminar')
             ->get();
 
-        return response()->json($seminar, 200);
+        return response()->json($akademik, 200);
     }
     public function postSeminar(Request $request) {
         // Mengambil data dari request
@@ -828,10 +829,10 @@ class penunjang_controller extends Controller
     
         // Menghitung SKS berdasarkan tingkat kegiatan
         $sks_terhitung = 0;
-        if ($jenis_tingkatan === 'regional/nasional') {
+        if ($jenis_tingkatan === 'Regional/Nasional') {
             $sks_terhitung = 0.5;
-        } else if ($jenis_tingkatan === 'internasional') {
-            $sks_terhitung = 1;
+        } else if ($jenis_tingkatan === 'Internasional') {
+            $sks_terhitung = 1.0;
         }
     
         // Jika belum mencapai batas, lanjutkan dengan proses submit

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('jenis_tingkatan')->nullable();
             $table->integer('jumlah_prodi')->nullable();
             $table->integer('jumlah_kegiatan')->nullable();
-            $table->integer('jabatan')->nullable();
+            $table->string('jabatan')->nullable();
             $table->timestamps();
 
             // Define foreign key constraint with ON DELETE CASCADE
