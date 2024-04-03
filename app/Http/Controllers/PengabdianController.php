@@ -23,7 +23,10 @@ class PengabdianController extends Controller
             ->get();
 
         // BAGIAN C // BAGIAN C // BAGIAN C // BAGIAN C // BAGIAN C // BAGIAN C
-
+        $konsultan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
+        ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.posisi', 'rencana.sks_terhitung')
+           ->where('rencana.sub_rencana', 'konsultan')
+           ->get();
 
         // BAGIAN D // BAGIAN D // BAGIAN D // BAGIAN D // BAGIAN D // BAGIAN D
         $karya = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
@@ -39,7 +42,7 @@ class PengabdianController extends Controller
             'penyuluhan' => $penyuluhan,
 
             //Data Konsultan
-
+            'konsultan' => $konsultan,
             //Data Karya
             'karya' => $karya
         ], 200);
@@ -172,23 +175,127 @@ class PengabdianController extends Controller
     //BEGINNING OF METHOD C. KONSULTAN //BEGINNING OF METHOD C. KONSULTAN
     public function getKonsultan()
     {
+        $konsultan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
+        ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.posisi', 'rencana.sks_terhitung')
+           ->where('rencana.sub_rencana', 'konsultan')
+           ->get();
 
+           return response()->json($konsultan, 200);
     }
 
     public function postKonsultan(Request $request)
     {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $posisi = $request->get('posisi');
 
+
+        $bobot_pencapaian = 0;
+        switch ($posisi){
+            case "Ketua" :
+                $bobot_pencapaian = 0.5;
+                break;
+            case "Anggota" :
+                $bobot_pencapaian = 0.25;
+                break;
+                
+            default:
+            $bobot_pencapaian = 0;
+            break;
+
+        }
+        $sks_terhitung = $bobot_pencapaian;
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'pengabdian',
+            'sub_rencana' => 'konsultan',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+        $detailPengabdian = DetailPengabdian::create([
+            'id_rencana' => $rencana->id_rencana,
+            'posisi' => $posisi,
+        ]);
+
+        $res = [$rencana, $detailPengabdian];
+
+        return response()->json($res, 201);
+        
     }
 
     public function editKonsultan(Request $request)
     {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
 
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPengabdian::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $posisi = $request->get('posisi');
+        
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        } else {
+            $detail_rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+
+        if ($posisi == null || $posisi == "") {
+            $posisi = $detail_rencana->posisi;
+        } else {
+            $detail_rencana->posisi = $posisi;
+        }
+
+
+        $bobot_pencapaian = 0;
+        switch ($posisi){
+            case "Ketua" :
+                $bobot_pencapaian = 0.5;
+                break;
+            case "Anggota" :
+                $bobot_pencapaian = 0.25;
+                break;
+            default:
+            $bobot_pencapaian = 0;
+            break;
+
+        }
+        $sks_terhitung = $bobot_pencapaian;
+        $rencana->sks_terhitung = $sks_terhitung;
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+
+        return response()->json($res, 200);
     }
 
     public function deleteKonsultan($id)
-    {
-
-    }
+        {
+            $record = Rencana::where('id_rencana', $id);
+            $detail_record = DetailPengabdian::where('id_rencana', $id);
+    
+            if ($record && $detail_record) {
+                $detail_record->delete();
+                $record->delete();
+                $response = [
+                    'message' => 'Delete kegiatan sukses'
+                ];
+                return response()->json($response, 201);
+            } else {
+                $response = [
+                    'message' => 'Delete kegiatan gagal'
+                ];
+                return response()->json($response, 300);
+            }
+        }
     //END OF C. KONSULTAN //END OF C. KONSULTAN //END OF C. KONSULTAN //END OF C. KONSULTAN
 
     //BEGINNING OF METHOD D. KARYA //BEGINNING OF METHOD D. KARYA //BEGINNING OF METHOD D. KARYA

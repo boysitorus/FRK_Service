@@ -204,7 +204,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         //END OF BAGIAN B
 
         //BAGIAN C
-
+        $router->get('/konsultan', 'PengabdianController@getKonsultan');
+        $router->post('/konsultan', 'PengabdianController@postKonsultan');
+        $router->post('/edit/konsultan', 'PengabdianController@editKonsultan');
+        $router->delete('/konsultan/{id}', 'PengabdianController@deleteKonsultan');
         //END OF BAGIAN C
 
         //BAGIAN D
