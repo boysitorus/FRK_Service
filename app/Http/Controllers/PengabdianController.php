@@ -14,6 +14,10 @@ class PengabdianController extends Controller
         // Ambil semua data dari masing-masing tabel rencana
 
         // BAGIAN A // BAGIAN A // BAGIAN A // BAGIAN A // BAGIAN A // BAGIAN A
+        $kegiatan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jumlah_durasi', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'kegiatan')
+            ->get();
 
 
         // BAGIAN B // BAGIAN B // BAGIAN B // BAGIAN B // BAGIAN B // BAGIAN B
@@ -51,22 +55,101 @@ class PengabdianController extends Controller
     // BEGINING OF METHOD A. KEGIATAN // BEGINING OF METHOD A. KEGIATAN
     public function getKegiatan()
     {
+        $kegiatan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jumlah_durasi', 'rencana.sks_terhitung')
+            ->where('rencana.sub_rencana', 'kegiatan')
+            ->get();
 
+        return response()->json($kegiatan, 200);
     }
 
     public function postKegiatan(Request $request)
     {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_durasi = $request->get('jumlah_durasi');
 
+        $jumlah_jam = $jumlah_durasi;
+
+        $sks_terhitung = ($jumlah_jam / 50);
+        $sks_terhitung = min($sks_terhitung, 3);
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'pengabdian',
+            'sub_rencana' => 'kegiatan',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => round($sks_terhitung, 2),
+        ]);
+
+        $detailPengabdian = DetailPengabdian::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jumlah_durasi' => $jumlah_durasi
+        ]);
+
+        $res = [$rencana, $detailPengabdian];
+
+        return response()->json($res, 201);
     }
 
     public function editKegiatan(Request $request)
     {
+        $request->all();
+        $id_rencana = $request->get('id_rencana');
 
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_rencana = DetailPengabdian::where('id_rencana', $id_rencana)->first();
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jumlah_durasi = $request->get('jumlah_durasi');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        } else {
+            $detail_rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jumlah_durasi == null || $jumlah_durasi == "") {
+            $jumlah_durasi = $detail_rencana->jumlah_durasi;
+        } else {
+            $detail_rencana->jumlah_durasi = $jumlah_durasi;
+        }
+
+        $jumlah_jam = $jumlah_durasi;
+
+        $sks_terhitung = ($jumlah_jam / 50);
+        $sks_terhitung = min($sks_terhitung, 3);
+        $rencana->sks_terhitung = $sks_terhitung;
+
+        $rencana->save();
+        $detail_rencana->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_rencana" => $detail_rencana,
+            "message" => "Rencana updated successfully"
+        ];
+
+        return response()->json($res, 200);
     }
 
     public function deleteKegiatan($id)
     {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPengabdian::where('id_rencana', $id);
 
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
     }
 
     //END OF METHOD A. KEGIATAN //END OF METHOD A. KEGIATAN //END OF METHOD A. KEGIATAN
@@ -198,7 +281,7 @@ class PengabdianController extends Controller
             case "Anggota" :
                 $bobot_pencapaian = 0.25;
                 break;
-                
+
             default:
             $bobot_pencapaian = 0;
             break;
@@ -221,7 +304,7 @@ class PengabdianController extends Controller
         $res = [$rencana, $detailPengabdian];
 
         return response()->json($res, 201);
-        
+
     }
 
     public function editKonsultan(Request $request)
@@ -233,7 +316,7 @@ class PengabdianController extends Controller
         $detail_rencana = DetailPengabdian::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
         $posisi = $request->get('posisi');
-        
+
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
         } else {
@@ -281,7 +364,7 @@ class PengabdianController extends Controller
         {
             $record = Rencana::where('id_rencana', $id);
             $detail_record = DetailPengabdian::where('id_rencana', $id);
-    
+
             if ($record && $detail_record) {
                 $detail_record->delete();
                 $record->delete();

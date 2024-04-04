@@ -193,7 +193,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     //START ROUTE FOR PENGABDIAN //START ROUTE FOR PENGABDIAN //START ROUTE FOR PENGABDIAN
     $router->group(['prefix' => 'pengabdian'], function () use ($router) {
         // Bagian A
-
+        $router->get('/kegiatan', 'PengabdianController@getKegiatan');
+        $router->post('/kegiatan', 'PengabdianController@postKegiatan');
+        $router->post('/edit/kegiatan', 'PengabdianController@editKegiatan');
+        $router->delete('/kegiatan/{id}', 'PengabdianController@deleteKegiatan');
         // END OF BAGIAN A
 
         //BAGIAN B
