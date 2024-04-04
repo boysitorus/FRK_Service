@@ -257,7 +257,26 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->delete('/struktural/{id}', 'penunjang_controller@deleteStruktural');
         // END OF BAGIAN E
 
+        // BAGIAN F
+        $router->get('/nonstruktural', 'penunjang_controller@getNonstruktural');
+        $router->post('/nonstruktural', 'penunjang_controller@postNonstruktural');
+        $router->post('/edit/nonstruktural/', 'penunjang_controller@editNonstruktural');
+        $router->delete('/nonstruktural/{id}', 'penunjang_controller@deleteNonstruktural');
+        // END OF BAGIAN F
 
+        // BAGIAN G
+        $router->get('/redaksi', 'penunjang_controller@getRedaksi');
+        $router->post('/redaksi', 'penunjang_controller@postRedaksi');
+        $router->post('/edit/redaksi/', 'penunjang_controller@editRedaksi');
+        $router->delete('/redaksi/{id}', 'penunjang_controller@deleteRedaksi');
+        // END OF BAGIAN G
+
+        // BAGIAN H
+        $router->get('/adhoc', 'penunjang_controller@getAdhoc');
+        $router->post('/adhoc', 'penunjang_controller@postAdhoc');
+        $router->post('/edit/adhoc/', 'penunjang_controller@editAdhoc');
+        $router->delete('/adhoc/{id}', 'penunjang_controller@deleteAdhoc');
+        // END OF BAGIAN H
 
         //BAGIAN L
         $router->get('/asosiasi', 'penunjang_controller@getAsosiasi');
