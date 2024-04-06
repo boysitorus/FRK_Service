@@ -190,6 +190,39 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->post('/penelitian/edit/penyajian_makalah', 'PenelitianController@editPenyajianMakalah');
     //PENELITIAN END
 
+    //START ROUTE FOR PENGABDIAN //START ROUTE FOR PENGABDIAN //START ROUTE FOR PENGABDIAN
+    $router->group(['prefix' => 'pengabdian'], function () use ($router) {
+        // Bagian A
+        $router->get('/kegiatan', 'PengabdianController@getKegiatan');
+        $router->post('/kegiatan', 'PengabdianController@postKegiatan');
+        $router->post('/edit/kegiatan', 'PengabdianController@editKegiatan');
+        $router->delete('/kegiatan/{id}', 'PengabdianController@deleteKegiatan');
+        // END OF BAGIAN A
+
+        //BAGIAN B
+        $router->get('/penyuluhan', 'PengabdianController@getPenyuluhan');
+        $router->post('/penyuluhan', 'PengabdianController@postPenyuluhan');
+        $router->post('/edit/penyuluhan', 'PengabdianController@editPenyuluhan');
+        $router->delete('/penyuluhan/{id}', 'PengabdianController@deletePenyuluhan');
+        //END OF BAGIAN B
+
+        //BAGIAN C
+        $router->get('/konsultan', 'PengabdianController@getKonsultan');
+        $router->post('/konsultan', 'PengabdianController@postKonsultan');
+        $router->post('/edit/konsultan', 'PengabdianController@editKonsultan');
+        $router->delete('/konsultan/{id}', 'PengabdianController@deleteKonsultan');
+        //END OF BAGIAN C
+
+        //BAGIAN D
+        $router->get('/karya', 'PengabdianController@getKarya');
+        $router->post('/karya', 'PengabdianController@postKarya');
+        $router->post('/edit/karya', 'PengabdianController@editKarya');
+        $router->delete('/karya/{id}', 'PengabdianController@deleteKarya');
+        //END OF BAGIAN D
+
+    });
+    //END OF ROUTE FOR PENGABDIAN //END OF ROUTE FOR PENGABDIAN //END OF ROUTE FOR PENGABDIAN
+
     //START ROUTE FOR PENUNJANG
     $router->group(['prefix' => 'penunjang'], function () use ($router) {
         // Bagian A
@@ -219,6 +252,34 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->post('/edit/sosial/', 'penunjang_controller@editSosial');
         $router->delete('/sosial/{id}', 'penunjang_controller@deleteSosial');
         //END OF BAGIAN D
+
+        // BAGIAN E
+        $router->get('/struktural', 'penunjang_controller@getStruktural');
+        $router->post('/struktural', 'penunjang_controller@postStruktural');
+        $router->post('/edit/struktural/', 'penunjang_controller@editStruktural');
+        $router->delete('/struktural/{id}', 'penunjang_controller@deleteStruktural');
+        // END OF BAGIAN E
+
+        // BAGIAN F
+        $router->get('/nonstruktural', 'penunjang_controller@getNonstruktural');
+        $router->post('/nonstruktural', 'penunjang_controller@postNonstruktural');
+        $router->post('/edit/nonstruktural/', 'penunjang_controller@editNonstruktural');
+        $router->delete('/nonstruktural/{id}', 'penunjang_controller@deleteNonstruktural');
+        // END OF BAGIAN F
+
+        // BAGIAN G
+        $router->get('/redaksi', 'penunjang_controller@getRedaksi');
+        $router->post('/redaksi', 'penunjang_controller@postRedaksi');
+        $router->post('/edit/redaksi/', 'penunjang_controller@editRedaksi');
+        $router->delete('/redaksi/{id}', 'penunjang_controller@deleteRedaksi');
+        // END OF BAGIAN G
+
+        // BAGIAN H
+        $router->get('/adhoc', 'penunjang_controller@getAdhoc');
+        $router->post('/adhoc', 'penunjang_controller@postAdhoc');
+        $router->post('/edit/adhoc/', 'penunjang_controller@editAdhoc');
+        $router->delete('/adhoc/{id}', 'penunjang_controller@deleteAdhoc');
+        // END OF BAGIAN H
 
         // BAGIAN I
         $router->get('/ketuapanitia', 'penunjang_controller@getKetuaPanitia');

@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_penunjang', function (Blueprint $table) {
+        Schema::create('detail_pengabdian', function (Blueprint $table) {
             $table->unsignedBigInteger('id_rencana');
-            $table->string('jumlah_mahasiswa')->nullable();
+            $table->integer('jumlah_durasi')->nullable();
             $table->string('posisi')->nullable();
-            $table->string('jenis_jabatan_struktural')->nullable();
-            $table->string('jenis_jabatan_nonstruktural')->nullable();
-            $table->string('jenis_tingkatan')->nullable();
-            $table->integer('jumlah_prodi')->nullable();
-            $table->integer('jumlah_kegiatan')->nullable();
-            $table->string('jabatan')->nullable();
+            $table->string('jenis_terbit')->nullable();
+            $table->string('status_tahapan')->nullable();
+            $table->string('jenis_pengerjaan')->nullable();
+            $table->string('peran')->nullable();
+            $table->integer('jumlah_anggota')->nullable();
             $table->timestamps();
 
             // Define foreign key constraint with ON DELETE CASCADE
@@ -37,5 +36,6 @@ return new class extends Migration
     public function down(): void
     {
         //
+        Schema::dropIfExists('detail_pengabdian');
     }
 };
