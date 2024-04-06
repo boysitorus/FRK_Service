@@ -1336,16 +1336,16 @@ class penunjang_controller extends Controller
 
         // Menghitung SKS berdasarkan tingkat kegiatan dan jabatan
         $sks_terhitung = 0;
-        if ($jenis_tingkatan === 'Nasional') {
-            if ($jabatan === 'Ketua') {
+        if ($jabatan === 'Ketua') {
+            if  ($jenis_tingkatan === 'Nasional'){
                 $sks_terhitung = 1;
-            } else if ($jabatan === 'Anggota') {
-                $sks_terhitung = 0.5;
-            }
-        } else if ($jenis_tingkatan === 'Internasional') {
-            if ($jabatan === 'Ketua') {
+            } else if ($jenis_tingkatan === 'Internasional') {
                 $sks_terhitung = 2;
-            } else if ($jabatan === 'Anggota') {
+            }
+        } else if ($jabatan === 'Anggota') {
+            if ($jenis_tingkatan === 'Nasional') {
+                $sks_terhitung = 0.5;
+            } else if ($jenis_tingkatan === 'Internasional') {
                 $sks_terhitung = 1;
             }
         }
