@@ -456,43 +456,298 @@ class penunjang_controller extends Controller
     //Handler I. Ketua Panitia Tetap
     public function getKetuaPanitia()
     {
+        $ketuapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_tingkatan')
+            ->where('rencana.sub_rencana', 'ketua_panitia')
+            ->get();
+
+        return response()->json($ketuapanitia, 200);
     }
     public function postKetuaPanitia(Request $request)
     {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_tingkatan = (int)$request->get('jenis_tingkatan');
+        $sks_terhitung = 0;
+
+        if ($jenis_tingkatan == 1 || $jenis_tingkatan == 2) {
+            $sks_terhitung = 2;
+        } else if ($jenis_tingkatan == 3){
+            $sks_terhitung = 1;
+        } else {
+            $sks_terhitung = 0;
+        }
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'ketua_panitia',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jenis_tingkatan' => $jenis_tingkatan
+        ]);
+
+        $res = [$rencana, $detailPenunjang];
+
+        return response()->json($res, 201);
     }
     public function editKetuaPanitia(Request $request)
     {
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_penunjang = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_tingkatan = (int)$request->get('jenis_tingkatan');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jenis_tingkatan != null) {
+            $detail_penunjang->jenis_tingkatan = $jenis_tingkatan;
+
+            if ($jenis_tingkatan == 1 || $jenis_tingkatan == 2) {
+                $rencana->sks_terhitung = 2;
+            } else if ($jenis_tingkatan == 3) {
+                $rencana->sks_terhitung = 1;
+            } else {
+                $rencana->sks_terhitung = 0;
+            }
+        }
+
+        $rencana->save();
+        $detail_penunjang->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_penunjang" => $detail_penunjang,
+            "message" => "Rencana updated successfully"
+        ];
+
+        return response()->json($res, 200);
     }
     public function deleteKetuaPanitia($id)
     {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
     }
 
     //Handler J. Anggota Panitia Tetap
     public function getAnggotaPanitia()
     {
+        $anggotapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_tingkatan')
+            ->where('rencana.sub_rencana', 'anggota_panitia')
+            ->get();
+
+        return response()->json($anggotapanitia, 200);
     }
     public function postAnggotaPanitia(Request $request)
     {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_tingkatan = (int)$request->get('jenis_tingkatan');
+        $sks_terhitung = 0;
+
+        if ($jenis_tingkatan == 1 || $jenis_tingkatan == 2) {
+            $sks_terhitung = 1;
+        } else if ($jenis_tingkatan == 3){
+            $sks_terhitung = 0.5;
+        } else {
+            $sks_terhitung = 0;
+        }
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'anggota_panitia',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jenis_tingkatan' => $jenis_tingkatan
+        ]);
+
+        $res = [$rencana, $detailPenunjang];
+
+        return response()->json($res, 201);
     }
     public function editAnggotaPanitia(Request $request)
     {
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_penunjang = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jenis_tingkatan = (int)$request->get('jenis_tingkatan');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jenis_tingkatan != null) {
+            $detail_penunjang->jenis_tingkatan = $jenis_tingkatan;
+
+            if ($jenis_tingkatan == 1 || $jenis_tingkatan == 2) {
+                $rencana->sks_terhitung = 1;
+            } else if ($jenis_tingkatan == 3) {
+                $rencana->sks_terhitung = 0.5;
+            } else {
+                $rencana->sks_terhitung = 0;
+            }
+        }
+
+        $rencana->save();
+        $detail_penunjang->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_penunjang" => $detail_penunjang,
+            "message" => "Rencana updated successfully"
+        ];
+
+        return response()->json($res, 200);
     }
     public function deleteAnggotaPanitia($id)
     {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
     }
 
     //Handler K. Menjadi Pengurus Yayasan
     public function getPengurusYayasan()
     {
+        $anggotapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jabatan')
+            ->where('rencana.sub_rencana', 'pengurus_yayasan')
+            ->get();
+
+        return response()->json($anggotapanitia, 200);
     }
     public function postPengurusYayasan(Request $request)
     {
+        $id_dosen = $request->get('id_dosen');
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jabatan = (int)$request->get('jabatan');
+        $sks_terhitung = 0;
+
+        if ($jabatan == 1 ) {
+            $sks_terhitung = 1;
+        } else if ($jabatan == 2){
+            $sks_terhitung = 0.5;
+        } else {
+            $sks_terhitung = 0;
+        }
+
+        $rencana = Rencana::create([
+            'jenis_rencana' => 'penunjang',
+            'sub_rencana' => 'pengurus_yayasan',
+            'id_dosen' => $id_dosen,
+            'nama_kegiatan' => $nama_kegiatan,
+            'sks_terhitung' => $sks_terhitung,
+        ]);
+
+        $detailPenunjang = DetailPenunjang::create([
+            'id_rencana' => $rencana->id_rencana,
+            'jabatan' => $jabatan
+        ]);
+
+        $res = [$rencana, $detailPenunjang];
+
+        return response()->json($res, 201);
     }
     public function editPengurusYayasan(Request $request)
     {
+        $id_rencana = $request->get('id_rencana');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+        $detail_penunjang = DetailPenunjang::where('id_rencana', $id_rencana)->first();
+
+        $nama_kegiatan = $request->get('nama_kegiatan');
+        $jabatan = (int)$request->get('jabatan');
+
+        if ($nama_kegiatan != null && $nama_kegiatan != "") {
+            $rencana->nama_kegiatan = $nama_kegiatan;
+        }
+
+        if ($jabatan != null) {
+            $detail_penunjang->jabatan = $jabatan;
+
+            if ($jabatan == 1) {
+                $rencana->sks_terhitung = 1;
+            } else if ($jabatan == 2) {
+                $rencana->sks_terhitung = 0.5;
+            } else {
+                $rencana->sks_terhitung = 0;
+            }
+        }
+
+        $rencana->save();
+        $detail_penunjang->save();
+
+        $res = [
+            "rencana" => $rencana,
+            "detail_penunjang" => $detail_penunjang,
+            "message" => "Rencana updated successfully"
+        ];
+
+        return response()->json($res, 200);
     }
     public function deletePengurusYayasan($id)
     {
+        $record = Rencana::where('id_rencana', $id);
+        $detail_record = DetailPenunjang::where('id_rencana', $id);
+
+        if ($record && $detail_record) {
+            $detail_record->delete();
+            $record->delete();
+            $response = [
+                'message' => 'Delete kegiatan sukses'
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = [
+                'message' => 'Delete kegiatan gagal'
+            ];
+            return response()->json($response, 300);
+        }
     }
 
     //Handler L. Menjadi Pengurus/Anggota Asosiasi Profesi

@@ -220,9 +220,24 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->delete('/sosial/{id}', 'penunjang_controller@deleteSosial');
         //END OF BAGIAN D
 
+        // BAGIAN I
+        $router->get('/ketuapanitia', 'penunjang_controller@getKetuaPanitia');
+        $router->post('/ketuapanitia', 'penunjang_controller@postKetuaPanitia');
+        $router->post('/edit/ketuapanitia', 'penunjang_controller@editKetuaPanitia');
+        $router->delete('/ketuapanitia/{id}', 'penunjang_controller@deleteKetuaPanitia');
 
+        // BAGIAN J
+        $router->get('/anggotapanitia', 'penunjang_controller@getAnggotaPanitia');
+        $router->post('/anggotapanitia', 'penunjang_controller@postAnggotaPanitia');
+        $router->post('/edit/anggotapanitia', 'penunjang_controller@editAnggotaPanitia');
+        $router->delete('/anggotapanitia/{id}', 'penunjang_controller@deleteAnggotaPanitia');
 
-        
+        // BAGIAN K
+        $router->get('/pengurusyayasan', 'penunjang_controller@getPengurusYayasan');
+        $router->post('/pengurusyayasan', 'penunjang_controller@postPengurusYayasan');
+        $router->post('/edit/pengurusyayasan', 'penunjang_controller@editPengurusYayasan');
+        $router->delete('/pengurusyayasan/{id}', 'penunjang_controller@deletePengurusYayasan');
+
         //BAGIAN L
         $router->get('/asosiasi', 'penunjang_controller@getAsosiasi');
         $router->post('/asosiasi', 'penunjang_controller@postAsosiasi');

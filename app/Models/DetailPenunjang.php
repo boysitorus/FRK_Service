@@ -17,6 +17,7 @@ class DetailPenunjang extends Model
         'jenis_tingkatan', 
         'jumlah_prodi',
         'jumlah_kegiatan',
+        'jabatan'
     ];
 
     protected $primaryKey = 'id_rencana';
