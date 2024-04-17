@@ -74,11 +74,12 @@ class pendidikan_controller extends Controller
     }
 
     // START OF METHOD A
-    public function getTeori()
+    public function getTeori($id)
     {
         $teori = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelas', 'detail_pendidikan.jumlah_evaluasi', 'detail_pendidikan.sks_matakuliah', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'teori')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($teori, 200);
@@ -195,11 +196,12 @@ class pendidikan_controller extends Controller
     //END OF METHOD A
 
     //START OF METHOD B
-    public function getPraktikum()
+    public function getPraktikum($id)
     {
         $praktikum = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelas', 'detail_pendidikan.sks_matakuliah', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'praktikum')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($praktikum, 200);
@@ -300,11 +302,12 @@ class pendidikan_controller extends Controller
     //END OF METHOD B
 
     // START OF METHOD C
-    public function getBimbingan()
+    public function getBimbingan($id)
     {
         $bimbingan = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'bimbingan')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($bimbingan, 200);
@@ -396,11 +399,12 @@ class pendidikan_controller extends Controller
     // END OF METHOD C
 
     // START OF METHOD D
-    public function getSeminar()
+    public function getSeminar($id)
     {
         $seminar = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelompok', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'seminar')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($seminar, 200);
@@ -492,11 +496,12 @@ class pendidikan_controller extends Controller
     // END OF METHOD D
 
     // START OF METHOD E
-    public function getTugasAkhir()
+    public function getTugasAkhir($id)
     {
         $tugasAkhir = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'tugasAkhir')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($tugasAkhir, 200);
@@ -591,11 +596,12 @@ class pendidikan_controller extends Controller
     // END OF METHOD E
 
     // START OF METHOD F
-    public function getProposal()
+    public function getProposal($id)
     {
         $proposal = Rencana::join('detail_pendidikan', 'rencana.id_rencana', "=", 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'proposal')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($proposal, 200);
@@ -691,11 +697,12 @@ class pendidikan_controller extends Controller
     // END OF METHOD F
 
     // START OF METHOD G
-    public function getRendah()
+    public function getRendah($id)
     {
         $rencana = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'bimbing_rendah')
+            ->where('id_dosen', $id)
             ->get();
         return response()->json($rencana, 200);
     }
@@ -787,11 +794,12 @@ class pendidikan_controller extends Controller
     // END OF METHOD G
 
     // START OF METHOD H
-    public function getKembang()
+    public function getKembang($id)
     {
         $rencana = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_sap', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'pengembangan')
+            ->where('id_dosen', $id)
             ->get();
         return response()->json($rencana, 200);
     }
@@ -872,11 +880,12 @@ class pendidikan_controller extends Controller
 
     // START OF METHOD I
 
-    public function getCangkok()
+    public function getCangkok($id)
     {
         $cangkok = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_dosen', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'cangkok')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($cangkok, 200);
@@ -979,11 +988,12 @@ class pendidikan_controller extends Controller
 
 
     // START OF METHOD J
-    public function getKoordinator()
+    public function getKoordinator($id)
     {
         $koordinator = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'koordinator')
+            ->where('id_dosen', $id)
             ->get();
         return response()->json($koordinator, 200);
     }

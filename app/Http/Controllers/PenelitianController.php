@@ -14,80 +14,80 @@ class PenelitianController extends Controller
     {
         // Ambil semua data dari masing-masing tabel rencana
 
-        // BAGIAN A // BAGIAN A // BAGIAN A // BAGIAN A // BAGIAN A // BAGIAN A 
+        // BAGIAN A // BAGIAN A // BAGIAN A // BAGIAN A // BAGIAN A // BAGIAN A
         $penelitian_kelompok = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.posisi', 'detail_penelitian.jumlah_anggota', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_kelompok')
             ->get();
 
-        // BAGIAN B // BAGIAN B // BAGIAN B // BAGIAN B // BAGIAN B // BAGIAN B 
+        // BAGIAN B // BAGIAN B // BAGIAN B // BAGIAN B // BAGIAN B // BAGIAN B
         $penelitian_mandiri = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_mandiri')
             ->get();
 
-        // BAGIAN C // BAGIAN C // BAGIAN C // BAGIAN C // BAGIAN C // BAGIAN C 
+        // BAGIAN C // BAGIAN C // BAGIAN C // BAGIAN C // BAGIAN C // BAGIAN C
         $buku_terbit = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan','detail_penelitian.peran','rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'buku_terbit')
             ->get();
 
-        // BAGIAN D // BAGIAN D // BAGIAN D // BAGIAN D // BAGIAN D // BAGIAN D 
+        // BAGIAN D // BAGIAN D // BAGIAN D // BAGIAN D // BAGIAN D // BAGIAN D
         $buku_internasional = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan','detail_penelitian.peran','rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'buku_internasional')
             ->get();
 
-        // BAGIAN E // BAGIAN E // BAGIAN E // BAGIAN E // BAGIAN E // BAGIAN E 
+        // BAGIAN E // BAGIAN E // BAGIAN E // BAGIAN E // BAGIAN E // BAGIAN E
         $menyadur = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', "detail_penelitian.posisi",'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'menyadur')
             ->get();
 
-        // BAGIAN F // BAGIAN F // BAGIAN F // BAGIAN F // BAGIAN F // BAGIAN F 
+        // BAGIAN F // BAGIAN F // BAGIAN F // BAGIAN F // BAGIAN F // BAGIAN F
         $menyunting = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan','detail_penelitian.posisi', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'menyunting')
             ->get();
 
-        // BAGIAN G // BAGIAN G // BAGIAN G // BAGIAN G // BAGIAN G // BAGIAN G 
+        // BAGIAN G // BAGIAN G // BAGIAN G // BAGIAN G // BAGIAN G // BAGIAN G
         $penelitian_modul = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan', 'detail_penelitian.peran', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_modul')
             ->get();
 
-        // BAGIAN H // BAGIAN H // BAGIAN H // BAGIAN H // BAGIAN H // BAGIAN H 
+        // BAGIAN H // BAGIAN H // BAGIAN H // BAGIAN H // BAGIAN H // BAGIAN H
         $penelitian_pekerti = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_pekerti')
             ->get();
 
-        // BAGIAN I // BAGIAN I // BAGIAN I // BAGIAN I // BAGIAN I // BAGIAN I 
+        // BAGIAN I // BAGIAN I // BAGIAN I // BAGIAN I // BAGIAN I // BAGIAN I
         $penelitian_tridharma = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.jumlah_bkd', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_tridharma')
             ->get();
 
-        // BAGIAN J // BAGIAN J // BAGIAN J // BAGIAN J // BAGIAN J // BAGIAN J 
+        // BAGIAN J // BAGIAN J // BAGIAN J // BAGIAN J // BAGIAN J // BAGIAN J
         $jurnal_ilmiah = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.jenis_pengerjaan', 'detail_penelitian.lingkup_penerbit',
             'detail_penelitian.peran','rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'jurnal_ilmiah')
             ->get();
 
-        // BAGIAN K // BAGIAN K // BAGIAN K // BAGIAN K // BAGIAN K // BAGIAN K 
+        // BAGIAN K // BAGIAN K // BAGIAN K // BAGIAN K // BAGIAN K // BAGIAN K
         $hak_paten = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.lingkup_wilayah', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'hak_paten')
             ->get();
 
-        // BAGIAN L // BAGIAN L // BAGIAN L // BAGIAN L // BAGIAN L // BAGIAN L 
+        // BAGIAN L // BAGIAN L // BAGIAN L // BAGIAN L // BAGIAN L // BAGIAN L
         $media_massa = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'media_massa')
             ->get();
 
-        // BAGIAN M // BAGIAN M // BAGIAN M // BAGIAN M // BAGIAN M // BAGIAN M 
+        // BAGIAN M // BAGIAN M // BAGIAN M // BAGIAN M // BAGIAN M // BAGIAN M
         $pembicara_seminar = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.lingkup_wilayah', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'pembicara_seminar')
@@ -115,16 +115,17 @@ class PenelitianController extends Controller
             'hak_paten' => $hak_paten,
             'media_massa' => $media_massa,
             'pembicara_seminar' => $pembicara_seminar,
-            'penyajian_makalah'=> $penyajian_makalah 
+            'penyajian_makalah'=> $penyajian_makalah
         ], 200);
     }
 
     // BEGINING OF METHOD A. PENELITIAN_KELOMPOK // BEGINING OF METHOD A. PENELITIAN_KELOMPOK
-    public function getPenelitianKelompok()
+    public function getPenelitianKelompok($id)
     {
         $penelitian_kelompok = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.posisi', 'detail_penelitian.jumlah_anggota', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_kelompok')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($penelitian_kelompok, 200);
@@ -307,11 +308,12 @@ class PenelitianController extends Controller
 
     //BEGINNING  OF METHOD B. PENILITIAN MANDIRI //BEGINNING  OF METHOD B. PENILITIAN MANDIRI
 
-    public function getPenelitianMandiri()
+    public function getPenelitianMandiri($id)
     {
         $penelitian_mandiri = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_mandiri')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($penelitian_mandiri, 200);
@@ -462,11 +464,12 @@ class PenelitianController extends Controller
 
     //BEGINNING OF METHOD C. BUKU TERBIT //BEGINNING OF METHOD C. BUKU TERBIT
 
-    public function getBukuTerbit()
+    public function getBukuTerbit($id)
     {
         $buku_terbit = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan','detail_penelitian.peran','rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'buku_terbit')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($buku_terbit, 200);
@@ -654,11 +657,12 @@ class PenelitianController extends Controller
 
     //BEGINNING  OF METHOD D. BUKU INTERNASIONAL //BEGINNING  OF METHOD D. BUKU INTERNASIONAL
 
-    public function getBukuInternasional()
+    public function getBukuInternasional($id)
     {
         $buku_internasional = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan','detail_penelitian.peran','rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'buku_internasional')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($buku_internasional, 200);
@@ -842,12 +846,13 @@ class PenelitianController extends Controller
     }
 
     //END OF METHOD D. BUKU INTERNASIONAL //END OF METHOD D. BUKU INTERNASIONAL
-    
+
     //BEGINNING OF METHOD E. MENYADUR //BEGINNING OF METHOD E. MENYADUR
-    public function getMenyadur(){
+    public function getMenyadur($id){
         $menyadur = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan',"detail_penelitian.posisi",'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'menyadur')
+            ->where('id_dosen', $id)
             ->get();
         return response()->json($menyadur, 200);
     }
@@ -1012,10 +1017,11 @@ class PenelitianController extends Controller
     //END OF METHOD E. MENYADUR //END OF METHOD E. MENYADUR
 
     //BEGINNING OF METHOD F. MENYUNTING //BEGINNING OF METHOD F. MENYUNTING
-    public function getMenyunting(){
+    public function getMenyunting($id){
         $menyunting = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan',"detail_penelitian.posisi",'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'menyunting')
+            ->where('id_dosen', $id)
             ->get();
         return response()->json($menyunting, 200);
     }
@@ -1176,11 +1182,12 @@ class PenelitianController extends Controller
     //END OF METHOD F. MENYUNTING //END OF METHOD F. MENYUNTING
 
     //BEGINNING OF METHOD G. PENELITIAN_MODUL //BEGINNING OF METHOD G. PENELITIAN_MODUL
-    public function getPenelitianModul()
+    public function getPenelitianModul($id)
     {
         $penelitian_modul = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan', 'detail_penelitian.peran', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_modul')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($penelitian_modul, 200);
@@ -1359,11 +1366,12 @@ class PenelitianController extends Controller
     //END OF METHOD G. PENELITIAN MODUL //END OF METHOD G. PENELITIAN MODUL
 
     //BEGINNING OF METHOD H. PENELITIAN_PEKERTI //BEGINNING OF METHOD H. PENELITIAN_PEKERTI
-    public function getPenelitianPekerti()
+    public function getPenelitianPekerti($id)
     {
         $penelitian_pekerti = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_pekerti')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($penelitian_pekerti, 200);
@@ -1439,11 +1447,12 @@ class PenelitianController extends Controller
     //END OF METHOD H. PENELITIAN PEKERTI //END OF METHOD H. PENELITIAN PEKERTI
 
     //START OF METHOD I. PENELITIAN TRIDHARMA // START OF METHOD I. PENELITIAN TRIDHARMA
-    public function getPenelitianTridharma()
+    public function getPenelitianTridharma($id)
     {
         $penelitian_tridharma = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'jumlah_bkd', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penelitian_tridharma')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($penelitian_tridharma, 200);
@@ -1539,12 +1548,13 @@ class PenelitianController extends Controller
 
     //END OF METHOD I. PENELITIAN MANDIRI //END OF METHOD I. PENELITIAN MANDIRI
 
-    //BEGINNING OF METHOD J. JURNAL ILMIAH //BEGINNING OF METHOD J. JURNAL ILMIAH 
-    public function getJurnalIlmiah(){
+    //BEGINNING OF METHOD J. JURNAL ILMIAH //BEGINNING OF METHOD J. JURNAL ILMIAH
+    public function getJurnalIlmiah($id){
         $jurnal_ilmiah = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
         ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.jenis_pengerjaan', 'detail_penelitian.lingkup_penerbit',
         'detail_penelitian.peran','rencana.sks_terhitung')
         ->where('rencana.sub_rencana', 'jurnal_ilmiah')
+        ->where('id_dosen', $id)
         ->get();
 
         return response()->json($jurnal_ilmiah, 200);
@@ -1556,21 +1566,21 @@ class PenelitianController extends Controller
         $jenis_pengerjaan = $request->get('jenis_pengerjaan');
         $lingkup_penerbit = $request->get('lingkup_penerbit');
         $peran = $request->get('peran');
-        
+
         $sks_lingkup = 0;
         $bobot_peran = 0;
         switch($lingkup_penerbit)
         {
-            case 'Diterbitkan oleh Jurnal ilmiah/majalah ilmiah ber-ISSN tidak terakreditasi 
-            atau proceedings seminar nasional maupun internasional' : 
+            case 'Diterbitkan oleh Jurnal ilmiah/majalah ilmiah ber-ISSN tidak terakreditasi
+            atau proceedings seminar nasional maupun internasional' :
                 $sks_lingkup = 1;
                 break;
 
-            case 'Diterbitkan oleh Jurnal terakreditasi' : 
+            case 'Diterbitkan oleh Jurnal terakreditasi' :
                 $sks_lingkup = 2;
                 break;
 
-            case 'Diterbitkan oleh Jurnal terakreditasi internasional (dalam bahasa intenasional)' : 
+            case 'Diterbitkan oleh Jurnal terakreditasi internasional (dalam bahasa intenasional)' :
                 $sks_lingkup = 3;
                 break;
             default;
@@ -1580,7 +1590,7 @@ class PenelitianController extends Controller
             case 'Penulis Utama':
                 $bobot_peran = 0.6;
                 break;
-            
+
             case 'Penulis Lainnya':
                 $bobot_peran = 0.4;
                 break;
@@ -1629,11 +1639,11 @@ class PenelitianController extends Controller
         $jenis_pengerjaan = $request->get('jenis_pengerjaan');
         $lingkup_penerbit = $request->get('lingkup_penerbit');
         $peran = $request->get('peran');
-        
+
         $sks_lingkup = 0;
         $bobot_peran = 0;
 
-        
+
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
@@ -1659,16 +1669,16 @@ class PenelitianController extends Controller
 
         switch($lingkup_penerbit)
         {
-            case 'Diterbitkan oleh Jurnal ilmiah/majalah ilmiah ber-ISSN tidak terakreditasi 
-            atau proceedings seminar nasional maupun internasional' : 
+            case 'Diterbitkan oleh Jurnal ilmiah/majalah ilmiah ber-ISSN tidak terakreditasi
+            atau proceedings seminar nasional maupun internasional' :
                 $sks_lingkup = 1;
                 break;
 
-            case 'Diterbitkan oleh Jurnal terakreditasi' : 
+            case 'Diterbitkan oleh Jurnal terakreditasi' :
                 $sks_lingkup = 2;
                 break;
 
-            case 'Diterbitkan oleh Jurnal terakreditasi internasional (dalam bahasa intenasional)' : 
+            case 'Diterbitkan oleh Jurnal terakreditasi internasional (dalam bahasa intenasional)' :
                 $sks_lingkup = 3;
                 break;
             default;
@@ -1730,11 +1740,12 @@ class PenelitianController extends Controller
     //END OF METHOD J. JURNAL ILMIAH //END OF METHOD J. JURNAL ILMIAH
 
     //START OF METHOD K. HAK PATEN //START OF METHOD K. HAK PATEN
-    public function getHakPaten()
+    public function getHakPaten($id)
     {
         $hak_paten = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.lingkup_wilayah', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'hak_paten')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($hak_paten, 200);
@@ -1861,11 +1872,12 @@ class PenelitianController extends Controller
     //END OF METHOD K. HAK PATEN //END OF METHOD K. HAK PATEN
 
     //BEGINNING OF METHOD L. MEDIA MASSA //BEGINNING OF METHOD L. MEDIA MASSA
-    public function getMediaMassa()
+    public function getMediaMassa($id)
     {
         $media_massa = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'media_massa')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($media_massa, 200);
@@ -1955,16 +1967,17 @@ class PenelitianController extends Controller
     // END OF METHOD L. MEDIA MASSA // END OF METHOD L. MEDIA MASSA
 
     // BEGINNING OF METHOD M. PEMBICARA SEMINAR // BEGINNING OF METHOD M. PEMBICARA SEMINAR
-    public function getPembicaraSeminar()
+    public function getPembicaraSeminar($id)
     {
         $pembicara_seminar = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
         ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.lingkup_wilayah', 'rencana.sks_terhitung')
         ->where('rencana.sub_rencana', 'pembicara_seminar')
+        ->where('id_dosen', $id)
         ->get();
-        
+
         return response()->json($pembicara_seminar, 200);
     }
-    
+
     public function postPembicaraSeminar(Request $request)
     {
         $id_dosen = $request->get('id_dosen');
@@ -1984,7 +1997,7 @@ class PenelitianController extends Controller
                 break;
             default:
                 break;
-    }   
+    }
 
     $sks_terhitung = $nilai;
 
@@ -2007,17 +2020,17 @@ class PenelitianController extends Controller
     }
 
     public function editPembicaraSeminar(Request $request)
-    { 
+    {
         $request->all();
         $id_rencana = $request->get('id_rencana');
 
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
-        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first(); 
-        
+        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
+
         // Mengambil data dari request
         $nama_kegiatan = $request->get('nama_kegiatan');
         $tingkatan = $request->get('tingkatan');
-        
+
         // Memperbarui nama kegiatan jika diberikan
         if (!is_null($nama_kegiatan)) {
             $rencana->nama_kegiatan = $nama_kegiatan;
@@ -2061,10 +2074,10 @@ class PenelitianController extends Controller
     {
         // Langsung menghapus detail record terkait
         $detailDeleted = DetailPenelitian::where('id_rencana', $id)->delete();
-    
+
         // Menghapus record utama
         $recordDeleted = Rencana::where('id_rencana', $id)->delete();
-    
+
         if ($recordDeleted || $detailDeleted) {
         // Jika salah satu atau kedua penghapusan berhasil
         $response = ['message' => 'Delete kegiatan sukses'];
@@ -2078,11 +2091,12 @@ class PenelitianController extends Controller
     //END OF METHOD M. PEMBICARA SEMINAR //END OF METHOD M. PEMBICARA SEMINAR
 
     //BEGINNING OF METHOD N. PENYAJIAN MAKALAH //BEGINNING OF METHOD N. PENYAJIAN MAKALAH
-    public function getPenyajianMakalah()
+    public function getPenyajianMakalah($id)
     {
         $pembicara_seminar = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
         ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.jenis_pengerjaan', 'detail_penelitian.lingkup_wilayah', 'detail_penelitian.posisi', 'detail_penelitian.jumlah_anggota', 'rencana.sks_terhitung')
         ->where('rencana.sub_rencana', 'penyajian_makalah')
+        ->where('id_dosen', $id)
         ->get();
 
         return response()->json($pembicara_seminar, 200);
@@ -2097,7 +2111,7 @@ class PenelitianController extends Controller
         $posisi = $request->get('posisi');
         $jenis_pengerjaan = $request->get('jenis_pengerjaan');
 
-        
+
         $nilai = 0;
         switch ($tingkatan){
             case "Tingkat regional daerah, institusional(minimum fakultas)":
@@ -2115,15 +2129,15 @@ class PenelitianController extends Controller
 
         $sks = 0;
         if ($posisi == "Ketua") {
-            $sks = $nilai * 0.6; 
+            $sks = $nilai * 0.6;
         } elseif ($posisi == "Anggota") {
-            $sks = $nilai * 0.4 ; 
+            $sks = $nilai * 0.4 ;
         } else {
-            return 0; 
+            return 0;
         }
-        
+
         $sks_terhitung = $nilai*$sks;
-        
+
         $rencana = Rencana::create([
         'jenis_rencana' => 'penelitian',
         'sub_rencana' => 'penyajian_makalah',
@@ -2131,7 +2145,7 @@ class PenelitianController extends Controller
         'nama_kegiatan' => $nama_kegiatan,
         'sks_terhitung' => round($sks_terhitung, 2),
         ]);
-        
+
         $detailPenelitian = DetailPenelitian::create([
         'id_rencana' => $rencana->id_rencana,
         'lingkup_wilayah' => $tingkatan,
@@ -2139,9 +2153,9 @@ class PenelitianController extends Controller
         'jumlah_anggota' => $jumlah_anggota,
         'jenis_pengerjaan' => $jenis_pengerjaan,
         ]);
-        
+
         $res = [$rencana, $detailPenelitian];
-        
+
         return response()->json($res, 201);
     }
 
@@ -2151,18 +2165,18 @@ class PenelitianController extends Controller
         $id_rencana = $request->get('id_rencana');
 
         $rencana = Rencana::where('id_rencana', $id_rencana)->first();
-        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first(); 
-        
+        $detail_rencana = DetailPenelitian::where('id_rencana', $id_rencana)->first();
+
         $nama_kegiatan = $request->get('nama_kegiatan');
         $tingkatan = $request->get('tingkatan');
         $jumlah_anggota = $request->input('jumlah_anggota', 1);
         $posisi = $request->get('posisi');
         $jenis_pengerjaan = $request->get('jenis_pengerjaan');
-    
+
         if ($nama_kegiatan) {
             $rencana->nama_kegiatan = $nama_kegiatan;
         }
-        
+
         $nilai = 0;
         switch ($tingkatan) {
             case "Tingkat regional daerah, institusional(minimum fakultas)":
@@ -2175,24 +2189,24 @@ class PenelitianController extends Controller
                 $nilai = 1;
             break;
         }
-        
+
         $sks = 0;
         if ($posisi == "Ketua") {
-            $sks = $nilai * 0.6; 
+            $sks = $nilai * 0.6;
         } elseif ($posisi == "Anggota") {
-            $sks = $nilai * 0.4 ; 
+            $sks = $nilai * 0.4 ;
         } else {
-            return 0; 
+            return 0;
         }
-        
+
         $sks_terhitung = $nilai*$sks;
 
-        
+
         $rencana->sks_terhitung = round($sks_terhitung, 2);
         $rencana->update();
-        $detail_rencana->posisi = $posisi;  
-        $detail_rencana->jumlah_anggota = $jumlah_anggota;  
-        $detail_rencana->status_tahapan = $tingkatan;  
+        $detail_rencana->posisi = $posisi;
+        $detail_rencana->jumlah_anggota = $jumlah_anggota;
+        $detail_rencana->status_tahapan = $tingkatan;
         $detail_rencana->jenis_pengerjaan = $jenis_pengerjaan;
         $detail_rencana->update();
 
@@ -2205,7 +2219,7 @@ class PenelitianController extends Controller
 
         return response()->json($res, 200);
     }
-    
+
     public function deletePenyajianMakalah($id)
     {
         // Coba menghapus detail record terkait terlebih dahulu
@@ -2217,7 +2231,7 @@ class PenelitianController extends Controller
         // Mengecek apakah penghapusan berhasil
         // Logika ini mengasumsikan bahwa penghapusan berhasil jika salah satu operasi delete mengembalikan nilai > 0
         if ($detailDeleted > 0 || $recordDeleted > 0) {
-        
+
         // Jika penghapusan berhasil (salah satu atau kedua operasi delete menghapus record)
         $response = ['message' => 'Kegiatan berhasil dihapus'];
         return response()->json($response, 200); // Menggunakan kode status 200 OK
@@ -2227,7 +2241,7 @@ class PenelitianController extends Controller
             return response()->json($response, 404); // Menggunakan kode status 404 Not Found
         }
     }
-    
+
     // END OF METHOD N. PENYAJIAN MAKALAH
 
 }

@@ -62,11 +62,12 @@ class penunjang_controller extends Controller
 
 
     //Handler A. Bimbingan Akademik
-    public function getAkademik()
+    public function getAkademik($id)
     {
         $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jumlah_mahasiswa')
             ->where('rencana.sub_rencana', 'akademik')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($akademik, 200);
@@ -158,11 +159,12 @@ class penunjang_controller extends Controller
 
 
     //Handler B. Bimbingan dan Konseling
-    public function getBimbingan()
+    public function getBimbingan($id)
     {
         $bimbingan = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jumlah_mahasiswa')
             ->where('rencana.sub_rencana', 'bimbingan')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($bimbingan, 200);
@@ -253,11 +255,12 @@ class penunjang_controller extends Controller
     }
 
     //Handler C. Pimpinan Pembinaan UKM
-    public function getUkm()
+    public function getUkm($id)
     {
         $ukm = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jumlah_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'ukm')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($ukm, 200);
@@ -347,11 +350,12 @@ class penunjang_controller extends Controller
     }
 
     //Handler D. Pimpinan organisasi sosial intern
-    public function getSosial()
+    public function getSosial($id)
     {
         $sosial = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'sosial')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($sosial, 200);
@@ -426,11 +430,12 @@ class penunjang_controller extends Controller
     }
 
     //Handler E. Jabatan Struktural
-    public function getStruktural()
+    public function getStruktural($id)
     {
         $struktural = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_jabatan_struktural')
             ->where('rencana.sub_rencana', 'struktural')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($struktural, 200);
@@ -642,11 +647,12 @@ class penunjang_controller extends Controller
 
 
     //Handler F. Jabatan non struktural
-    public function getNonstruktural()
+    public function getNonstruktural($id)
     {
         $nonstruktural = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_jabatan_nonstruktural')
             ->where('rencana.sub_rencana', 'nonstruktural')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($nonstruktural, 200);
@@ -796,11 +802,12 @@ class penunjang_controller extends Controller
     }
 
     //Handler G. Ketua Redaksi Jurnal
-    public function getRedaksi()
+    public function getRedaksi($id)
     {
         $redaksi = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jabatan')
             ->where('rencana.sub_rencana', 'redaksi')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($redaksi, 200);
@@ -907,11 +914,12 @@ class penunjang_controller extends Controller
         }
     }
     //Handler H. Ketua Ad Hoc
-    public function getAdhoc()
+    public function getAdhoc($id)
     {
         $adhoc = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jabatan')
             ->where('rencana.sub_rencana', 'adhoc')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($adhoc, 200);
@@ -1020,11 +1028,12 @@ class penunjang_controller extends Controller
 
 
     //Handler I. Ketua Panitia Tetap
-    public function getKetuaPanitia()
+    public function getKetuaPanitia($id)
     {
         $ketuapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_tingkatan')
             ->where('rencana.sub_rencana', 'ketua_panitia')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($ketuapanitia, 200);
@@ -1119,11 +1128,12 @@ class penunjang_controller extends Controller
     }
 
     //Handler J. Anggota Panitia Tetap
-    public function getAnggotaPanitia()
+    public function getAnggotaPanitia($id)
     {
         $anggotapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_tingkatan')
             ->where('rencana.sub_rencana', 'anggota_panitia')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($anggotapanitia, 200);
@@ -1218,11 +1228,12 @@ class penunjang_controller extends Controller
     }
 
     //Handler K. Menjadi Pengurus Yayasan
-    public function getPengurusYayasan()
+    public function getPengurusYayasan($id)
     {
         $anggotapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jabatan')
             ->where('rencana.sub_rencana', 'pengurus_yayasan')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($anggotapanitia, 200);
@@ -1317,11 +1328,12 @@ class penunjang_controller extends Controller
     }
 
     //Handler L. Menjadi Pengurus/Anggota Asosiasi Profesi
-    public function getAsosiasi()
+    public function getAsosiasi($id)
     {
         $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_tingkatan', 'detail_penunjang.jabatan')
             ->where('rencana.sub_rencana', 'asosiasi')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($akademik, 200);
@@ -1424,11 +1436,12 @@ class penunjang_controller extends Controller
     }
 
     //Handler M. Peserta seminar/workshop/kursus berdasar penugasan pimpinan
-    public function getSeminar()
+    public function getSeminar($id)
     {
         $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'detail_penunjang.jenis_tingkatan')
             ->where('rencana.sub_rencana', 'seminar')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($akademik, 200);
@@ -1527,11 +1540,12 @@ class penunjang_controller extends Controller
     }
 
     //Handler N. Reviewer jurnal ilmiah , proposal Hibah dll
-    public function getReviewer()
+    public function getReviewer($id)
     {
         $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'reviewer')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($akademik, 200);

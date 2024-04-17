@@ -53,11 +53,12 @@ class PengabdianController extends Controller
     }
 
     // BEGINING OF METHOD A. KEGIATAN // BEGINING OF METHOD A. KEGIATAN
-    public function getKegiatan()
+    public function getKegiatan($id)
     {
         $kegiatan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jumlah_durasi', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'kegiatan')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($kegiatan, 200);
@@ -155,11 +156,12 @@ class PengabdianController extends Controller
     //END OF METHOD A. KEGIATAN //END OF METHOD A. KEGIATAN //END OF METHOD A. KEGIATAN
 
     //BEGINNING OF METHOD B. PENYULUHAN //BEGINNING OF METHOD B. PENYULUHAN
-    public function getPenyuluhan()
+    public function getPenyuluhan($id)
     {
         $penyuluhan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jumlah_durasi', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'penyuluhan')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($penyuluhan, 200);
@@ -256,11 +258,12 @@ class PengabdianController extends Controller
     //END OF METHOD B. PENYULUHAN //END OF METHOD B. PENYULUHAN //END OF METHOD B. PENYULUHAN
 
     //BEGINNING OF METHOD C. KONSULTAN //BEGINNING OF METHOD C. KONSULTAN
-    public function getKonsultan()
+    public function getKonsultan($id)
     {
         $konsultan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
         ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.posisi', 'rencana.sks_terhitung')
            ->where('rencana.sub_rencana', 'konsultan')
+           ->where('id_dosen', $id)
            ->get();
 
            return response()->json($konsultan, 200);
@@ -382,11 +385,12 @@ class PengabdianController extends Controller
     //END OF C. KONSULTAN //END OF C. KONSULTAN //END OF C. KONSULTAN //END OF C. KONSULTAN
 
     //BEGINNING OF METHOD D. KARYA //BEGINNING OF METHOD D. KARYA //BEGINNING OF METHOD D. KARYA
-    public function getKarya()
+    public function getKarya($id)
     {
         $karya = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jenis_terbit', 'detail_pengabdian.status_tahapan', 'detail_pengabdian.jenis_pengerjaan','detail_pengabdian.peran','detail_pengabdian.jumlah_anggota', 'rencana.sks_terhitung')
             ->where('rencana.sub_rencana', 'karya')
+            ->where('id_dosen', $id)
             ->get();
 
         return response()->json($karya, 200);
