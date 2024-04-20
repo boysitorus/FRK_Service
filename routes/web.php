@@ -330,4 +330,5 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/simpulan-pengabdian', 'simpulanController@getSksPengabdian');
     $router->get('/simpulan-penunjang', 'simpulanController@getSksPenunjang');
     $router->get('/simpulan-total', 'simpulanController@getTotalSks');
+    $router->post('/simpulan-simpan-rencana/{id}', 'simpulanController@simpanRencana');
 });

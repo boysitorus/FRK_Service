@@ -67,4 +67,15 @@ class SimpulanController extends Controller
 
         return response()->json($totalSks, 200);
     }
+
+    public function simpanRencana($id) //tambahkan 1 params lagi ketika function generate FRK telah dibuat, $id_frk
+    {
+        try {
+            Rencana::where('id_dosen', $id)->update(['flag_save_permananent' => true]);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Gagal menyimpan rencana kerja'], 500);
+        }
+
+        return response()->json(['message' => 'Berhasil menyimpan form rencana kerja kepada asessor'], 200);
+    }
 }
