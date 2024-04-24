@@ -875,7 +875,7 @@ class PenelitianController extends Controller
             case "sks buku jadi":
                 $bobot_pencapaian = 0.75;
                 break;
-            case "persetujan penerbit":
+            case "persetujuan penerbit":
                 $bobot_pencapaian = 0.85;
                 break;
             case "sks buku selesai dicetak":
