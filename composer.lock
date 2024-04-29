@@ -634,25 +634,25 @@
         },
         {
             "name": "flipbox/lumen-generator",
-            "version": "9.2.0",
+            "version": "9.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/flipboxstudio/lumen-generator.git",
-                "reference": "95b88d1be59e0936407d04e3271ce819fefa06e3"
+                "reference": "0408733494716728bea7a3efc3df59896ea23b71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/flipboxstudio/lumen-generator/zipball/95b88d1be59e0936407d04e3271ce819fefa06e3",
-                "reference": "95b88d1be59e0936407d04e3271ce819fefa06e3",
+                "url": "https://api.github.com/repos/flipboxstudio/lumen-generator/zipball/0408733494716728bea7a3efc3df59896ea23b71",
+                "reference": "0408733494716728bea7a3efc3df59896ea23b71",
                 "shasum": ""
             },
             "require": {
                 "classpreloader/classpreloader": "^3.0|^4.0|^4.2",
-                "illuminate/console": "^5.5|^6.0|^7.0|^8.0|^8.17|^9.0|^10.0",
-                "illuminate/filesystem": "^5.5|^6.0|^7.0|^8.0|^8.17|^9.0|^10.0",
-                "illuminate/support": "^5.5|^6.0|^7.0|^8.0|^8.17|^9.0|^10.0",
-                "psy/psysh": "0.9.*|0.10.*|0.11.*",
-                "symfony/var-dumper": "^4.2|^4.3|^5.0|^5.1|^5.2|^6.0"
+                "illuminate/console": "^6.0|^7.0|^8.0|^8.17|^9.0|^10.0|^11.0",
+                "illuminate/filesystem": "^6.0|^7.0|^8.0|^8.17|^9.0|^10.0|^11.0",
+                "illuminate/support": "^6.0|^7.0|^8.0|^8.17|^9.0|^10.0|^11.0",
+                "psy/psysh": "^0.12",
+                "symfony/var-dumper": "^5.1|^5.2|^6.0|^7.0"
             },
             "suggest": {
                 "anik/form-request": "Required to use form request in Lumen."
@@ -676,9 +676,9 @@
             "description": "A Lumen Generator You Are Missing",
             "support": {
                 "issues": "https://github.com/flipboxstudio/lumen-generator/issues",
-                "source": "https://github.com/flipboxstudio/lumen-generator/tree/9.2.0"
+                "source": "https://github.com/flipboxstudio/lumen-generator/tree/9.3.0"
             },
-            "time": "2023-02-27T22:49:52+00:00"
+            "time": "2024-03-07T02:03:29+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -901,7 +901,7 @@
         },
         {
             "name": "illuminate/auth",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/auth.git",
@@ -959,7 +959,7 @@
         },
         {
             "name": "illuminate/broadcasting",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/broadcasting.git",
@@ -1017,7 +1017,7 @@
         },
         {
             "name": "illuminate/bus",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/bus.git",
@@ -1070,7 +1070,7 @@
         },
         {
             "name": "illuminate/cache",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
@@ -1132,7 +1132,7 @@
         },
         {
             "name": "illuminate/collections",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -1187,7 +1187,7 @@
         },
         {
             "name": "illuminate/conditionable",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1233,7 +1233,7 @@
         },
         {
             "name": "illuminate/config",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -1281,7 +1281,7 @@
         },
         {
             "name": "illuminate/console",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/console.git",
@@ -1346,7 +1346,7 @@
         },
         {
             "name": "illuminate/container",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -1397,7 +1397,7 @@
         },
         {
             "name": "illuminate/contracts",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1514,7 +1514,7 @@
         },
         {
             "name": "illuminate/encryption",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/encryption.git",
@@ -1565,7 +1565,7 @@
         },
         {
             "name": "illuminate/events",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -1620,7 +1620,7 @@
         },
         {
             "name": "illuminate/filesystem",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -1687,7 +1687,7 @@
         },
         {
             "name": "illuminate/hashing",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/hashing.git",
@@ -1735,7 +1735,7 @@
         },
         {
             "name": "illuminate/http",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/http.git",
@@ -1795,7 +1795,7 @@
         },
         {
             "name": "illuminate/log",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/log.git",
@@ -1844,7 +1844,7 @@
         },
         {
             "name": "illuminate/macroable",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1890,16 +1890,16 @@
         },
         {
             "name": "illuminate/pagination",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pagination.git",
-                "reference": "b42a851e037984e38f8964d1a96d15b0302bebfc"
+                "reference": "616874b9607ff35925347e1710a8b5151858cdf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/pagination/zipball/b42a851e037984e38f8964d1a96d15b0302bebfc",
-                "reference": "b42a851e037984e38f8964d1a96d15b0302bebfc",
+                "url": "https://api.github.com/repos/illuminate/pagination/zipball/616874b9607ff35925347e1710a8b5151858cdf2",
+                "reference": "616874b9607ff35925347e1710a8b5151858cdf2",
                 "shasum": ""
             },
             "require": {
@@ -1936,11 +1936,11 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-01-12T17:17:46+00:00"
+            "time": "2024-04-11T14:31:05+00:00"
         },
         {
             "name": "illuminate/pipeline",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pipeline.git",
@@ -1988,7 +1988,7 @@
         },
         {
             "name": "illuminate/queue",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/queue.git",
@@ -2055,7 +2055,7 @@
         },
         {
             "name": "illuminate/session",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/session.git",
@@ -2112,7 +2112,7 @@
         },
         {
             "name": "illuminate/support",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -2183,7 +2183,7 @@
         },
         {
             "name": "illuminate/testing",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/testing.git",
@@ -2242,7 +2242,7 @@
         },
         {
             "name": "illuminate/translation",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/translation.git",
@@ -2293,7 +2293,7 @@
         },
         {
             "name": "illuminate/validation",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/validation.git",
@@ -2354,7 +2354,7 @@
         },
         {
             "name": "illuminate/view",
-            "version": "v10.48.7",
+            "version": "v10.48.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
@@ -2506,16 +2506,16 @@
         },
         {
             "name": "laravel/prompts",
-            "version": "v0.1.18",
+            "version": "v0.1.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/prompts.git",
-                "reference": "3b5e6b03f1f1175574b5a32331d99c9819da9848"
+                "reference": "0ab75ac3434d9f610c5691758a6146a3d1940c18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/prompts/zipball/3b5e6b03f1f1175574b5a32331d99c9819da9848",
-                "reference": "3b5e6b03f1f1175574b5a32331d99c9819da9848",
+                "url": "https://api.github.com/repos/laravel/prompts/zipball/0ab75ac3434d9f610c5691758a6146a3d1940c18",
+                "reference": "0ab75ac3434d9f610c5691758a6146a3d1940c18",
                 "shasum": ""
             },
             "require": {
@@ -2557,9 +2557,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/prompts/issues",
-                "source": "https://github.com/laravel/prompts/tree/v0.1.18"
+                "source": "https://github.com/laravel/prompts/tree/v0.1.19"
             },
-            "time": "2024-04-04T17:41:50+00:00"
+            "time": "2024-04-16T14:20:35+00:00"
         },
         {
             "name": "laravel/serializable-closure",
@@ -3842,25 +3842,25 @@
         },
         {
             "name": "psy/psysh",
-            "version": "v0.11.22",
+            "version": "v0.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
-                "reference": "128fa1b608be651999ed9789c95e6e2a31b5802b"
+                "reference": "b6b6cce7d3ee8fbf31843edce5e8f5a72eff4a73"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/128fa1b608be651999ed9789c95e6e2a31b5802b",
-                "reference": "128fa1b608be651999ed9789c95e6e2a31b5802b",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/b6b6cce7d3ee8fbf31843edce5e8f5a72eff4a73",
+                "reference": "b6b6cce7d3ee8fbf31843edce5e8f5a72eff4a73",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-tokenizer": "*",
-                "nikic/php-parser": "^4.0 || ^3.1",
-                "php": "^8.0 || ^7.0.8",
-                "symfony/console": "^6.0 || ^5.0 || ^4.0 || ^3.4",
-                "symfony/var-dumper": "^6.0 || ^5.0 || ^4.0 || ^3.4"
+                "nikic/php-parser": "^5.0 || ^4.0",
+                "php": "^8.0 || ^7.4",
+                "symfony/console": "^7.0 || ^6.0 || ^5.0 || ^4.0 || ^3.4",
+                "symfony/var-dumper": "^7.0 || ^6.0 || ^5.0 || ^4.0 || ^3.4"
             },
             "conflict": {
                 "symfony/console": "4.4.37 || 5.3.14 || 5.3.15 || 5.4.3 || 5.4.4 || 6.0.3 || 6.0.4"
@@ -3871,8 +3871,7 @@
             "suggest": {
                 "ext-pcntl": "Enabling the PCNTL extension makes PsySH a lot happier :)",
                 "ext-pdo-sqlite": "The doc command requires SQLite to work.",
-                "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well.",
-                "ext-readline": "Enables support for arrow-key history navigation, and showing and manipulating command history."
+                "ext-posix": "If you have PCNTL, you'll want the POSIX extension as well."
             },
             "bin": [
                 "bin/psysh"
@@ -3880,7 +3879,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-0.11": "0.11.x-dev"
+                    "dev-main": "0.12.x-dev"
                 },
                 "bamarni-bin": {
                     "bin-links": false,
@@ -3916,9 +3915,9 @@
             ],
             "support": {
                 "issues": "https://github.com/bobthecow/psysh/issues",
-                "source": "https://github.com/bobthecow/psysh/tree/v0.11.22"
+                "source": "https://github.com/bobthecow/psysh/tree/v0.12.3"
             },
-            "time": "2023-10-14T21:56:36+00:00"
+            "time": "2024-04-02T15:57:53+00:00"
         },
         {
             "name": "ramsey/collection",
@@ -6944,16 +6943,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.18",
+            "version": "10.5.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "835df1709ac6c968ba34bf23f3c30e5d5a266de8"
+                "reference": "c726f0de022368f6ed103e452a765d3304a996a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/835df1709ac6c968ba34bf23f3c30e5d5a266de8",
-                "reference": "835df1709ac6c968ba34bf23f3c30e5d5a266de8",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c726f0de022368f6ed103e452a765d3304a996a4",
+                "reference": "c726f0de022368f6ed103e452a765d3304a996a4",
                 "shasum": ""
             },
             "require": {
@@ -7025,7 +7024,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.18"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.19"
             },
             "funding": [
                 {
@@ -7041,7 +7040,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-14T07:05:31+00:00"
+            "time": "2024-04-17T14:06:18+00:00"
         },
         {
             "name": "sebastian/cli-parser",
