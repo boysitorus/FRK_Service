@@ -20,4 +20,22 @@ class AsesorController extends Controller
         }
     }
 
+    public function reviewRencana(Request $request){
+        $id_rencana = $request->get('id_rencana');
+        $komentar = $request->get('komentar');
+
+        $rencana = Rencana::where('id_rencana', $id_rencana)->first();
+
+        $rencana->asesor1_frk = $komentar;
+
+        $res = [
+            "rencana" => $rencana,
+            "message" => "Successfully give approval for frk"
+        ];
+
+        $rencana->save();
+
+        return response()->json($res, 200);
+    }
+
 }

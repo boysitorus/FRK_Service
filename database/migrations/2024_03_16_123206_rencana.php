@@ -20,10 +20,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_dosen');
             $table->string('nama_kegiatan');
             $table->decimal('sks_terhitung');
-            $table->string('asesor1_frk')->default(false);
-            $table->string('asesor2_frk')->default(false);
-            $table->string('asesor1_fed')->default(false);
-            $table->string('asesor2_fed')->default(false);
+            $table->string('asesor1_frk')->nullable();
+            $table->string('asesor2_frk')->nullable();
+            $table->string('asesor1_fed')->nullable();
+            $table->string('asesor2_fed')->nullable();
             $table->string('lampiran')->nullable();
             $table->boolean('flag_save_permananent')->default(false);
             $table->timestamps();

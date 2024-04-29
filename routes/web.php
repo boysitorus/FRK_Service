@@ -335,5 +335,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     // START OF ROUTE ASESOR FRK
     $router->group(['prefix' => 'asesor-frk'], function () use ($router) {
         $router->get('/getAllDosen', 'AsesorController@getAllDosen');
+        $router->post('/reviewRencana', 'AsesorController@reviewRencana');
     });
 });
