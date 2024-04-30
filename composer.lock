@@ -901,7 +901,11 @@
         },
         {
             "name": "illuminate/auth",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/auth.git",
@@ -959,7 +963,11 @@
         },
         {
             "name": "illuminate/broadcasting",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/broadcasting.git",
@@ -1017,7 +1025,11 @@
         },
         {
             "name": "illuminate/bus",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/bus.git",
@@ -1070,7 +1082,11 @@
         },
         {
             "name": "illuminate/cache",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/cache.git",
@@ -1132,7 +1148,11 @@
         },
         {
             "name": "illuminate/collections",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/collections.git",
@@ -1187,7 +1207,11 @@
         },
         {
             "name": "illuminate/conditionable",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/conditionable.git",
@@ -1233,7 +1257,11 @@
         },
         {
             "name": "illuminate/config",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/config.git",
@@ -1281,7 +1309,11 @@
         },
         {
             "name": "illuminate/console",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/console.git",
@@ -1346,7 +1378,11 @@
         },
         {
             "name": "illuminate/container",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
@@ -1397,7 +1433,11 @@
         },
         {
             "name": "illuminate/contracts",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
@@ -1514,7 +1554,11 @@
         },
         {
             "name": "illuminate/encryption",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/encryption.git",
@@ -1565,7 +1609,11 @@
         },
         {
             "name": "illuminate/events",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/events.git",
@@ -1620,7 +1668,11 @@
         },
         {
             "name": "illuminate/filesystem",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/filesystem.git",
@@ -1687,7 +1739,11 @@
         },
         {
             "name": "illuminate/hashing",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/hashing.git",
@@ -1735,7 +1791,11 @@
         },
         {
             "name": "illuminate/http",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/http.git",
@@ -1795,7 +1855,11 @@
         },
         {
             "name": "illuminate/log",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/log.git",
@@ -1844,7 +1908,11 @@
         },
         {
             "name": "illuminate/macroable",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/macroable.git",
@@ -1890,7 +1958,11 @@
         },
         {
             "name": "illuminate/pagination",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pagination.git",
@@ -1940,7 +2012,11 @@
         },
         {
             "name": "illuminate/pipeline",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/pipeline.git",
@@ -1988,7 +2064,11 @@
         },
         {
             "name": "illuminate/queue",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/queue.git",
@@ -2055,7 +2135,11 @@
         },
         {
             "name": "illuminate/session",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/session.git",
@@ -2112,7 +2196,11 @@
         },
         {
             "name": "illuminate/support",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
@@ -2183,7 +2271,11 @@
         },
         {
             "name": "illuminate/testing",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/testing.git",
@@ -2242,7 +2334,11 @@
         },
         {
             "name": "illuminate/translation",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/translation.git",
@@ -2293,7 +2389,11 @@
         },
         {
             "name": "illuminate/validation",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/validation.git",
@@ -2354,7 +2454,11 @@
         },
         {
             "name": "illuminate/view",
+<<<<<<< HEAD
             "version": "v10.48.9",
+=======
+            "version": "v10.48.8",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/view.git",
@@ -2506,6 +2610,7 @@
         },
         {
             "name": "laravel/prompts",
+<<<<<<< HEAD
             "version": "v0.1.20",
             "source": {
                 "type": "git",
@@ -2516,6 +2621,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/laravel/prompts/zipball/bf9a360c484976692de0f3792f30066f4f4b34a2",
                 "reference": "bf9a360c484976692de0f3792f30066f4f4b34a2",
+=======
+            "version": "v0.1.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/prompts.git",
+                "reference": "0ab75ac3434d9f610c5691758a6146a3d1940c18"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/prompts/zipball/0ab75ac3434d9f610c5691758a6146a3d1940c18",
+                "reference": "0ab75ac3434d9f610c5691758a6146a3d1940c18",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
                 "shasum": ""
             },
             "require": {
@@ -2557,9 +2674,15 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/prompts/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/laravel/prompts/tree/v0.1.20"
             },
             "time": "2024-04-18T00:45:25+00:00"
+=======
+                "source": "https://github.com/laravel/prompts/tree/v0.1.19"
+            },
+            "time": "2024-04-16T14:20:35+00:00"
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
         },
         {
             "name": "laravel/serializable-closure",
@@ -6944,6 +7067,7 @@
         },
         {
             "name": "phpunit/phpunit",
+<<<<<<< HEAD
             "version": "10.5.20",
             "source": {
                 "type": "git",
@@ -6954,6 +7078,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/547d314dc24ec1e177720d45c6263fb226cc2ae3",
                 "reference": "547d314dc24ec1e177720d45c6263fb226cc2ae3",
+=======
+            "version": "10.5.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/phpunit.git",
+                "reference": "c726f0de022368f6ed103e452a765d3304a996a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c726f0de022368f6ed103e452a765d3304a996a4",
+                "reference": "c726f0de022368f6ed103e452a765d3304a996a4",
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
                 "shasum": ""
             },
             "require": {
@@ -7025,7 +7161,11 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
+<<<<<<< HEAD
                 "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.20"
+=======
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.19"
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
             },
             "funding": [
                 {
@@ -7041,7 +7181,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2024-04-24T06:32:35+00:00"
+=======
+            "time": "2024-04-17T14:06:18+00:00"
+>>>>>>> 70f457222b42ffa713d175df81e61923d973a1a1
         },
         {
             "name": "sebastian/cli-parser",
