@@ -331,4 +331,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('/simpulan-penunjang', 'simpulanController@getSksPenunjang');
     $router->get('/simpulan-total', 'simpulanController@getTotalSks');
     $router->post('/simpulan-simpan-rencana/{id}', 'simpulanController@simpanRencana');
+
+    // START OF ROUTE ASESOR FRK
+    $router->group(['prefix' => 'asesor-frk'], function () use ($router) {
+        $router->get('/getAllDosen', 'AsesorController@getAllDosen');
+        $router->post('/reviewRencana', 'AsesorController@reviewRencana');
+    });
 });
