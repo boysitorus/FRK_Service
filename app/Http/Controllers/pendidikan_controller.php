@@ -32,7 +32,7 @@ class pendidikan_controller extends Controller
 
         // BAGIAN E
         $tugasAkhir = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_mahasiswa', 'rencana.sks_terhitung', 'rencana.asesor1_frk')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pendidikan.jumlah_kelompok', 'rencana.sks_terhitung', 'rencana.asesor1_frk')
             ->where('rencana.sub_rencana', 'tugasAkhir')
             ->get();
 
