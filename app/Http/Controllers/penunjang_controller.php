@@ -1392,7 +1392,7 @@ class penunjang_controller extends Controller
         $detail_rencana = DetailPenunjang::where('id_rencana', $id_rencana)->first();
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jabatan = $request->get('jabatan');
-        $tingkatan = $request->get('tingkatan');
+        $jenis_tingkatan = $request->get('jenis_tingkatan');
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
@@ -1402,8 +1402,8 @@ class penunjang_controller extends Controller
             $detail_rencana->jabatan = $jabatan;
         }
 
-        if ($tingkatan != null && $tingkatan != "") {
-            $detail_rencana->tingkatan = $tingkatan;
+        if ($jenis_tingkatan != null && $jenis_tingkatan != "") {
+            $detail_rencana->jenis_tingkatan = $jenis_tingkatan;
         }
 
         $rencana->save();
