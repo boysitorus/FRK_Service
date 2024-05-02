@@ -552,7 +552,7 @@ class pendidikan_controller extends Controller
         if ($jumlah_kelompok == null) {
             $jumlah_kelompok = $detail_rencana->jumlah_kelompok;
         } else {
-            $detail_rencana->jumlah_mahasiswa = $jumlah_kelompok;
+            $detail_rencana->jumlah_kelompok = $jumlah_kelompok;
         }
 
         if ($jumlah_kelompok != null) {

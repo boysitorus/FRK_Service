@@ -55,7 +55,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         //Tugas Akhir
         $router->get('/tugasAkhir/{id}', 'pendidikan_controller@getTugasAkhir');
         $router->post('/tugasAkhir', 'pendidikan_controller@postTugasAkhir');
-        $router->post('/editTugasAkhir', 'pendidikan_controller@editTugasAkhir');
+        $router->post('/edit/tugasAkhir', 'pendidikan_controller@editTugasAkhir');
         $router->delete('/tugasAkhir/{id}', 'pendidikan_controller@deleteTugasAkhir');
 
         //Proposal
