@@ -421,7 +421,7 @@ class PengabdianController extends Controller
                     $bobot_pencapaian = 0.75;
                 }
                 break;
-            case "Persetujuan penerbit":
+            case "Persetujuan Penerbit":
                 $bobot_pencapaian = 0.85;
                 break;
             case "Buku selesai dicetak":
@@ -437,7 +437,7 @@ class PengabdianController extends Controller
         $sks_terhitung = 0;
         if ($peran == "Penulis Utama") {
             $bobot_peran = 0.6;
-        } elseif ($peran == "Penulis Lain") {
+        } elseif ($peran == "Penulis Lainnya") {
             $bobot_peran = 0.4*2/$jumlah_anggota;
         } elseif ($peran == "Editor") {
             $bobot_peran = 0.6*2;
