@@ -9,16 +9,24 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class SimpulanController extends Controller
 {
-    public function getAll()
+    public function getAll($id)
     {
         try {
-            $totalSksPendidikan = Rencana::join('detail_pendidikan', 'rencana.id_rencana', '=', 'detail_pendidikan.id_rencana')
-                ->where('rencana.jenis_rencana', 'pendidikan')
-                ->sum('rencana.sks_terhitung');
+            $totalSksPendidikan = Rencana::where('id_dosen', $id)->where("jenis_rencana", "pendidikan")->sum("sks_terhitung");
+            $totalSksPenelitian = Rencana::where('id_dosen', $id)->where("jenis_rencana", "penelitian")->sum("sks_terhitung");
+            $totalSksPengabdian = Rencana::where('id_dosen', $id)->where("jenis_rencana", "pengabdian")->sum("sks_terhitung");
+            $totalSksPenunjang = Rencana::where('id_dosen', $id)->where("jenis_rencana", "penunjang")->sum("sks_terhitung");
+            $sksTotal = $totalSksPendidikan + $totalSksPenelitian + $totalSksPengabdian + $totalSksPenunjang;
 
-            $totalSksPenelitian = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
-            ->where('rencana.jenis_rencana', 'penelitian')
-            ->sum('rencana.sks_terhitung');
+            $res = [
+                "sks_pendidikan" => $totalSksPendidikan,
+                "sks_penelitian" => $totalSksPenelitian,
+                "sks_pengabdian" => $totalSksPengabdian,
+                "sks_penunjang" => $totalSksPenunjang,
+                "sks_total" => $sksTotal
+            ];
+
+            return response()->json($res, 200);
 
         } catch(\Throwable $th) {
             return response()->json(['error' => 'Failed to retrieve data from database'], 500);

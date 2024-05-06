@@ -325,6 +325,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     //END OF ROUTE FOR PENUNJANG
 
     // START OF ROUTE SIMPULAN FRK
+    $router->get('/simpulan/{id}', 'simpulanController@getAll');
     $router->get('/simpulan-pendidikan', 'simpulanController@getSksPendidikan');
     $router->get('/simpulan-penelitian', 'simpulanController@getSksPenelitian');
     $router->get('/simpulan-pengabdian', 'simpulanController@getSksPengabdian');
