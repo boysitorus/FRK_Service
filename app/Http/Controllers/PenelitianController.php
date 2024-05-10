@@ -169,9 +169,9 @@ class PenelitianController extends Controller
 
         $sks = 0;
         if ($posisi == "Ketua") {
-            $sks = 0.6*2;
+            $sks = 0.8*2;
         } elseif ($posisi == "Anggota") {
-            $sks = round(0.8*2/$jumlah_anggota, 2);
+            $sks = round(0.6*2/$jumlah_anggota, 2);
         }
 
         $sks_terhitung = $bobot_pencapaian*$sks;
@@ -261,9 +261,9 @@ class PenelitianController extends Controller
             }
 
             if ($posisi == "Ketua") {
-                $sks = 0.6*2;
+                $sks = 0.8*2;
             } elseif ($posisi == "Anggota") {
-                $sks = round(0.8*2/$jumlah_anggota, 2);
+                $sks = round(0.6*2/$jumlah_anggota, 2);
             }
 
             $sks_terhitung = $bobot_pencapaian*$sks;
