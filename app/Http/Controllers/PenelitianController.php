@@ -1569,6 +1569,8 @@ class PenelitianController extends Controller
 
         $sks_lingkup = 0;
         $bobot_peran = 0;
+        $sks_terhitung = 0;
+
         switch($lingkup_penerbit)
         {
             case 'Diterbitkan oleh Jurnal ilmiah/majalah ilmiah ber-ISSN tidak terakreditasi
@@ -1590,7 +1592,6 @@ class PenelitianController extends Controller
             case 'Penulis Utama':
                 $bobot_peran = 0.6;
                 break;
-
             case 'Penulis Lainnya':
                 $bobot_peran = 0.4;
                 break;
@@ -1599,10 +1600,9 @@ class PenelitianController extends Controller
                 break;
         }
 
-        $sks_terhitung = 0;
-        if($jenis_pengerjaan == 1){
+        if($jenis_pengerjaan == 'Mandiri'){
             $sks_terhitung = $sks_lingkup;
-        }else if($jenis_pengerjaan == 2){
+        }else if($jenis_pengerjaan == 'Mandiri'){
             $sks_terhitung = $sks_lingkup * $bobot_peran;
         }
 
@@ -1642,8 +1642,7 @@ class PenelitianController extends Controller
 
         $sks_lingkup = 0;
         $bobot_peran = 0;
-
-
+        $sks_terhitung = 0;
 
         if ($nama_kegiatan != null && $nama_kegiatan != "") {
             $rencana->nama_kegiatan = $nama_kegiatan;
@@ -1696,10 +1695,9 @@ class PenelitianController extends Controller
                 break;
         }
 
-        $sks_terhitung = 0;
-        if($jenis_pengerjaan == 1){
+        if($jenis_pengerjaan == 'Mandiri'){
             $sks_terhitung = $sks_lingkup;
-        }else if($jenis_pengerjaan == 2){
+        }else if($jenis_pengerjaan == 'Kelompok'){
             $sks_terhitung = $sks_lingkup * $bobot_peran;
         }
 
