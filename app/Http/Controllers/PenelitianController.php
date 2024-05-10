@@ -1573,8 +1573,7 @@ class PenelitianController extends Controller
 
         switch($lingkup_penerbit)
         {
-            case 'Diterbitkan oleh Jurnal ilmiah/majalah ilmiah ber-ISSN tidak terakreditasi
-            atau proceedings seminar nasional maupun internasional' :
+            case 'Diterbitkan oleh Jurnal ilmiah/majalah ilmiah ber-ISSN tidak terakreditasi atau proceedings seminar nasional maupun internasional' :
                 $sks_lingkup = 1;
                 break;
 
@@ -1602,7 +1601,7 @@ class PenelitianController extends Controller
 
         if($jenis_pengerjaan == 'Mandiri'){
             $sks_terhitung = $sks_lingkup;
-        }else if($jenis_pengerjaan == 'Mandiri'){
+        }else if($jenis_pengerjaan == 'Kelompok'){
             $sks_terhitung = $sks_lingkup * $bobot_peran;
         }
 
@@ -1668,8 +1667,7 @@ class PenelitianController extends Controller
 
         switch($lingkup_penerbit)
         {
-            case 'Diterbitkan oleh Jurnal ilmiah/majalah ilmiah ber-ISSN tidak terakreditasi
-            atau proceedings seminar nasional maupun internasional' :
+            case 'Diterbitkan oleh Jurnal ilmiah/majalah ilmiah ber-ISSN tidak terakreditasi atau proceedings seminar nasional maupun internasional' :
                 $sks_lingkup = 1;
                 break;
 
