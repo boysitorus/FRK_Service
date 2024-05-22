@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('asesor2_frk')->nullable();
             $table->string('asesor1_fed')->nullable();
             $table->string('asesor2_fed')->nullable();
-            $table->string('lampiran')->nullable();
+            $table->json('lampiran')->nullable();
             $table->boolean('flag_save_permananent')->default(false);
             $table->timestamps();
 
