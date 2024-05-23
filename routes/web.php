@@ -28,6 +28,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     //START ROUTE FOR PENDIDIKAN
     $router->group(['prefix' => 'pendidikan'], function () use ($router) {
+        $router->get('/all/{id}', 'pendidikan_controller@all');
+
         //teori
         $router->get('/teori/{id}', 'pendidikan_controller@getTeori');
         $router->post('/teori', 'pendidikan_controller@postTeori');
@@ -225,6 +227,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
     //START ROUTE FOR PENUNJANG
     $router->group(['prefix' => 'penunjang'], function () use ($router) {
+        $router->get('/all/{id}', 'penunjang_controller@all');
         // Bagian A
         $router->get('/akademik/{id}', 'penunjang_controller@getAkademik');
         $router->post('/akademik', 'penunjang_controller@postAkademik');

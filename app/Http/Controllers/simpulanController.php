@@ -94,3 +94,4 @@ class SimpulanController extends Controller
         }
     }
 }
+    
