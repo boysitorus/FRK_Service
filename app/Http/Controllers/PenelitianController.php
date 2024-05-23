@@ -467,7 +467,7 @@ class PenelitianController extends Controller
     public function getBukuTerbit($id)
     {
         $buku_terbit = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan','detail_penelitian.peran','rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.lmapiran')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.jenis_pengerjaan','detail_penelitian.peran','rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.lampiran')
             ->where('rencana.sub_rencana', 'buku_terbit')
             ->where('id_dosen', $id)
             ->get();
