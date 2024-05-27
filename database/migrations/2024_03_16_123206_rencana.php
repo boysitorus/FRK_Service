@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('asesor2_fed')->nullable();
             $table->json('lampiran')->nullable();
             $table->boolean('flag_save_permananent')->default(false);
+            $table->boolean('flag_save_permananent_fed')->default(false);
             $table->timestamps();
 
             $table->foreign('id_tanggal')
