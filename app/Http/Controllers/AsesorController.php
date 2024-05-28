@@ -10,10 +10,14 @@ class AsesorController extends Controller
     public function getAllDosen()
     {
         try {
-            $res = Rencana::where('flag_save_permananent', 1)
-                ->select('id_dosen')
+//            $res = Rencana::where('flag_save_permananent', 1)
+//                ->select('id_dosen')
+//                ->distinct()
+//                ->get();
+            $res = Rencana::select('id_dosen')
                 ->distinct()
                 ->get();
+
             return response()->json($res, 200);
         } catch (\Throwable $th) {
             return response()->json($res, 400);
