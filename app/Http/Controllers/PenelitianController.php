@@ -123,7 +123,7 @@ class PenelitianController extends Controller
     }
 
     // BEGINING OF METHOD A. PENELITIAN_KELOMPOK // BEGINING OF METHOD A. PENELITIAN_KELOMPOK
-    public function getPenelitianKelompok(Request $request)
+    public function getPenelitianKelompok($id)
     {
         $penelitian_kelompok = Rencana::join('detail_penelitian', 'rencana.id_rencana', '=', 'detail_penelitian.id_rencana')
             ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penelitian.status_tahapan', 'detail_penelitian.posisi', 'detail_penelitian.jumlah_anggota', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.lampiran','rencana.asesor2_frk', 'rencana.asesor1_fed', 'rencana.asesor2_fed', 'rencana.flag_save_permananent')
