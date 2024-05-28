@@ -12,92 +12,98 @@ class penunjang_controller extends Controller
 
     public function getAll()
     {
+        //SEMUA
+        $all = Rencana::where('rencana.id_dosen', $id)
+            ->select('rencana.flag_save_permananent', 1)
+            ->count();
+        
         // BAGIAN A
         $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jumlah_mahasiswa')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jumlah_mahasiswa', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'akademik')
             ->get();
 
         // BAGIAN B
         $bimbingan = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jumlah_mahasiswa')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jumlah_mahasiswa', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'bimbingan')
             ->get();
 
         // BAGIAN C
         $ukm = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jumlah_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jumlah_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'ukm')
             ->get();
 
         // BAGIAN D
         $sosial = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'sosial')
             ->get();
 
         // BAGIAN E
         $struktural = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_jabatan_struktural')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_jabatan_struktural', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'struktural')
             ->get();
 
         // BAGIAN F
         $nonstruktural = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_jabatan_nonstruktural')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_jabatan_nonstruktural', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'nonstruktural')
             ->get();
 
         // BAGIAN G
         $redaksi = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jabatan')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jabatan', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'redaksi')
             ->get();
 
         // BAGIAN H
         $adhoc = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jabatan')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jabatan', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'adhoc')
             ->get();
         
         // BAGIAN I
         $ketuapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jenis_tingkatan', 'rencana.lampiran')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jenis_tingkatan', 'rencana.lampiran', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'ketua_panitia')
             ->get();
 
         // BAGIAN J
         $anggotapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jenis_tingkatan', 'rencana.lampiran')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jenis_tingkatan', 'rencana.lampiran', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'anggota_panitia')
             ->get();
 
         // BAGIAN K
         $pengurusyayasan = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jabatan', 'rencana.lampiran')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jabatan', 'rencana.lampiran', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'pengurus_yayasan')
             ->get();
 
         // BAGIAN L
         $asosiasi = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jenis_tingkatan', 'detail_penunjang.jabatan', 'rencana.lampiran')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jenis_tingkatan', 'detail_penunjang.jabatan', 'rencana.lampiran', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'asosiasi')
             ->get();
 
         // BAGIAN M
         $seminar = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jenis_tingkatan', 'rencana.lampiran')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'detail_penunjang.jenis_tingkatan', 'rencana.lampiran', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'seminar')
             ->get();
 
         // BAGIAN N
         $reviewer = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.lampiran')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.lampiran', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'reviewer')
             ->get();
 
         // Kembalikan data dalam bentuk yang sesuai untuk ditampilkan di halaman
         return response()->json([
+            'all' => $all,
             'akademik' => $akademik,
             'bimbingan' => $bimbingan,
             'ukm' => $ukm,
@@ -116,11 +122,20 @@ class penunjang_controller extends Controller
     }
 
 
+    public function all($id)
+    {
+        $all = Rencana::where('rencana.id_dosen', $id)
+            ->where('rencana.flag_save_permananent', 1)
+            ->count();
+        
+            return response()->json($all, 200);
+    }
+
     //Handler A. Bimbingan Akademik
     public function getAkademik($id)
     {
         $akademik = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jumlah_mahasiswa')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jumlah_mahasiswa', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'akademik')
             ->where('id_dosen', $id)
             ->get();
@@ -217,7 +232,7 @@ class penunjang_controller extends Controller
     public function getBimbingan($id)
     {
         $bimbingan = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jumlah_mahasiswa')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jumlah_mahasiswa', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'bimbingan')
             ->where('id_dosen', $id)
             ->get();
@@ -313,7 +328,7 @@ class penunjang_controller extends Controller
     public function getUkm($id)
     {
         $ukm = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jumlah_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor2_frk', 'rencana.asesor1_frk')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_penunjang.jumlah_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor2_frk', 'rencana.asesor1_frk', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'ukm')
             ->where('id_dosen', $id)
             ->get();
@@ -408,7 +423,7 @@ class penunjang_controller extends Controller
     public function getSosial($id)
     {
         $sosial = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor2_frk', 'rencana.asesor1_frk')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor2_frk', 'rencana.asesor1_frk', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'sosial')
             ->where('id_dosen', $id)
             ->get();
@@ -488,7 +503,7 @@ class penunjang_controller extends Controller
     public function getStruktural($id)
     {
         $struktural = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_jabatan_struktural')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_jabatan_struktural', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'struktural')
             ->where('id_dosen', $id)
             ->get();
@@ -705,7 +720,7 @@ class penunjang_controller extends Controller
     public function getNonstruktural($id)
     {
         $nonstruktural = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_jabatan_nonstruktural')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_jabatan_nonstruktural', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'nonstruktural')
             ->where('id_dosen', $id)
             ->get();
@@ -860,7 +875,7 @@ class penunjang_controller extends Controller
     public function getRedaksi($id)
     {
         $redaksi = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk','detail_penunjang.jabatan')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk','detail_penunjang.jabatan', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'redaksi')
             ->where('id_dosen', $id)
             ->get();
@@ -972,7 +987,7 @@ class penunjang_controller extends Controller
     public function getAdhoc($id)
     {
         $adhoc = Rencana::join('detail_penunjang', 'rencana.id_rencana', "=", "detail_penunjang.id_rencana")
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk','rencana.asesor2_frk', 'detail_penunjang.jabatan')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk','rencana.asesor2_frk', 'detail_penunjang.jabatan', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'adhoc')
             ->where('id_dosen', $id)
             ->get();
@@ -1086,7 +1101,7 @@ class penunjang_controller extends Controller
     public function getKetuaPanitia($id)
     {
         $ketuapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk','rencana.asesor2_frk','detail_penunjang.jenis_tingkatan')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk','rencana.asesor2_frk','detail_penunjang.jenis_tingkatan', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'ketua_panitia')
             ->where('id_dosen', $id)
             ->get();
@@ -1186,7 +1201,7 @@ class penunjang_controller extends Controller
     public function getAnggotaPanitia($id)
     {
         $anggotapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk','rencana.asesor2_frk', 'detail_penunjang.jenis_tingkatan')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk','rencana.asesor2_frk', 'detail_penunjang.jenis_tingkatan', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'anggota_panitia')
             ->where('id_dosen', $id)
             ->get();
@@ -1286,7 +1301,7 @@ class penunjang_controller extends Controller
     public function getPengurusYayasan($id)
     {
         $anggotapanitia = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jabatan')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jabatan', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'pengurus_yayasan')
             ->where('id_dosen', $id)
             ->get();
@@ -1386,7 +1401,7 @@ class penunjang_controller extends Controller
     public function getAsosiasi($id)
     {
         $asosiasi = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_tingkatan', 'detail_penunjang.jabatan')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_tingkatan', 'detail_penunjang.jabatan', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'asosiasi')
             ->where('id_dosen', $id)
             ->get();
@@ -1494,7 +1509,7 @@ class penunjang_controller extends Controller
     public function getSeminar($id)
     {
         $seminar = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_tingkatan')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk', 'detail_penunjang.jenis_tingkatan', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'seminar')
             ->where('id_dosen', $id)
             ->get();
@@ -1598,7 +1613,7 @@ class penunjang_controller extends Controller
     public function getReviewer($id)
     {
         $reviewer = Rencana::join('detail_penunjang', 'rencana.id_rencana', '=', 'detail_penunjang.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor2_frk', 'rencana.asesor1_frk')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'rencana.sks_terhitung', 'rencana.asesor2_frk', 'rencana.asesor1_frk', 'rencana.flag_save_permananent')
             ->where('rencana.sub_rencana', 'reviewer')
             ->where('id_dosen', $id)
             ->get();
