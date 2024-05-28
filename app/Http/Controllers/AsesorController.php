@@ -20,11 +20,19 @@ class AsesorController extends Controller
         }
     }
 
-    public function getAllCompleteDosen()
+    public function getAllCompleteDosen($role)
     {
         try {
+            if ($role == 'asesor1') {
+                $condition = 'COUNT(*) = SUM(CASE WHEN asesor1_frk = "setuju" THEN 1 ELSE 0 END)';
+            } else {
+                $condition = 'COUNT(*) = SUM(CASE WHEN asesor2_frk = "setuju" THEN 1 ELSE 0 END)';
+            }
             $res = Rencana::select('id_dosen')
-                ->get();
+                ->groupBy('id_dosen')
+                ->havingRaw($condition)
+                ->pluck('id_dosen');
+
             return response()->json($res, 200);
         } catch (\Throwable $th) {
             return response()->json($res, 400);
