@@ -11,7 +11,7 @@ class AuthController extends Controller
     public function index()
     {
         $data_dosen = [
-            "username" => "wilona.diva",
+            "username" => "wilona.divaa",
 		    "password" => "testing123",
 		    "nama" => "Wilona Diva Artha Simbolon",
 		    "nik" => 1234567890,
