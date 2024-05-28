@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('periode_awal_approve_assesor_2');
             $table->date('periode_akhir_approve_assesor_2');
             $table->string('tahun_ajaran');
+            $table->enum('semester', ['Ganjil', 'Genap']);
             $table->timestamps();
         });
     }
