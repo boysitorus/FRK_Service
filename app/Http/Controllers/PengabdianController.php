@@ -64,7 +64,7 @@ class PengabdianController extends Controller
     public function getKegiatan($id)
     {
         $kegiatan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jumlah_durasi', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk','rencana.lampiran', 'rencana.flag_save_permananent')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jumlah_durasi', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk','rencana.lampiran', 'rencana.flag_save_permananent', 'rencana.asesor1_fed', 'rencana.asesor2_fed')
             ->where('rencana.sub_rencana', 'kegiatan')
             ->where('id_dosen', $id)
             ->get();
@@ -167,7 +167,7 @@ class PengabdianController extends Controller
     public function getPenyuluhan($id)
     {
         $penyuluhan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jumlah_durasi', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk','rencana.lampiran', 'rencana.flag_save_permananent')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jumlah_durasi', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk','rencana.lampiran', 'rencana.flag_save_permananent', 'rencana.asesor1_fed', 'rencana.asesor2_fed')
             ->where('rencana.sub_rencana', 'penyuluhan')
             ->where('id_dosen', $id)
             ->get();
@@ -269,7 +269,7 @@ class PengabdianController extends Controller
     public function getKonsultan($id)
     {
         $konsultan = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
-        ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.posisi', 'rencana.sks_terhitung', 'rencana.asesor1_frk','rencana.asesor2_frk', 'rencana.lampiran', 'rencana.flag_save_permananent')
+        ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.posisi', 'rencana.sks_terhitung', 'rencana.asesor1_frk','rencana.asesor2_frk', 'rencana.lampiran', 'rencana.flag_save_permananent', 'rencana.asesor1_fed', 'rencana.asesor2_fed')
            ->where('rencana.sub_rencana', 'konsultan')
            ->where('id_dosen', $id)
            ->get();
@@ -396,7 +396,7 @@ class PengabdianController extends Controller
     public function getKarya($id)
     {
         $karya = Rencana::join('detail_pengabdian', 'rencana.id_rencana', '=', 'detail_pengabdian.id_rencana')
-            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jenis_terbit', 'detail_pengabdian.status_tahapan', 'detail_pengabdian.jenis_pengerjaan','detail_pengabdian.peran','detail_pengabdian.jumlah_anggota', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk','rencana.lampiran', 'rencana.flag_save_permananent')
+            ->select('rencana.id_rencana', 'rencana.nama_kegiatan', 'detail_pengabdian.jenis_terbit', 'detail_pengabdian.status_tahapan', 'detail_pengabdian.jenis_pengerjaan','detail_pengabdian.peran','detail_pengabdian.jumlah_anggota', 'rencana.sks_terhitung', 'rencana.asesor1_frk', 'rencana.asesor2_frk','rencana.lampiran', 'rencana.flag_save_permananent', 'rencana.asesor1_fed', 'rencana.asesor2_fed')
             ->where('rencana.sub_rencana', 'karya')
             ->where('id_dosen', $id)
             ->get();
