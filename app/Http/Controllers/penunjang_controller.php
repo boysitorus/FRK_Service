@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class penunjang_controller extends Controller
 {
 
-    public function getAll()
+    public function getAll($id)
     {
         //SEMUA
         $all = Rencana::where('rencana.id_dosen', $id)
