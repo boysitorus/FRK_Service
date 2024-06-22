@@ -9,6 +9,7 @@ use App\Models\DetailPenunjang;
 use App\Models\Rencana;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RencanaTableSeeder extends Seeder
 {
