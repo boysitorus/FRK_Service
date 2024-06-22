@@ -14,7 +14,8 @@ return new class extends Migration
         //
         Schema::create('rencana', function (Blueprint $table) {
             $table->id('id_rencana');
-            $table->unsignedBigInteger('id_tanggal')->nullable();
+            $table->unsignedBigInteger('id_tanggal_frk')->nullable();
+            $table->unsignedBigInteger('id_tanggal_fed')->nullable();
             $table->string('jenis_rencana');
             $table->string('sub_rencana');
             $table->unsignedBigInteger('id_dosen');
@@ -29,7 +30,10 @@ return new class extends Migration
             $table->boolean('flag_save_permananent_fed')->default(false);
             $table->timestamps();
 
-            $table->foreign('id_tanggal')
+            $table->foreign('id_tanggal_frk')
+                ->references('id')->on('generate_tanggal')
+                ->onDelete('cascade');
+            $table->foreign('id_tanggal_fed')
                 ->references('id')->on('generate_tanggal')
                 ->onDelete('cascade');
         });

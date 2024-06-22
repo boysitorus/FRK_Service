@@ -74,6 +74,8 @@ class PengabdianController extends Controller
 
     public function postKegiatan(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_durasi = $request->get('jumlah_durasi');
@@ -84,6 +86,8 @@ class PengabdianController extends Controller
         $sks_terhitung = min($sks_terhitung, 3);
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pengabdian',
             'sub_rencana' => 'kegiatan',
             'id_dosen' => $id_dosen,
@@ -177,6 +181,8 @@ class PengabdianController extends Controller
 
     public function postPenyuluhan(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_durasi = $request->get('jumlah_durasi');
@@ -187,6 +193,8 @@ class PengabdianController extends Controller
         $sks_terhitung = min($sks_terhitung, 3);
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pengabdian',
             'sub_rencana' => 'penyuluhan',
             'id_dosen' => $id_dosen,
@@ -279,6 +287,8 @@ class PengabdianController extends Controller
 
     public function postKonsultan(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $posisi = $request->get('posisi');
@@ -301,6 +311,8 @@ class PengabdianController extends Controller
         $sks_terhitung = $bobot_pencapaian;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pengabdian',
             'sub_rencana' => 'konsultan',
             'id_dosen' => $id_dosen,
@@ -406,6 +418,8 @@ class PengabdianController extends Controller
 
     public function postKarya(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jenis_terbit = $request->get('jenis_terbit');
@@ -460,6 +474,8 @@ class PengabdianController extends Controller
         }
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pengabdian',
             'sub_rencana' => 'karya',
             'id_dosen' => $id_dosen,

@@ -84,7 +84,7 @@ class pendidikan_controller extends Controller
         $all = Rencana::where('rencana.id_dosen', $id)
             ->where('rencana.flag_save_permananent', 1)
             ->count();
-        
+
             return response()->json($all, 200);
     }
 
@@ -102,6 +102,8 @@ class pendidikan_controller extends Controller
 
     public function postTeori(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_kelas = (int)$request->get('jumlah_kelas');
@@ -114,6 +116,8 @@ class pendidikan_controller extends Controller
         $sks_terhitung = round(($jam_persiapan + $jam_tatap_muka + $jumlah_evaluasi) / 3, 2);
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'teori',
             'id_dosen' => $id_dosen,
@@ -223,6 +227,8 @@ class pendidikan_controller extends Controller
     }
     public function postPraktikum(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_kelas = (int)$request->get('jumlah_kelas');
@@ -231,6 +237,8 @@ class pendidikan_controller extends Controller
         $sks_terhitung = round((1.5 * $sks_matakuliah * $jumlah_kelas) / 2, 2);
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'praktikum',
             'id_dosen' => $id_dosen,
@@ -330,6 +338,8 @@ class pendidikan_controller extends Controller
 
     public function postBimbingan(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
@@ -337,6 +347,8 @@ class pendidikan_controller extends Controller
         $sks_terhitung = $jumlah_mahasiswa / 25;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'bimbingan',
             'id_dosen' => $id_dosen,
@@ -427,6 +439,8 @@ class pendidikan_controller extends Controller
 
     public function postSeminar(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_kelompok = (int)$request->get('jumlah_kelompok');
@@ -434,6 +448,8 @@ class pendidikan_controller extends Controller
         $sks_terhitung = (4 * $jumlah_kelompok) / 42;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'seminar',
             'id_dosen' => $id_dosen,
@@ -524,6 +540,8 @@ class pendidikan_controller extends Controller
 
     public function postTugasAkhir(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_kelompok = (int)$request->get('jumlah_kelompok');
@@ -531,6 +549,8 @@ class pendidikan_controller extends Controller
         $sks_terhitung = $jumlah_kelompok / 25;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'tugasAkhir',
             'id_dosen' => $id_dosen,
@@ -624,6 +644,8 @@ class pendidikan_controller extends Controller
 
     public function postProposal(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_mahasiswa = (int)$request->get('jumlah_mahasiswa');
@@ -631,6 +653,8 @@ class pendidikan_controller extends Controller
         $sks_terhitung = (4 / 14) / (3 * $jumlah_mahasiswa);
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'proposal',
             'id_dosen' => $id_dosen,
@@ -724,6 +748,8 @@ class pendidikan_controller extends Controller
 
     public function postRendah(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_dosen = (int)$request->get('jumlah_dosen');
@@ -731,6 +757,8 @@ class pendidikan_controller extends Controller
         $sks_terhitung = $jumlah_dosen;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'bimbing_rendah',
             'id_dosen' => $id_dosen,
@@ -821,6 +849,8 @@ class pendidikan_controller extends Controller
 
     public function postKembang(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_sap = (int)$request->get('jumlah_sap');
@@ -828,6 +858,8 @@ class pendidikan_controller extends Controller
         $sks_terhitung = 0.5 * $jumlah_sap;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'pengembangan',
             'id_dosen' => $id_dosen,
@@ -908,6 +940,8 @@ class pendidikan_controller extends Controller
 
     public function postCangkok(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_dosen = (int)$request->get('jumlah_dosen');
@@ -915,6 +949,8 @@ class pendidikan_controller extends Controller
         $sks_terhitung = 2;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'cangkok',
             'id_dosen' => $id_dosen,
@@ -1015,10 +1051,14 @@ class pendidikan_controller extends Controller
 
     public function postKoordinator(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $sks_terhitung = 1;
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'pendidikan',
             'sub_rencana' => 'koordinator',
             'id_dosen' => $id_dosen,

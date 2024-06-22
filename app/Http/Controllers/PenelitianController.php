@@ -136,6 +136,8 @@ class PenelitianController extends Controller
 
     public function postPenelitianKelompok(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $status_tahapan = $request->get('status_tahapan');
@@ -180,6 +182,8 @@ class PenelitianController extends Controller
         $sks_terhitung = $bobot_pencapaian*$sks;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'penelitian_kelompok',
             'id_dosen' => $id_dosen,
@@ -324,6 +328,8 @@ class PenelitianController extends Controller
 
     public function postPenelitianMandiri(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $status_tahapan = $request->get('status_tahapan');
@@ -360,6 +366,8 @@ class PenelitianController extends Controller
         $sks_terhitung = $bobot_pencapaian*$sks;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'penelitian_mandiri',
             'id_dosen' => $id_dosen,
@@ -480,6 +488,8 @@ class PenelitianController extends Controller
 
     public function postBukuTerbit(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $status_tahapan = $request->get('status_tahapan');
@@ -526,6 +536,8 @@ class PenelitianController extends Controller
         }
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'buku_terbit',
             'id_dosen' => $id_dosen,
@@ -673,6 +685,8 @@ class PenelitianController extends Controller
 
     public function postBukuInternasional(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $status_tahapan = $request->get('status_tahapan');
@@ -719,6 +733,8 @@ class PenelitianController extends Controller
         }
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'buku_internasional',
             'id_dosen' => $id_dosen,
@@ -862,6 +878,8 @@ class PenelitianController extends Controller
 
     public function postMenyadur(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $status_tahapan = $request->get('status_tahapan');
@@ -901,6 +919,8 @@ class PenelitianController extends Controller
         $sks_terhitung = $bobot_pencapaian*$sks;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'menyadur',
             'id_dosen' => $id_dosen,
@@ -1031,6 +1051,8 @@ class PenelitianController extends Controller
 
     public function postMenyunting(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $status_tahapan = $request->get('status_tahapan');
@@ -1068,6 +1090,8 @@ class PenelitianController extends Controller
         $sks_terhitung = $bobot_pencapaian*$sks;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'menyunting',
             'id_dosen' => $id_dosen,
@@ -1198,6 +1222,8 @@ class PenelitianController extends Controller
 
     public function postPenelitianModul(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $status_tahapan = $request->get('status_tahapan');
@@ -1247,6 +1273,8 @@ class PenelitianController extends Controller
         $sks_terhitung = $bobot_pencapaian*$sks;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'penelitian_modul',
             'id_dosen' => $id_dosen,
@@ -1382,6 +1410,8 @@ class PenelitianController extends Controller
 
     public function postPenelitianPekerti(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
 
@@ -1390,6 +1420,8 @@ class PenelitianController extends Controller
         $sks_terhitung = $sks;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'penelitian_pekerti',
             'id_dosen' => $id_dosen,
@@ -1463,6 +1495,8 @@ class PenelitianController extends Controller
 
     public function postPenelitianTridharma(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jumlah_bkd = (int)$request->get('jumlah_bkd');
@@ -1472,6 +1506,8 @@ class PenelitianController extends Controller
         $sks_terhitung = ($jumlah_bkd/8)*$sks;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'penelitian_tridharma',
             'id_dosen' => $id_dosen,
@@ -1564,6 +1600,8 @@ class PenelitianController extends Controller
     }
 
     public function postJurnalIlmiah(Request $request){
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $jenis_pengerjaan = $request->get('jenis_pengerjaan');
@@ -1609,6 +1647,8 @@ class PenelitianController extends Controller
         }
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'jurnal_ilmiah',
             'id_dosen' => $id_dosen,
@@ -1752,6 +1792,8 @@ class PenelitianController extends Controller
 
     public function postHakPaten(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $lingkup_wilayah = $request->get('lingkup_wilayah');
@@ -1775,6 +1817,8 @@ class PenelitianController extends Controller
         $sks_terhitung = $bobot_pencapaian;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'hak_paten',
             'id_dosen' => $id_dosen,
@@ -1884,12 +1928,16 @@ class PenelitianController extends Controller
 
     public function postMediaMassa(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
 
         $sks_terhitung = 0.5;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
             'jenis_rencana' => 'penelitian',
             'sub_rencana' => 'media_massa',
             'id_dosen' => $id_dosen,
@@ -1979,6 +2027,8 @@ class PenelitianController extends Controller
 
     public function postPembicaraSeminar(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $tingkatan = $request->get('tingkatan');
@@ -2001,6 +2051,8 @@ class PenelitianController extends Controller
     $sks_terhitung = $nilai;
 
     $rencana = Rencana::create([
+        'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
     'jenis_rencana' => 'penelitian',
     'sub_rencana' => 'pembicara_seminar',
     'id_dosen' => $id_dosen,
@@ -2103,6 +2155,8 @@ class PenelitianController extends Controller
 
     public function postPenyajianMakalah(Request $request)
     {
+        $id_frk = $request->get('id_frk');
+        $id_fed = $request->get('id_fed');
         $id_dosen = $request->get('id_dosen');
         $nama_kegiatan = $request->get('nama_kegiatan');
         $tingkatan = $request->get('tingkatan');
@@ -2138,6 +2192,8 @@ class PenelitianController extends Controller
         $sks_terhitung = $nilai*$sks;
 
         $rencana = Rencana::create([
+            'id_tanggal_frk' => $id_frk,
+            'id_tanggal_fed' => $id_fed,
         'jenis_rencana' => 'penelitian',
         'sub_rencana' => 'penyajian_makalah',
         'id_dosen' => $id_dosen,
