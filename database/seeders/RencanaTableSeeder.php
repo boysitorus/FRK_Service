@@ -25,6 +25,8 @@ class RencanaTableSeeder extends Seeder
         // TEORI
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 "nama_kegiatan" => "Test Pendidikan A " . $i,
                 "jenis_rencana" => "pendidikan",
                 "sub_rencana" => "teori",
@@ -43,6 +45,8 @@ class RencanaTableSeeder extends Seeder
         //PRAKTIKUM
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
                 'sub_rencana' => 'praktikum',
                 'id_dosen' => $id_dosen,
@@ -60,6 +64,8 @@ class RencanaTableSeeder extends Seeder
         //BIMBINGAN
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
                 'sub_rencana' => 'bimbingan',
                 'id_dosen' => $id_dosen,
@@ -76,6 +82,8 @@ class RencanaTableSeeder extends Seeder
         //SEMINAR
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
                 'sub_rencana' => 'seminar',
                 'id_dosen' => $id_dosen,
@@ -92,6 +100,8 @@ class RencanaTableSeeder extends Seeder
         //TUGAS AKHIR
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
                 'sub_rencana' => 'tugasAkhir',
                 'id_dosen' => $id_dosen,
@@ -108,6 +118,8 @@ class RencanaTableSeeder extends Seeder
         //PROPOSAL
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
                 'sub_rencana' => 'proposal',
                 'id_dosen' => $id_dosen,
@@ -124,6 +136,8 @@ class RencanaTableSeeder extends Seeder
         //RENDAH
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
                 'sub_rencana' => 'bimbing_rendah',
                 'id_dosen' => $id_dosen,
@@ -140,6 +154,8 @@ class RencanaTableSeeder extends Seeder
         //KEMBANG
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
                 'sub_rencana' => 'pengembangan',
                 'id_dosen' => $id_dosen,
@@ -156,6 +172,8 @@ class RencanaTableSeeder extends Seeder
         //CANGKOK
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
                 'sub_rencana' => 'cangkok',
                 'id_dosen' => $id_dosen,
@@ -172,6 +190,8 @@ class RencanaTableSeeder extends Seeder
         //KOORDINATOR
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
                 'sub_rencana' => 'koordinator',
                 'id_dosen' => $id_dosen,
@@ -189,6 +209,8 @@ class RencanaTableSeeder extends Seeder
         //A
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'penelitian_kelompok',
                 'id_dosen' => $id_dosen,
@@ -207,6 +229,8 @@ class RencanaTableSeeder extends Seeder
         //B
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'penelitian_mandiri',
                 'id_dosen' => $id_dosen,
@@ -223,6 +247,8 @@ class RencanaTableSeeder extends Seeder
         //C
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'buku_terbit',
                 'id_dosen' => $id_dosen,
@@ -234,13 +260,15 @@ class RencanaTableSeeder extends Seeder
                 'id_rencana' => $rencana->id_rencana,
                 'jenis_pengerjaan' => "Mandiri",
                 'status_tahapan' => "Pendahuluan",
-                'peran'=> "Editor"
+                'peran' => "Editor"
             ]);
         }
 
         //D
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'buku_internasional',
                 'id_dosen' => $id_dosen,
@@ -252,13 +280,15 @@ class RencanaTableSeeder extends Seeder
                 'id_rencana' => $rencana->id_rencana,
                 'jenis_pengerjaan' => "Mandiri",
                 'status_tahapan' => "Pendahuluan",
-                'peran'=> "Editor"
+                'peran' => "Editor"
             ]);
         }
 
         //E
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'menyadur',
                 'id_dosen' => $id_dosen,
@@ -276,6 +306,8 @@ class RencanaTableSeeder extends Seeder
         //F
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'menyunting',
                 'id_dosen' => $id_dosen,
@@ -293,6 +325,8 @@ class RencanaTableSeeder extends Seeder
         //G
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'penelitian_modul',
                 'id_dosen' => $id_dosen,
@@ -306,12 +340,13 @@ class RencanaTableSeeder extends Seeder
                 'jenis_pengerjaan' => "Mandiri",
                 'peran' => "Anggota"
             ]);
-
         }
 
         //H
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'penelitian_pekerti',
                 'id_dosen' => $id_dosen,
@@ -322,12 +357,13 @@ class RencanaTableSeeder extends Seeder
             DetailPenelitian::create([
                 'id_rencana' => $rencana->id_rencana,
             ]);
-
         }
 
         //I
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'penelitian_tridharma',
                 'id_dosen' => $id_dosen,
@@ -344,6 +380,8 @@ class RencanaTableSeeder extends Seeder
         //J
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'jurnal_ilmiah',
                 'id_dosen' => $id_dosen,
@@ -362,6 +400,8 @@ class RencanaTableSeeder extends Seeder
         //K
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'hak_paten',
                 'id_dosen' => $id_dosen,
@@ -378,6 +418,8 @@ class RencanaTableSeeder extends Seeder
         //L
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'media_massa',
                 'id_dosen' => $id_dosen,
@@ -393,42 +435,48 @@ class RencanaTableSeeder extends Seeder
         //M
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'pembicara_seminar',
                 'id_dosen' => $id_dosen,
                 'nama_kegiatan' => "Test Penelitian M " . $i,
                 'sks_terhitung' => round($sks_terhitung, 2),
-                ]);
+            ]);
 
-                DetailPenelitian::create([
+            DetailPenelitian::create([
                 'id_rencana' => $rencana->id_rencana,
                 'lingkup_wilayah' => "Tingkat Regional/minimal fakultas",
-                ]);
+            ]);
         }
 
         //N
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
                 'sub_rencana' => 'penyajian_makalah',
                 'id_dosen' => $id_dosen,
                 'nama_kegiatan' => "Test Penelitian N " . $i,
                 'sks_terhitung' => round($sks_terhitung, 2),
-                ]);
+            ]);
 
-                DetailPenelitian::create([
+            DetailPenelitian::create([
                 'id_rencana' => $rencana->id_rencana,
                 'lingkup_wilayah' => "Tingkat regional daerah, institusional(minimum fakultas)",
                 'posisi' => "Ketua",
                 'jumlah_anggota' => 2,
                 'jenis_pengerjaan' => "Individual",
-                ]);
+            ]);
         }
 
         //PENGABDIAN
         //A
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pengabdian',
                 'sub_rencana' => 'kegiatan',
                 'id_dosen' => $id_dosen,
@@ -445,6 +493,8 @@ class RencanaTableSeeder extends Seeder
         //B
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pengabdian',
                 'sub_rencana' => 'penyuluhan',
                 'id_dosen' => $id_dosen,
@@ -461,6 +511,8 @@ class RencanaTableSeeder extends Seeder
         //C
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pengabdian',
                 'sub_rencana' => 'konsultan',
                 'id_dosen' => $id_dosen,
@@ -476,6 +528,8 @@ class RencanaTableSeeder extends Seeder
         //D
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pengabdian',
                 'sub_rencana' => 'karya',
                 'id_dosen' => $id_dosen,
@@ -497,6 +551,8 @@ class RencanaTableSeeder extends Seeder
         //A
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'akademik',
                 'id_dosen' => $id_dosen,
@@ -513,6 +569,8 @@ class RencanaTableSeeder extends Seeder
         //B
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'bimbingan',
                 'id_dosen' => $id_dosen,
@@ -529,6 +587,8 @@ class RencanaTableSeeder extends Seeder
         //C
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'ukm',
                 'id_dosen' => $id_dosen,
@@ -545,6 +605,8 @@ class RencanaTableSeeder extends Seeder
         //D
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'sosial',
                 'id_dosen' => $id_dosen,
@@ -560,6 +622,8 @@ class RencanaTableSeeder extends Seeder
         //E
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'struktural',
                 'id_dosen' => $id_dosen,
@@ -577,6 +641,8 @@ class RencanaTableSeeder extends Seeder
         //F
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'nonstruktural',
                 'id_dosen' => $id_dosen,
@@ -593,6 +659,8 @@ class RencanaTableSeeder extends Seeder
         //G
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'redaksi',
                 'id_dosen' => $id_dosen,
@@ -609,6 +677,8 @@ class RencanaTableSeeder extends Seeder
         //H
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'adhoc',
                 'id_dosen' => $id_dosen,
@@ -620,12 +690,13 @@ class RencanaTableSeeder extends Seeder
                 'id_rencana' => $rencana->id_rencana,
                 'jabatan' => 'Ketua Panitia Ad Hoc'
             ]);
-
         }
 
         //I
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'ketua_panitia',
                 'id_dosen' => $id_dosen,
@@ -642,6 +713,8 @@ class RencanaTableSeeder extends Seeder
         //J
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'anggota_panitia',
                 'id_dosen' => $id_dosen,
@@ -658,6 +731,8 @@ class RencanaTableSeeder extends Seeder
         //K
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'pengurus_yayasan',
                 'id_dosen' => $id_dosen,
@@ -674,6 +749,8 @@ class RencanaTableSeeder extends Seeder
         //L
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'asosiasi',
                 'id_dosen' => $id_dosen,
@@ -692,6 +769,8 @@ class RencanaTableSeeder extends Seeder
         //M
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'seminar',
                 'id_dosen' => $id_dosen,
@@ -708,6 +787,8 @@ class RencanaTableSeeder extends Seeder
         //N
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'id_tanggal_frk' => 2,
+                'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
                 'sub_rencana' => 'reviewer',
                 'id_dosen' => $id_dosen,
@@ -719,6 +800,5 @@ class RencanaTableSeeder extends Seeder
                 'id_rencana' => $rencana->id_rencana,
             ]);
         }
-
     }
 }
