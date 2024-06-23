@@ -26,6 +26,8 @@ class RencanaTableSeeder extends Seeder
         // TEORI
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 "nama_kegiatan" => "Test Pendidikan A " . $i,
@@ -46,6 +48,8 @@ class RencanaTableSeeder extends Seeder
         //PRAKTIKUM
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
@@ -65,6 +69,8 @@ class RencanaTableSeeder extends Seeder
         //BIMBINGAN
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
@@ -83,6 +89,8 @@ class RencanaTableSeeder extends Seeder
         //SEMINAR
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
@@ -101,6 +109,8 @@ class RencanaTableSeeder extends Seeder
         //TUGAS AKHIR
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
@@ -119,6 +129,8 @@ class RencanaTableSeeder extends Seeder
         //PROPOSAL
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
@@ -137,6 +149,8 @@ class RencanaTableSeeder extends Seeder
         //RENDAH
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
@@ -155,6 +169,8 @@ class RencanaTableSeeder extends Seeder
         //KEMBANG
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
@@ -173,6 +189,8 @@ class RencanaTableSeeder extends Seeder
         //CANGKOK
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
@@ -191,6 +209,8 @@ class RencanaTableSeeder extends Seeder
         //KOORDINATOR
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pendidikan',
@@ -210,6 +230,8 @@ class RencanaTableSeeder extends Seeder
         //A
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -230,6 +252,8 @@ class RencanaTableSeeder extends Seeder
         //B
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -248,6 +272,8 @@ class RencanaTableSeeder extends Seeder
         //C
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -268,6 +294,8 @@ class RencanaTableSeeder extends Seeder
         //D
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -288,6 +316,8 @@ class RencanaTableSeeder extends Seeder
         //E
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -307,6 +337,8 @@ class RencanaTableSeeder extends Seeder
         //F
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -326,6 +358,8 @@ class RencanaTableSeeder extends Seeder
         //G
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -346,6 +380,8 @@ class RencanaTableSeeder extends Seeder
         //H
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -363,6 +399,8 @@ class RencanaTableSeeder extends Seeder
         //I
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -381,6 +419,8 @@ class RencanaTableSeeder extends Seeder
         //J
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -401,6 +441,8 @@ class RencanaTableSeeder extends Seeder
         //K
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -419,6 +461,8 @@ class RencanaTableSeeder extends Seeder
         //L
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -436,6 +480,8 @@ class RencanaTableSeeder extends Seeder
         //M
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -454,6 +500,8 @@ class RencanaTableSeeder extends Seeder
         //N
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penelitian',
@@ -476,6 +524,8 @@ class RencanaTableSeeder extends Seeder
         //A
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pengabdian',
@@ -494,6 +544,8 @@ class RencanaTableSeeder extends Seeder
         //B
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pengabdian',
@@ -512,6 +564,8 @@ class RencanaTableSeeder extends Seeder
         //C
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pengabdian',
@@ -529,6 +583,8 @@ class RencanaTableSeeder extends Seeder
         //D
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'pengabdian',
@@ -552,6 +608,8 @@ class RencanaTableSeeder extends Seeder
         //A
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -570,6 +628,8 @@ class RencanaTableSeeder extends Seeder
         //B
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -588,6 +648,8 @@ class RencanaTableSeeder extends Seeder
         //C
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -606,6 +668,8 @@ class RencanaTableSeeder extends Seeder
         //D
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -623,6 +687,8 @@ class RencanaTableSeeder extends Seeder
         //E
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -642,6 +708,8 @@ class RencanaTableSeeder extends Seeder
         //F
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -660,6 +728,8 @@ class RencanaTableSeeder extends Seeder
         //G
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -678,6 +748,8 @@ class RencanaTableSeeder extends Seeder
         //H
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -696,6 +768,8 @@ class RencanaTableSeeder extends Seeder
         //I
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -714,6 +788,8 @@ class RencanaTableSeeder extends Seeder
         //J
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -732,6 +808,8 @@ class RencanaTableSeeder extends Seeder
         //K
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -750,6 +828,8 @@ class RencanaTableSeeder extends Seeder
         //L
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -770,6 +850,8 @@ class RencanaTableSeeder extends Seeder
         //M
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
@@ -788,6 +870,8 @@ class RencanaTableSeeder extends Seeder
         //N
         for ($i = 1; $i <= $jumlahPerRencana; $i++) {
             $rencana = Rencana::create([
+                'asesor1_frk' => 'setuju',
+                'asesor2_frk' => 'setuju',
                 'id_tanggal_frk' => 2,
                 'id_tanggal_fed' => 1,
                 'jenis_rencana' => 'penunjang',
